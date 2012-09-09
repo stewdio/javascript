@@ -1,0 +1,240 @@
+
+
+html, body
+{
+	width:  100%;
+	height: 100%;
+}
+body, h1, h2, h3, h4, h5, h6, p, form, input, textarea, select, address, th
+{
+	margin:  0;
+	padding: 0;
+	font-family: "Lucida Grande", Geneva, Verdana, Arial, sans-serif;
+	font-size:    9pt;
+	line-height: 15pt;
+	font-weight: normal;
+	font-style:  normal;
+	color: #888;
+	color: rgba( 0, 0, 0, 0.6 );
+	text-rendering: optimizeLegibility;
+}
+body
+{
+	min-width: 660px;
+}
+
+
+
+
+a
+{
+	color: #69C;
+	text-decoration: none;
+}
+a:hover
+{
+	border-bottom: 1px dotted #69C;
+}
+
+
+h1, h2
+{
+	font-size:   15pt;
+	line-height: 25pt;
+	color: #333;
+	color: rgba( 0, 0, 0, 0.8 );
+	margin-bottom: 10pt;
+}
+h2
+{
+	font-size:   12pt;
+	line-height: 20pt;
+	margin-bottom: 1pt;/*  Strange that it needs this little breath  */
+}
+p + h1, p + h2, code + h2
+{
+	margin-top: 15pt;
+}
+p + p
+{
+	/*margin-top: 15pt;*/
+	text-indent: 15pt !important;
+}
+ol, ul, li
+{
+	margin:  0;
+	padding: 0;
+	list-style: none;
+}
+.pad
+{
+	padding: 12px;
+}
+
+
+/*   Grid   */
+
+#page
+{
+	position: relative;
+	margin: 0 auto;
+	width: 660px;
+	min-height: 100%;
+}
+
+
+
+
+    /******************/
+   /*                */
+  /*   Navigation   */
+ /*                */
+/******************/
+
+
+nav
+{
+	position: relative;
+	top:  0;
+	left:  0;
+	width: 228px;/* 120 x 2  -12px padding  */
+	padding: 38pt 12px 120px 12px;
+}
+nav a
+{
+	display: block;
+	padding-left: 12px;
+}
+nav a:hover
+{
+	border: none;
+	background-color: #E0E9F9;
+}
+nav li.indent
+{
+	padding-left: 12px;
+}
+nav li.active
+{
+	font-weight: bold;
+}
+
+
+
+
+article
+{
+	position: absolute;
+	top:  0;
+	left: 240px;
+	width: 396px;/* 420 -12px padding -12px padding */
+	background-color: #FFF;
+	padding: 30pt 12px 120pt 12px;
+}
+article iframe
+{
+	position: relative;
+	top: 0;
+	left: -12px;
+	margin: 10pt 0 10pt 0;
+}
+footer
+{
+	margin-top: 90pt;
+	color: rgba( 0, 0, 0, 0.3 );
+}
+hr
+{
+	display: block;
+	position: relative;
+	top: 0;
+	left: -12px;
+	width: 420px;
+	height:  0;
+	margin: 15pt 0 45pt 0;
+	border: none;
+	border-bottom: 1px dashed #CCC;
+	overflow: hidden;
+}
+img.block
+{
+	display: block;
+	position: relative;
+	top: 0;
+	left: -12px;
+	width: 420px;	
+}
+
+
+
+
+    /************/
+   /*          */
+  /*   Code   */
+ /*          */
+/************/
+
+
+code
+{
+	display: block;
+	position: relative;
+	top: 0;
+	left: -12px;
+	width: 406px;/* 420 -12px padding -2px padding */
+	margin: 10pt 0 10pt 0;
+	border-top: 1px solid #DDD;
+	background-color: #F6F6F6;
+	padding: 2px 2px 2px 12px;
+	font-family: "Menlo", "Andale Mono", "Courier New", Courier, monospace;
+	font-size: 8pt;
+	color: #000;
+	white-space: pre-wrap;
+}
+.response
+{
+	color: #999;
+}
+code.block
+{
+	display: block;
+	white-space: pre-wrap;
+}
+code.inline
+{
+	display: inline;
+	top:  0;
+	left: 0;
+	margin: 0;
+	border: none;
+	padding: 0;
+	background-color: transparent;
+}
+
+
+
+
+.slideshow, .slideshowControls
+{
+	display:  block;
+	position: relative;
+	top:      0;
+	left:   -12px;
+	width:  420px;
+	height: 420px;
+	margin: 15pt 0 5pt 0;
+	overflow: hidden;
+}
+.slideshowControls
+{
+	margin: 0 0 30pt 0;
+	height: 15pt;
+	text-align: right;
+	overflow: hidden;
+}
+.slide
+{
+	position: relative;
+	width:  100%;
+	height: 100%;
+}

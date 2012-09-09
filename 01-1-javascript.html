@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>JavaScript basics</title>
+	</head>
+	<body>
+		<div id="page">
+			<nav></nav>
+			<article>
+
+
+
+
+				<a name="basics"></a>
+				<h1>JavaScript basics</h1>
+				<p>
+					Today’s crash course will be most useful for proficient programmers who may have written some JavaScript in the past
+					but are more familiar with classical languages like C++ or Java.
+					If you happen to be a seasoned lambda haxor have no fear—our lessons will accelerate rapidly in subsequent weeks.
+				</p>
+
+
+				<h2>Required tools</h2>
+				<p>
+					All you need is a text editor and a good Web browser. 
+					I’m on a Mac so my text editor of choice is <a target="_blank" href="http://macromates.com/">TextMate</a> ($50).
+					If you’re on a budget <a target="_blank" href="http://www.barebones.com/products/TextWrangler/">TextWrangler</a> is a great free alternative.
+					For Windows users, I’ve heard <a target="_blank" href="http://notepad-plus-plus.org/">Notepad++</a> is good—and it’s free.
+					If you’re on a *nix box I’m sure you already have a text editor that you’re rather attached to.
+					As for browsers, any of these will do nicely:
+					<a target="_blank" href="http://google.com/chrome">Chrome</a>, 
+					<a target="_blank" href="http://apple.com/safari">Safari</a>, 
+					<a target="_blank" href="http://opera.com/download">Opera</a>, and
+					<a target="_blank" href="http://mozilla.org">Firefox</a>.
+				</p>
+
+
+				<h2>Hello, Console</h2>
+				<p>
+					The browsers above come with interactive JavaScript consoles—a very powerful thing. 
+					Open your console right now. 
+					Here are Macintosh-specific instructions that Windows and *nix users can extrapolate from:
+				</p>
+				<br />
+				<p>
+					<a target="_blank" href="http://google.com/chrome">Chrome</a>: View &rarr; Developer &rarr; JavaScript Console (or ⌥⌘J).<br />
+					<a target="_blank" href="http://apple.com/safari">Safari</a>: First, <a target="_blank" href="http://developer.apple.com/library/safari/#documentation/appleapplications/Conceptual/Safari_Developer_Guide/2SafariDeveloperTools/SafariDeveloperTools.html">enable the Developer menu</a>. Then, Develop &rarr; Show Error Console (or ⌥⌘C).<br />
+					<a target="_blank" href="http://opera.com/download">Opera</a>: View &rarr; Developer Tools &rarr; Opera Dragonfly (or ⌥⌘I) then click on the Console tab.<br />
+					<a target="_blank" href="http://mozilla.org">Firefox</a>: Tools &rarr; Web Developer &rarr; Web Console (or ⌥⌘K).
+				</p>
+				<br />
+				<p>
+					Type the following into your console and hit enter:
+				</p>
+				<code>1 + 2</code>
+				<p>
+					Your console will respond with:
+				</p>
+				<code class="response">3</code>
+				<p>
+					Every browser window is now your very own calculator.
+					Follow along with the examples below by copying and pasting the sample code snippets into your console.
+				</p>
+
+
+
+
+				<a name="nsb"><hr /></a>
+				<h1>Numbers, Strings, and Booleans</h1>
+				<p>
+					Declaring a variable in JavaScript is easy:
+				</p>
+				<code>var hello</code>
+				<p>
+					Notice what we’re not doing:
+					There’s no need to specify what type of value this variable will hold.
+					In other languages you might have to decide ahead of time if a variable will hold numbers, or hold text, or hold some other type of data entirely.
+					In JavaScript you just declare a variable, then start assigning values to it.
+				</p>
+<code>var hello
+<span class="response">undefined</span>
+hello = 7
+<span class="response">7</span>
+hello * 2
+<span class="response">14</span></code>
+				<p>
+					Ok, from here on I’ll leave out the  
+					<code class="inline">var hello</code> line
+					because it’s quite repetitive and I think you get the idea:
+					declare a variable first, then assign it a value.
+					If you’re a fan of brevity you can do it in one go like this:
+					<code class="inline">var hello = 7</code>.
+				</p>
+				<p>
+					Any variable can hold any type of data.
+					And you can change that type of data on a whim.
+					This is called <a target="_blank" href="http://en.wikipedia.org/wiki/Type_system#Dynamic_typing">dynamic typing</a>:
+				</p>
+<code>hello = 7
+<span class="response">7</span>
+hello = 1.2
+<span class="response">1.2</span>
+hello = 'seven'
+<span class="response">"seven"</span>
+hello = true
+<span class="response">true</span></code>
+				<p>
+					It’s easy to ask JavaScript what type of data any variable is holding. 
+					Here we take apart the blurb above, inspecting <code class="inline">hello</code>
+					each time we assign it a new type of value.
+				</p>		
+<code>hello = 7
+<span class="response">7</span>
+typeof hello
+<span class="response">"number"</span></code>
+
+<code>hello = 1.2
+<span class="response">1.2</span>
+typeof hello
+<span class="response">"number"</span></code>
+
+<code>hello = 'seven'
+<span class="response">"seven"</span>
+typeof hello
+<span class="response">"string"</span></code>
+
+<code>hello = true
+<span class="response">true</span>
+typeof hello
+<span class="response">"boolean"</span></code>
+
+
+
+
+				<a name="functions"><hr /></a>
+				<h1>Functions</h1>
+				<p>
+					In JavaScript, functions can be stored in variables. 
+					This is rather strange if you’re coming from a C-based language.
+				</p>
+<code>hello = function(){
+
+	return 'Hello, World!'
+}</code>
+				<p>
+					Wait. Did we really just store a function in <code class="inline">hello</code>?
+				</p>
+<code>typeof hello
+<span class="response">"function"</span></code>
+				<p>
+					And what was the content of that <code class="inline">hello</code> variable again?
+				</p>
+<code>hello
+<span class="response">function(){
+
+	return 'Hello, World!'
+}</span></code>
+				<p>
+					Passing arguments to functions is a breeze.
+					Because variables are dynamically typed we don’t have to create multiple functions to achieve <a target="_blank" href="http://en.wikipedia.org/wiki/Polymorphism_(computer_science)">polymorphism</a>.
+					For example, this function could accept two strings—as it appears intended for—or some random combination of strings, numbers, booleans, and so on.
+				</p>
+<code>hello = function( greeting, name ){
+
+	return greeting + ', '+ name +'!'
+}</code>
+				<p>
+					Now, what do you suppose this will do?
+				</p>
+				<code>hello( 'Hey there', 73 )</code>
+				<p>
+					Or even this:
+				</p>
+				<code>hello( hello, hello( true, true ))</code>
+				<p>
+					Next week we’ll investigate JavaScript’s function-scope (rather than block-scope) and the magic of <a target="_blank" href="http://en.wikipedia.org/wiki/Closure_(computer_science)">closures</a>.
+					(For example, did you know JavaScript can have private variables?)
+					There’s a lot to look forward to.
+				</p>
+
+
+
+
+
+
+				<a name="objects"><hr /></a>
+				<h1>Objects</h1>
+				<p>
+					In classical languages like C++ or Java creating an object requires first writing a <a target="_blank" href="http://en.wikipedia.org/wiki/Class_(computer_programming)">class</a>,
+					then creating an “instance” of that class. 
+					In JavaScript it’s dead simple to create an object:
+				</p>
+				<code>hello = {}</code>
+				<p>
+					That’s it. That’s the power of JavaScript’s <a target="_blank" href="http://en.wikipedia.org/wiki/Literal_(computer_programming)">object-literal</a> syntax. 
+					Now you’ve got an empty object named “hello” at your disposal.
+				</p>
+<code>hello
+<span class="response">Object</span>
+typeof hello
+<span class="response">"object"</span></code>
+				<p>
+					But empty objects aren’t much fun, so let’s create an object with a property called “luckyNumber.”
+				</p>
+<code>hello = {
+
+	luckyNumber: 7
+}</code>
+				<p>
+					Now we can query the object.
+				</p>
+<code>hello.luckyNumber
+<span class="response">7</span></code>
+				<p>
+					If you’ve ever used the JSON format to pass data from one place to another these structures should feel familiar to you.
+					After all, JSON stands for <a target="_blank" href="http://en.wikipedia.org/wiki/JSON">JavaScript Object Notation</a>.					
+					You can store any data type inside an object, including functions and even more objects. 
+				</p>
+<code>hello = {
+
+	luckyNumber: 7,
+	luckyString: 'seven',
+	luckyObject: {
+		
+		anotherLuckyNumber: 3
+	},
+	luckyFunction: function( name ){
+		
+		return 'Hello, '+ name + '!'
+	}
+}</code>
+				<p>
+					And then you can query those as well:
+				</p>
+<code>hello.luckyString
+<span class="response">"seven"</span>
+hello.luckyObject.anotherLuckyNumber
+<span class="response">3</span>
+hello.luckyFunction
+<span class="response">function( name ){
+	
+	return 'Hello, '+ name + '!'
+}</span>
+hello.luckyFunction( 'World' )
+<span class="response">"Hello, World!"</span></code>
+
+
+				<p>
+					You can also add properties <em>after</em> the object has been created.
+					Suppose we’d already created the object example above.
+					We could then do the following:
+				</p>
+<code>hello.someNewProperty
+<span class="response">undefined</span>	
+hello.someNewProperty = 1 + 2
+<span class="response">3</span>
+hello.someNewProperty
+<span class="response">3</span></code>
+				<p>
+					And of course the object can modify its own values.
+				</p>
+<code>hello = {
+
+	times: 0,
+	again: function(){
+
+		this.times = this.times + 1
+		return 'Hello for the '+ this.times + 'x time!'
+	}
+}
+<span class="response">Object</span>
+hello.again()
+<span class="response">"Hello for the 1x time!"</span>
+hello.again()
+<span class="response">"Hello for the 2x time!"</span>
+hello.again()
+<span class="response">"Hello for the 3x time!"</span></code>
+				<p>
+					Next week we’ll investigate the “this” keyword in depth as we discuss 
+					classical inheritance (traditional object-oriented inheritance involving classes) 
+					versus JavaScript’s <a target="_blank" href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototypal inheritance</a>. 
+				</p>
+
+
+
+
+				<a name="arrays"><hr /></a>
+				<h1>Arrays</h1>
+				<p>
+					Creating a new array is just as easy as creating a new object:
+				</p>
+				<code>hello = []</code>
+				<p>
+					But here’s something unexpected:
+				</p>
+<code>typeof hello
+<span class="response">"object"</span></code>
+				<p>
+					What? Why did the console say this array was an object?
+					It behaves like an array and even has the usual array properties like <code class="inline">length</code>:
+				</p>
+<code>hello[ 0 ] = 'apple'
+<span class="response">"apple"</span>
+hello[ 1 ] = 'orange'
+<span class="response">"orange"</span>
+hello[ 2 ] = 'pear'
+<span class="response">"pear"</span>
+hello.length
+<span class="response">3</span>
+hello
+<span class="response">["apple", "orange", "pear"]</span></code>
+				<p>
+					Notice that beautiful array-literal notation coming back from the console—very useful.
+					The reason the console thinks this is an object rather than an array is partly because <a target="_blank" href="http://www.youtube.com/watch?v=DfSL-HeIrxA">JavaScript arrays aren’t really arrays at all</a>, 
+					but <a target="_blank" href="http://en.wikipedia.org/wiki/Hash_table">hash tables</a> disguised as arrays. 
+					(This is also why there’s no need to initialize an array with its intended size.)
+					In a true array the index must be an integer because the index translates to consecutive memory address.
+					In JavaScript this isn’t the case so the index can be any data type:
+				</p>
+<code>hello = []
+<span class="response">[]</span>
+hello[ 6 ] = 'apple'
+<span class="response">"apple"</span>
+hello[ 'orange' ] = 'Yes, strings work too.'
+<span class="response">"Yes, strings work too."</span>
+hello[ function(){} ] = 'Oddly, you can use functions as well.'
+<span class="response">"Oddly, you can use functions as well."</span></code>
+				<p>
+					The length of an array is always one higher than its highest <em>numerical</em> index.
+					This is a curveball for many seasoned programmers new to JavaScript.
+				</p>
+<code>hello = []
+<span class="response">[]</span>
+hello.length
+<span class="response">0</span>
+hello[ 0 ] = 'apple'
+<span class="response">"apple"</span>
+hello.length
+<span class="response">1</span>
+hello[ 1337 ] = 'Woa.. We just skipped quite a few indexes there!'
+<span class="response">"Woa.. We just skipped quite a few indexes there!"</span>
+hello.length
+<span class="response">1138</span></code>
+				<p>
+					One last note, arrays really are just objects with some fancy “array-ness” sprinkled on 
+					top—properties like <code class="inline">length</code> and methods such as <code class="inline">push()</code>, <code class="inline">pop()</code>, and so on.
+					In fact, objects and arrays are so similar that you can actually switch between 
+					object-notation (<code class="inline">object.key</code>)
+					and array-notation (<code class="inline">array['key']</code>) when appropriate.
+					Here’s an array using both notations. 
+					Note that you cannot use a number with object-notation 
+					because raw names must begin with a letter, underscore, or dollar sign.
+				</p>
+<code>hello = []
+<span class="response">[]</span>
+hello[ 'apple' ] = 'Hello, Apple!'
+<span class="response">"Hello, Apple!"</span>
+hello.apple
+<span class="response">"Hello, Apple!"</span>
+hello[ 7 ] = 'Hello, Seven!'
+<span class="response">"Hello, Seven!"</span>
+hello[ '7' ]
+<span class="response">"Hello, Seven!"</span>
+hello.7
+<span class="response">SyntaxError: Unexpected number</span></code>
+				<p>
+					And here’s an object using both notations.
+					Note that some strings just can’t be used with object-notation.
+				</p>
+<code>hello = {}
+<span class="response">Object</span>
+hello.avocado = 'Goes well with anything.'
+<span class="response">"Goes well with anything."</span>
+hello[ 'avocado' ]
+<span class="response">"Goes well with anything."</span>
+hello[ 'chips and salsa' ] = 'Good any time.'
+<span class="response">"Good any time."</span>
+hello.chips and salsa
+<span class="response">SyntaxError: Unexpected identifier</span>
+hello.'chips and salsa'
+<span class="response">SyntaxError: Unexpected string</span></code>
+
+
+
+
+				<a name="coercion"><hr /></a>
+				<h1>Type coercion</h1>
+				<p>
+					JavaScript is a friendly language that wants everyone (including different data types) to get along. 
+					This can be a source of confusion when testing for equalities.
+					For example, JavaScript will tell you that the <em>number</em> <code class="inline">7</code>
+					is entirely equal to the <em>string</em> representation of the number seven:
+				</p>
+<code>7 == '7'
+<span class="response">true</span></code>
+				<p>
+					But how could they be equal when they’re not even the same data type?
+					JavaScript is internally casting the number as a string when it does the comparison.
+					If you want to truly test the number seven against its string representation you must use the <em>triple-equals</em> operator:
+				</p>					
+<code>7 === '7'
+<span class="response">false</span></code>
+				<p>
+					The same concept is true for not-equals.
+				</p>
+<code>7 != '7'
+<span class="response">false</span>
+7 !== '7'
+<span class="response">true</span></code>
+				<p>
+					It’s worth noting that zero, an empty string, and an empty array
+					are all equal to false when using the regular double-equals operator.
+				</p>
+<code>0 == false
+<span class="response">true</span>
+'' == false
+<span class="response">true</span>
+[] == false
+<span class="response">true</span></code>
+				<p>
+					But they have a distinct meaning separate from false when using the triple-equals operator.
+				</p>
+<code>0 === false
+<span class="response">false</span>
+'' === false
+<span class="response">false</span>
+[] === false
+<span class="response">false</span></code>
+				<p>
+					JavaScript’s addition operator is rather overloaded.
+				</p>
+<code>7 + 7
+<span class="response">14</span></code>
+				<p>
+					Well, that made sense. Seven plus seven is indeed fourteen. 
+				</p>
+<code>'Java' + 'Script'
+<span class="response">"JavaScript"</span></code>
+				<p>
+					And that also made sense, two strings can be added (or more appropriately, <a target="_blank" href="http://en.wikipedia.org/wiki/Concatenation">concatenated</a>) together.
+
+					But what about a number plus a string?
+				</p>
+<code>7 + 'Script'
+<span class="response">"7Script"</span></code>
+				<p>
+					JavaScript cast the number <code class="inline">7</code> as a string, then concatenated it with the string <code class="inline">'Script'</code>.
+					We can go one step further: When used as prefix the addition operator will attempt to cast a string as a number.
+				</p>
+<code>7 + +'7'
+<span class="response">14</span></code>
+				<p>
+					If you attempt to do some actual math on something that’s not a number you’ll receive the value <em>Not a Number</em>.
+				</p>
+<code>7 * 'Script'
+<span class="response">NaN</span></code>
+				<br />
+				<a target="_blank" href="https://www.destroyallsoftware.com/talks/wat"><img class="block" src="media/watDuck.jpg" /></a>
+				<br />
+				<h2>Wat?</h2>
+				<p>
+					This brings us to <a target="_blank" href="https://www.destroyallsoftware.com/talks/wat">Wat</a>
+					(by <a target="_blank" href="http://twitter.com/garybernhardt">Gary Bernhardt</a>), 
+					a video that humorously demonstrates type coercion in action. 
+					The first minute happens to be about the 
+					<a target="_blank" href="http://ruby-lang.org/">Ruby language</a>,
+					but the remaining three minutes are purely JavaScript.
+				</p>
+				<p>
+					As a bonus wat, JavaScript uses the IEEE standard for floating point numbers,
+					causing many JavaScript newcomers to anxiously ask <a target="_blank" href="http://stackoverflow.com/questions/588004/is-javascripts-math-broken">is JavaScript’s Math broken?</a>
+					I assure you <a target="_blank" href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html">it’s not broken</a>, but it does look that way, doesn’t it?
+				</p>
+<code>1 + 2
+<span class="response">3</span>
+0.1 + 0.2
+<span class="response">0.30000000000000004</span></code>
+
+
+
+
+			<a name="crockford"><hr /></a>
+			<a target="_blank" href="http://yuiblog.com/crockford/"><img class="block" src="media/crockfordJavaScript.jpg" /></a>
+			<br />
+			<h1>Douglas Crockford on JavaScript</h1>
+			<p>
+				Part of your homework this week is to watch Douglas Crockford’s lecture 
+				<a target="_blank" href="http://yuiblog.com/crockford/">“Chapter 2: And then there was JavaScript.”</a>
+				I’d like to show you two choice cuts to help you get started:<br />
+				<a target="_blank" href="http://www.youtube.com/watch?v=RO1Wnu-xKoY">00:00–11:04 — JavaScript’s origins</a><br />
+				<a target="_blank" href="http://www.youtube.com/watch?v=RO1Wnu-xKoY#t=24m07s">24:07–28:03 — Classes vs Prototypes</a><br />
+			</p>
+			<p>
+				If you’re interested in where the language itself is headed see
+				<a target="_blank" href="http://en.wikipedia.org/wiki/Brendan_Eich">Brendan Eich</a>, inventor of JavaScript, discuss
+				<a target="_blank" href="http://www.youtube.com/watch?v=Rj49rmc01Hs">JavaScript at 17</a>.
+				Eich is a genius. 
+				It is most unfortunate then that some of his personal views are less than enlightened.
+			</p>
+		
+		
+	
+
+			</article>
+		</div>
+	</body>
+	<script charset="utf-8" src="scripts/jquery.js"></script>
+	<script charset="utf-8" src="scripts/skip.js"></script>
+	<script charset="utf-8" src="scripts/application.js"></script>
+</html>
