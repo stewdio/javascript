@@ -14,7 +14,6 @@ body, h1, h2, h3, h4, h5, h6, p, form, input, textarea, select, address, th
 	line-height: 15pt;
 	font-weight: normal;
 	font-style:  normal;
-	color: #888;
 	color: rgba( 0, 0, 0, 0.6 );
 	text-rendering: optimizeLegibility;
 }
@@ -114,8 +113,9 @@ nav li.indent
 {
 	padding-left: 12px;
 }
-nav li.active
+nav li a.active
 {
+	/*color: rgba( 0, 0, 0, 0.6 );*/
 	font-weight: bold;
 }
 
