@@ -27,12 +27,26 @@ body
 
 a
 {
-	color: #69C;
+	color: #58A;
 	text-decoration: none;
 }
 a:hover
 {
-	border-bottom: 1px dotted #69C;
+	border-bottom: 1px dotted #58A;
+}
+.tipper
+{
+	color: #58A;
+	cursor: default;
+}
+.tip
+{
+	position: absolute;
+	display: none;
+	background-color: #58A;
+	padding: 4px 8px;
+	color: #FFF;
+	cursor: default;
 }
 
 
@@ -57,7 +71,7 @@ p + h1, p + h2, code + h2
 p + p
 {
 	/*margin-top: 15pt;*/
-	text-indent: 15pt !important;
+	text-indent: 12px !important;
 }
 ol, ul, li
 {
@@ -107,7 +121,8 @@ nav a
 nav a:hover
 {
 	border: none;
-	background-color: #E0E9F9;
+	background-color: #ECF3F7;
+	69B
 }
 nav li.indent
 {
@@ -183,7 +198,7 @@ code
 	left: -12px;
 	width: 406px;/* 420 -12px padding -2px padding */
 	margin: 10pt 0 10pt 0;
-	border-top: 1px solid #DDD;
+	border-top: 1px solid #E6E6E6;
 	background-color: #F6F6F6;
 	padding: 2px 2px 2px 12px;
 	font-family: "Menlo", "Andale Mono", "Courier New", Courier, monospace;

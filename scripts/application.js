@@ -69,6 +69,33 @@ A = {
 
 
 
+		//  Take anything with a ‘tip’ attribute
+		//  and create a Tool Tip for it.
+		
+		var toolTip = $( '<div>' )
+			.addClass( 'tip' )
+			.text( 'This is a tool tip.' )
+			.mouseleave( function(){
+				
+				$( this ).hide()//fadeOut( 300 )
+			})
+		$( 'article' ).append( toolTip )
+		$( 'article *[tip]' )
+			.addClass( 'tipper' )
+			.mouseenter( function(){
+				toolTip
+					.hide()
+					.text( $(this).attr( 'tip' ))
+					.css({
+						left: $(this).position().left.round() - 6,
+						top:  $(this).position().top.round()  - 6
+					})
+					.show()//fadeIn( 100 )
+			})
+
+
+
+
 		//  I needed a seriously quick and simple way to click between slides,
 		//  mostly because I had planned to run the class off of Keynote
 		//  then realized at the last minute it was a bad idea... but I still

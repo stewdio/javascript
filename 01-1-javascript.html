@@ -18,7 +18,7 @@
 				<p>
 					Today’s crash course will be most useful for proficient programmers who may have written some JavaScript in the past
 					but are more familiar with classical languages like C++ or Java.
-					If you happen to be a seasoned lambda haxor have no fear—our lessons will accelerate rapidly in subsequent weeks.
+					If you happen to be a <a target="_blank" href="http://www.youtube.com/watch?v=sC369CQmrQs">seasoned lambda haxor</a> have no fear—our lessons will accelerate rapidly in subsequent weeks.
 				</p>
 
 
@@ -45,14 +45,15 @@
 				</p>
 				<br />
 				<p>
-					<a target="_blank" href="http://google.com/chrome">Chrome</a>: View &rarr; Developer &rarr; JavaScript Console (or ⌥⌘J).<br />
-					<a target="_blank" href="http://apple.com/safari">Safari</a>: First, <a target="_blank" href="http://developer.apple.com/library/safari/#documentation/appleapplications/Conceptual/Safari_Developer_Guide/2SafariDeveloperTools/SafariDeveloperTools.html">enable the Developer menu</a>. Then, Develop &rarr; Show Error Console (or ⌥⌘C).<br />
-					<a target="_blank" href="http://opera.com/download">Opera</a>: View &rarr; Developer Tools &rarr; Opera Dragonfly (or ⌥⌘I) then click on the Console tab.<br />
-					<a target="_blank" href="http://mozilla.org">Firefox</a>: Tools &rarr; Web Developer &rarr; Web Console (or ⌥⌘K).
+					<a target="_blank" href="http://google.com/chrome">Chrome</a>: View &rarr; Developer &rarr; JavaScript Console, or <span tip="Option Command J">⌥⌘J</span>.<br />
+					<a target="_blank" href="http://apple.com/safari">Safari</a>: First, <a target="_blank" href="http://developer.apple.com/library/safari/#documentation/appleapplications/Conceptual/Safari_Developer_Guide/2SafariDeveloperTools/SafariDeveloperTools.html">enable the Developer menu</a>. 
+					Then, Develop &rarr; Show Error Console, or <span tip="Option Command C">⌥⌘C</span>.<br />
+					<a target="_blank" href="http://opera.com/download">Opera</a>: View &rarr; Developer Tools &rarr; Opera Dragonfly, or <span tip="Option Command I">⌥⌘I</span>, then click on the Console tab.<br />
+					<a target="_blank" href="http://mozilla.org">Firefox</a>: Tools &rarr; Web Developer &rarr; Web Console, or <span tip="Option Command K">⌥⌘K</span>.
 				</p>
 				<br />
 				<p>
-					Type the following into your console and hit enter:
+					Type the following into your console and hit <span tip="Enter">↩</span>:
 				</p>
 				<code>1 + 2</code>
 				<p>
@@ -62,6 +63,16 @@
 				<p>
 					Every browser window is now your very own calculator.
 					Follow along with the examples below by copying and pasting the sample code snippets into your console.
+				</p>
+				<p>
+					<!--  Thank you Tom Campbell for reminding me of this:  -->
+					Each time you hit <span tip="Enter">↩</span> the console will respond to your input. 
+					This is great. Unless you need to type out a multiline command.
+					In that case when you reach the end of a line hit <span tip="Shift Enter">⇧↩</span> (instead of just <span tip="Enter">↩</span>)
+					to insert a line break without submitting to the console.
+					(In Opera <span tip="Shift Enter">⇧↩</span> will begin a “multiline mode” without inserting a new line. 
+					Once in Opera’s multiline mode hitting <span tip="Enter">↩</span> will not trigger a submission.
+					To exit Opera’s multiline mode hit <span tip="Command Enter">⌘↩</span>.)
 				</p>
 
 
@@ -139,6 +150,9 @@ typeof hello
 				<p>
 					In JavaScript, functions can be stored in variables. 
 					This is rather strange if you’re coming from a C-based language.
+					<!--  Thank you Tom Campbell for reminding me of this:  -->
+					(If you’re typing this example into the console by hand 
+					don’t forget that <span tip="Shift Enter">⇧↩</span> allows you to insert a line break without submitting.)
 				</p>
 <code>hello = function(){
 
