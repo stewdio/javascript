@@ -185,8 +185,8 @@ A = {
 	navigation: [	
 
 		{
-			title: 'Jump in',
-			url  : 'jumpin',
+			title: 'Welcome',
+			url  : 'welcome',
 			date : '7 September 2012',
 			pages: [
 				[ 'JavaScript basics', 'javascript' ],
