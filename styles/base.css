@@ -34,6 +34,10 @@ a:hover
 {
 	border-bottom: 1px dotted #58A;
 }
+a:active
+{
+	border-bottom: 1px solid #58A;
+}
 .tipper
 {
 	color: #58A;
@@ -111,7 +115,9 @@ nav
 	top:  0;
 	left:  0;
 	width: 228px;/* 120 x 2  -12px padding  */
-	padding: 38pt 12px 120px 12px;
+	/*height: 100%;*/
+	padding: 38pt 12px 120px 0;
+	overflow: auto;
 }
 nav a
 {
@@ -122,7 +128,10 @@ nav a:hover
 {
 	border: none;
 	background-color: #ECF3F7;
-	69B
+}
+nav a:active
+{
+	background-color: #DAE7EE;	
 }
 nav li.indent
 {
@@ -175,6 +184,7 @@ img.block
 {
 	display: block;
 	position: relative;
+	margin-bottom: 2pt;
 	top: 0;
 	left: -12px;
 	width: 420px;	

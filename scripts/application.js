@@ -28,7 +28,7 @@ A = {
 
 			var el
 			
-			lessonNumber = ( lessonNumber + 1 ).pad( 2 )
+			lessonNumber = ( lessonNumber + 1 ).toPaddedString( 2 )
 			el = $( '<li>' ).attr( 'title', lesson.date )
 			nav.append( el )
 			if( lesson.url ){
@@ -105,8 +105,26 @@ A = {
 		$( '.slideshow' ).each( function(){
 			
 			var
-			slideNumber = 0,
-			slideshowContainer = $( this )
+			slideshowContainer = $( this ),
+			slideNumber        = 0,
+			slideNumberLast    = slideshowContainer.find( '.slide' ).length-1,
+			slideNumberLabel   = $( '<span>' ).text( ' / ' ),
+			slideNumberUpdate  = function(){
+				
+				
+				//  Why do it in TWO passes? To avoid flickering.
+
+				slideshowContainer.find( '.slide' ).each( function( i, slide ){
+					if( i === slideNumber ) $( slide ).show()
+				})
+				slideshowContainer.find( '.slide' ).each( function( i, slide ){
+					if( i !== slideNumber ) $( slide ).hide()
+				})
+				slideNumberLabel.text(
+				
+					' '+ ( slideNumber + 1 ) +':'+ ( slideNumberLast + 1 ) +' '
+				)
+			}
 			
 			slideshowContainer.after(
 			
@@ -120,20 +138,12 @@ A = {
 					.click( function(){
 						
 						slideNumber --
-						if( slideNumber < 0 ) slideNumber = slideshowContainer.find( '.slide' ).length-1
-
-						//  Why do it in TWO passes? To avoid flickering.
-
-						slideshowContainer.find( '.slide' ).each( function( i, slide ){
-							if( i === slideNumber ) $( slide ).show()
-						})
-						slideshowContainer.find( '.slide' ).each( function( i, slide ){
-							if( i !== slideNumber ) $( slide ).hide()
-						})
+						if( slideNumber < 0 ) slideNumber = slideNumberLast
+						slideNumberUpdate()
 						return false;
 					})
 				)
-				.append( ' / ' )
+				.append( slideNumberLabel )
 				.append(
 				
 					$( '<a>' )
@@ -141,20 +151,13 @@ A = {
 					.html( 'Next &rarr;' )
 					.click( function(){
 						
-						slideNumber = ( slideNumber + 1 ) % slideshowContainer.find( '.slide' ).length
-						
-						//  Why do it in TWO passes? To avoid flickering.
-
-						slideshowContainer.find( '.slide' ).each( function( i, slide ){
-							if( i === slideNumber ) $( slide ).show()
-						})
-						slideshowContainer.find( '.slide' ).each( function( i, slide ){
-							if( i !== slideNumber ) $( slide ).hide()
-						})
+						slideNumber = ( slideNumber + 1 ) % ( slideNumberLast + 1 )
+						slideNumberUpdate()
 						return false;
 					})
 				)
 			)
+			slideNumberUpdate()
 		})
 	},
 	
@@ -163,7 +166,7 @@ A = {
 	
 	//  This was just a quick temporary solution for waiting until the user
 	//  clicks before loading an actual email address into the href.
-	//  To display an obfuscated email address... been solved any times over.
+	//  To display an obfuscated email address... been solved many times over.
 	//  Probably won’t stop me from tinkering with the idea later though.
 	
 	email: function( e ){
@@ -177,7 +180,7 @@ A = {
 	
 	
 	//  This is our navigation data, since we’re not using a database.
-	//  Hold on, what? Why do all this client-side rather than a CMS?
+	//  Hold on, what? Why do all this client-side rather than in a CMS?
 	//  Because we want this to be über easy to download and run right off 
 	//  the desktop so anyone can grab this material from GitHub and take 
 	//  it with them if they want to!
@@ -191,16 +194,29 @@ A = {
 			pages: [
 				[ 'JavaScript basics', 'javascript' ],
 				[ 'Design as communication', 'design' ],
-				[ 'Homework', 'homework' ]			
+				[ 'Homework', 'homework' ]
 			]
 		},
 		{
-			title: 'Random fish',
-			date : '14 September 2012'
+			title: 'Paperwork',
+			url  : 'paperwork',
+			date : '14 September 2012',
+			pages: [
+				[ 'Some more basics', 'javascript' ],
+				[ 'Closures', 'closure' ],
+				[ 'Introducing Paper.js', 'paper' ],
+				[ 'Homework', 'homework' ]
+			]
 		},
 		{
 			title: 'Text and image',
-			date : '21 September 2012'
+			//url  : 'textimage',
+			date : '21 September 2012',
+			/*pages: [
+				[ 'Prototypal Inheritance', 'inheritance' ],
+				[ 'Design history highlights', 'design' ],
+				[ 'Homework', 'homework' ]
+			]*/
 		},
 		{
 			title: 'Voice and closure',

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Closures</title>
+	</head>
+	<body>
+		<div id="page">
+			<nav></nav>
+			<article>
+
+
+
+
+				<h1>Closures</h1>
+				<p>
+					Functions are amazing in JavaScript.
+					You may need to repeat that to yourself several times before it begins to sink in.
+					We’re going to take a look at a few interesting aspects of functions,
+					particularly a function’s ability to peek back at its parent’s variable scope even when the parent seems to no longer exist!
+					(ie. The parent function has already executed and returned a value.)
+					And that will bring us some <a target="_blank" href="http://en.wikipedia.org/wiki/Closure_(computer_science)">closure</a>.
+					<!-- JavaScript has <a target="_blank" href="http://en.wikipedia.org/wiki/Scope_(computer_science)#Lexical_scoping_and_dynamic_scoping">lexical scope</a -->
+				</p>
+
+
+
+				<h2>Function-scope, not block-scope</h2>
+				<p>
+					In JavaScript variables declared anywhere in a function exist <em>everywhere</em> within that function.
+					(Consider the global object as one big container function for everything inside.
+					In this way all of your code is always wrapped in at least one function.)
+					If you’re coming from a language like Java or C++ it may seem odd that the following example exits after listing just ten numbers, rather than one hundred.
+				</p>
+<code>for( var i = 0; i &lt; 10; i ++ ){
+	for( var i = 0; i &lt; 10; i ++ ){
+		console.log( i )
+	}
+}</code>
+				<p>
+					In Java those would be two completely separate <code class="inline">i</code> variables, each existing in their own block scope—a
+					boundary delimited by brackets.
+					The interior <code class="inline">i</code>’s scope wouldn’t exist beyond the inner loop and therefore it would never conflict with the outer <code class="inline">i</code>. 
+					But because JavaScript has function-wide scope what’s happening is when the inner <code class="inline">i</code> completes its loop
+					that value of 10 is still present as the outer <code class="inline">i</code> checks its <code class="inline">for</code> condition of <code class="inline">i &lt; 10</code>.
+					(Also worth noting: declaring a variable with <code class="inline">var</code> multiple times doesn’t throw an error so this will fail completely silently.)
+					For comparison here it is again, this time with separate variables:
+				</p>
+<code>for( var y = 0; y &lt; 10; y ++ ){
+	for( var x = 0; x &lt; 10; x ++ ){
+		console.log( x )
+	}
+}</code>
+				<p>
+					A function always has access to its container:
+				</p>
+<code>var luckyNo = 7,
+makeLuckier = function(){ luckyNo = 999 }
+<span class="response">undefined</span>
+luckyNo
+<span class="response">7</span>
+makeLuckier()
+<span class="response">undefined</span>
+luckyNo
+<span class="response">999</span></code>
+				<p>
+					But the container doesn’t have access to variables declared inside.
+					The child can inspect the parent, but the parent cannot inspect the child.
+					Note that the only difference below is the <code class="inline">var</code> keyword inside the 
+					<code class="inline">makeItLuckier</code> function, but it definitely changes the result.
+				</p>
+<code>var luckyNo = 7,
+makeLuckier = function(){ var luckyNo = 999 }
+<span class="response">undefined</span>
+luckyNo
+<span class="response">7</span>
+makeLuckier()
+<span class="response">undefined</span>
+luckyNo
+<span class="response">7</span></code>
+				<!-- p>
+					The code below has the same result because passing in an argument is equal to declaring it within the function itself.
+				</p>
+<code>var luckyNo = 7,
+makeLuckier = function( luckyNo ){ luckyNo = 999 }
+<span class="response">undefined</span>
+luckyNo
+<span class="response">7</span>
+makeLuckier( luckyNo )
+<span class="response">undefined</span>
+luckyNo
+<span class="response">7</span></code -->
+
+
+				<hr />
+				<h1>Lambdas</h1>
+				<p>
+					Remember how we can assign a value to a variable?
+					Don’t worry, this isn’t a trick question:
+				</p>
+<code>luckyNumber = 7
+<span class="response">7</span></code>
+				<p>
+					Ok. Well, what if we just get rid of the variable part? 
+					When you enter a number into the console, you don’t have to assign it to a variable name.
+					You can just enter the “number literal” <em>(ie. literally the number itself)</em>
+					and JavaScript will echo that back to you:
+				</p>
+<code>7
+<span class="response">7</span></code>
+				<p>
+					And of course you can do the same with strings by entering a “string literal” <em>(ie. literally the string itself)</em>.
+				</p>
+<code>'seven'
+<span class="response">"seven"</span></code> 
+				<p>
+					That’s sort of interesting but doesn’t feel all that useful. 
+					I mean, what good is a raw value that you can’t recall and do operations on later?
+					Well, the brain bending part is that in addition to entering number literals or string literals you can enter <em>function literals</em> too.
+				</p>
+				<p>
+					Unnamed functions are often called <a target="_blank" href="http://en.wikipedia.org/wiki/Anonymous_function">anonymous functions</a>
+					or <em>lambdas</em>, as their conceptual structure was first borrowed from <a target="_blank" href="http://en.wikipedia.org/wiki/Lambda_calculus">lambda calculus</a> for the 
+					<a target="_blank" href="http://en.wikipedia.org/wiki/Lisp_(programming_language)">Lisp programming language</a>.
+					The über sexy mathematical symbol for lambda is λ.
+					I won’t make you memorize all of that or force you to read up on how inspirational 
+					<a target="_blank" href="http://en.wikipedia.org/wiki/Alonzo_Church">Alonzo Church</a> and 
+					<a target="_blank" href="http://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)">John McCarthy</a> were.
+					Just remember that <em>lambda</em> means <em>a function without a name.</em>
+				</p>
+				<p>
+					So what does a function without a name look like?
+				</p>
+<code>(function(){ return 'Hello, World!' })
+<span class="response">function(){ return 'Hello, World!' }</span></code>
+				<p>
+					Well, it looks like a regular function, but without an assigned name, and it’s wrapped in parenthesis. 
+					We’ve declared an anonymous function but it’s like junk DNA—the code inside can never be executed. 
+					Or can it be?
+				</p>
+				<br />
+
+				<h2>IIFE’s</h2>
+				<p>
+					But here’s the big deal:
+					We can immediately invoke a lambda function, causing it to execute as soon as it is declared,
+					just by placing invocation parenthesis at the end of the function expression like this:
+				</p>
+<code>(function(){ return 'Hello, World!' })()
+<span class="response">"Hello, World!"</span></code>
+				<p>
+					Look at that! We simultaneously create the function and execute it, 
+					causing the console to echo back <code class="inline">"Hello, World!"</code>
+					We’ll follow <a target="_blank" href="http://benalman.com">Ben Alman</a>’s lead and call these strange creatures
+					Immediately Invoked Function Expressions, or IIFE’s for short.
+					(Pronounced like <em>iffy</em>.)
+					You could assign this IIFE to a variable and it would almost look like 
+					a normal function declaration. 
+					But keep in mind you’d be setting the variable equal to the function’s return value,
+					not equal to the function itself:
+				</p>
+<code>var hello = (function(){ return 'Hello, World!' })()
+<span class="response">undefined</span>
+hello
+<span class="response">"Hello, World!"</span>
+hello === (function(){ return 'Hello, World!' })
+<span class="response">false</span>
+hello === (function(){ return 'Hello, World!' })()
+<span class="response">true</span></code>
+				
+				
+				
+				
+				<h2>Expression vs. declaration</h2>
+				<p>
+					So far in class I’ve insisted on creating functions and assigning them to variables (the expression form):
+					<code>var hello = function(){}</code>
+					rather than the classical definition form:
+					<code>function hello(){}</code>
+					This is because I’ve wanted to drive home the point that in JavaScript functions are first-class variables.
+					You can store them in objects, in arrays, pass them as arguments to other functions, and so on—just like you would with a number or string.
+				</p>
+				<p>
+					The two forms above are nearly equal but it’s worth explaining the difference as we dig deeper into JavaScript.
+					In the first example what we’re actually doing is creating an anonymous function and after creation it’s being assigned to the <code class="inline">hello</code> variable.
+					In the second example we’re defining a named, rather than anonymous, function. 
+					We can actually combine the two methods:
+				</p>
+<code>var bat = function man(){
+	if( man.caller === man ){
+		console.log( 'And this second.' )
+		return
+	}
+	console.log( 'This will fire first.' )
+	man()
+}
+<span class="response">undefined</span>
+man()
+<span class="response">► ReferenceError: man is not defined</span>
+bat()
+<span class="response">This will fire first.
+And this second.</span></code>
+				<p>
+					So what’s happening here? Does anyone have any guesses? 
+					Show of hands? 
+					If you’re not brave enough to risk an answer you’ll just have to wait for the brief video lecture below.
+				</p>
+
+				
+				<hr />
+				<h1>Closure and private variables</h1>
+				<p>
+					We keep hinting at closure, coming at it from different angles. 
+					Closure is the ability of an inner function to close over—or trap—references to its containing function.
+					In JavaScript if you have a reference to a variable then you are allowed to read its value and assign new values to it.
+					Closures allow you to hide these references, restricting who has access to what.
+					Let’s illustrate that through private variables.
+				</p>
+<code>var magician = (function(){
+	var 
+	inHand   = 'nothing',
+	inPocket = 'ace of spades',
+	swap     =  function(){
+		var temp    = this.inHand
+		this.inHand = inPocket
+		inPocket    = temp
+	}
+	return { inHand: inHand, swap: swap }
+})()
+<span class="response">undefined</span>
+magician
+<span class="response">► Object</span></code>
+				<p>
+					Be sure to copy and paste the above code into the console.
+					Inspect the resulting object.
+					(Why it is an object and not a function?) 
+					You can see that its keys and values mirror what our IIFE is returning:
+					<code class="inline">inHand</code> and <code class="inline">swap()</code>.
+					What doesn’t it have?
+					There’s no way to know what the current value of <code class="inline">inPocket</code> is.
+					Oh wait... Well I suppose if you’re simply swapping 
+					<code class="inline">inHand</code> and
+					<code class="inline">inPocket</code>
+					and you have access to <code class="inline">inHand</code>,
+					then it’s pretty easy to guess the value of <code class="inline">inPocket</code>.
+					So let’s push this example just one step further: 
+				</p>
+<code>var magician = (function(){
+	var 
+	inHand   = 'nothing',
+	inPocket =  Math.random(),
+	swap     =  function(){
+		this.inHand = inPocket
+		inPocket    = Math.random()
+	}
+	return { inHand: inHand, swap: swap }
+})()</code>
+				<p>
+					Now <code class="inline">inPocket</code> is a random number and you have no way of guessing what it is.
+					Each time you call <code class="inline">swap()</code> a new random number is loaded into <code class="inline">inPocket</code>.
+					Note that JavaScript’s <code class="inline">Math.random()</code> function returns a float value between zero and one.
+					Next week when we discuss <a target="_blank" href="http://en.wikipedia.org/wiki/Prototype-based_programming">prototypal inheritance</a>
+					I’ll introduce you to <a target="_blank" href="https://github.com/stewdio/skip">Skip.js</a> 
+					and its convenience functions such as <code class="inline">Number.rand()</code> which returns random integers within a range.
+					We’ll also really tackle the <code class="inline">this</code> keyword—it’s where closure meets inheritance. 
+					For now think of it as the “owner” of the function. 
+					If you’re curious try experimenting with it a bit in the console ;)
+				</p>
+
+			
+				<h2>A timely example</h2>
+				<p>
+					JavaScript has a really useful built-in method called 
+					<code class="inline"><a target="_blank" href="https://developer.mozilla.org/en-US/docs/DOM/window.setTimeout">setTimeout</a></code>
+					that waits for a specified number of milliseconds, then fires a callback function.
+					(See also its cousin <code class="inline"><a target="_blank" href="https://developer.mozilla.org/en-US/docs/DOM/window.setInterval">setInterval</a></code>.)
+					Here’s a simple example that waits for 2000 milliseconds (equal to two whole seconds)
+					and then fires the callback function we provide:
+				</p>
+<code>setTimeout( function(){
+	alert( 'Two seconds later...' )
+}, 2000 )</code>	
+				<p>
+					Here’s a problem though: Look at the code sample below. 
+					Because of closure our callback function will still have “live access” to the value of <code class="inline">i</code> when it finally fires.
+					Who can tell me what’s going to happen here?
+					Try it yourself: copy and paste the example into your console.
+					Why does this error change the value being displayed but not the timing of <code class="inline">setTimeout</code>?
+				</p>
+<code>for( var i = 1; i &lt;= 5; i ++ ){	
+	window.setTimeout( function(){
+		alert( i + ' out of 5' )
+	}, 1000 * i )
+}</code>
+				<p>
+					What’s the difference between the code above and the code below?
+					How does the code below solve the problem encountered above?
+				</p>
+<code>for( var i = 1; i &lt;= 5; i ++ ){
+	(function( i ){
+		window.setTimeout( function(){
+			alert( i + ' out of 5' )
+		}, 1000 * i )
+	})( i )
+}</code>
+				<p>
+					This can be tricky stuff at first. 
+					The best way to better understand closure (and JavaScript’s <a target="" href="http://en.wikipedia.org/wiki/Scope_(computer_science)#Lexical_scoping_and_dynamic_scoping">lexical scoping</a>)
+					is to just keep playing with it. 
+					The more you experiment the more you will develop and intuitive sense of scope and how to make it work for you.
+				</p>
+
+
+
+				<hr />
+				<a target="_blank" href="http://www.youtube.com/watch?v=KRm-h6vcpxs"><img class="block" src="media/dalgleishGettingClosure.jpg" /></a>
+				<br />
+				<h1>Closure down under</h1>
+				<p>
+					Phew! That was a lot. 
+					Let’s have a look at <a target="_blank" href="http://markdalgleish.com">Mark Dalgleish</a>’s excellent
+					<a target="_blank" href="http://www.youtube.com/watch?v=KRm-h6vcpxs">JavaScript: Getting Closure</a> 
+					lecture and then take our break.
+					It’s only 15 minutes and entirely worth it.
+				</p>
+
+
+
+
+
+			</article>
+		</div>
+	</body>
+	<script charset="utf-8" src="scripts/jquery.js"></script>
+	<script charset="utf-8" src="scripts/skip.js"></script>
+	<script charset="utf-8" src="scripts/application.js"></script>
+</html>
