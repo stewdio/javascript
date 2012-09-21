@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Some more basics</title>
+	</head>
+	<body>
+		<div id="page">
+			<nav></nav>
+			<article>
+
+
+
+
+				<h1>Some more basics</h1>
+				<p>
+					We’re moving right along in our exploration of JavaScript.
+					Last week’s “JavaScript basics” focussed on the most common variable types as well as type coercion. 
+					Before we dig deeper into the language it’s worth looking at a few more nuts and bolts of working in-browser with JavaScript.
+					Now that we know a little about objects I can show you the one big global (or “root”) object that houses everything.
+					Type <code class="inline">window</code> into your console like this:
+				</p>
+<code>window
+<span class="response">► Window</span></code>
+				<p>
+					In your console click the triangle next to the <code class="inline">Window</code> response
+					and you’ll see all of the variables that are visible from the global scope. 
+					There’s a lot in there. And your scripts have access to all of it.
+					(Later in the course we’ll discuss <a target="_blank" href="http://en.wikipedia.org/wiki/Namespace_(computer_science)">name-spacing</a> to keep things tidy and to prevent overwriting important variables.)
+				</p>
+
+
+
+
+				<hr />
+				<h1>Inspecting variables</h1>
+				<p>
+					As you’re writing more complex scripts you’ll inevitably run across bugs—particularly 
+					if you go with the “cowboy style” of constant trial, error, and iteration. 
+					Here are three quick ways to inspect the value of variables that might be misbehaving.
+					The first is to output to the console using the 
+					<code class="inline">console</code> object and its
+					<code class="inline">log</code> method:
+				</p>
+<code>var luckyNumber = 7
+<span class="response">undefined</span>
+console.log( 'My luckyNumber is '+ luckyNumber )
+<span class="response">My luckyNumber is 7
+undefined</span></code>
+				<p>
+					The second way to get quick outputs is a bit more brash.
+					The <code class="inline">alert</code> method will pop up a dialog box, 
+					preventing you from interacting with the page until you click the “Ok” button.
+					<strong>Warning</strong>: Do not put an <code class="inline">alert</code> in a long or infinite loop.
+					You will regret it.
+				</p>
+<code>var luckyNumber = 7
+<span class="response">undefined</span>
+alert( 'My luckyNumber is '+ luckyNumber )
+<span class="response">undefined</span></code>
+				<p>
+					The third way is more subtle. 
+					Just as the browser’s window is represented by a <code class="inline">window</code> object,
+					the HTML document running inside this window is represented by a <code class="inline">document</code> object.
+					You can change its <code class="inline">title</code> property and thereby change what’s in the browser’s title bar.
+				</p>
+<code>var luckyNumber = 7
+<span class="response">undefined</span>
+document.title = 'My luckyNumber is '+ luckyNumber
+<span class="response">"My luckyNumber is 7"</span></code>
+				<p>
+					Now, bonus points for whomever inspects the <code class="inline">document</code> 
+					object in the console and is confused by the console’s response.
+					Where’s the <code class="inline">title</code> property?
+					(Let’s discuss this for a few minutes.)
+				</p>
+
+
+
+				<hr />
+				<h1>Style and comments</h1>
+				<p>
+					As part of the homework assigned last week you read the short essay 
+					<a target="_blank" href="http://mislav.uniqpath.com/2010/05/semicolons/">Semicolons are Optional</a>
+					and also browsed the 
+					<a target="_blank" href="https://sites.google.com/a/khanacademy.org/forge/for-developers/styleguide/javascript">Kahn Academy JavaScript Styleguide</a>.					
+					What’s your personal coding style guide?
+					Is your source code neat or messy?
+					How confident are you that a colleague could look through your source and make sense of it?
+					Sure, these things are highly subjective and therefore there are no truly correct answers.
+					But as always, bear in mind that 
+					<a target="_blank" href="http://mitpress.mit.edu/sicp/full-text/sicp/book/node3.html">programs should be written for people to read, and only incidentally for machines to execute</a>.
+				</p>
+				<p>
+					Part of maintaining good source code is commenting. 
+					Comments in JavaScript are the same as in Java or most C-derived languages.
+					There are single line comments that begin with a double-forward-slash
+					and extend to the end of the line:
+				</p>
+				<code>var x = 0// And this side text won’t get executed.</code>
+				<p>
+					And there are multiline comments that begin with slash-star and end with a star-slash like so:
+				</p>
+<code>/*
+Multiline comments
+are best for temporarily
+striking out blocks of code.
+*/</code>
+
+
+
+
+				<hr />
+				<h1>Running off the desktop</h1>
+				<p>
+					Your browser can run a static (no moving parts) website right off your desktop.
+					No web server, domain name, or anything like that is required. 
+					After all, a simple static website really is just some text files
+					and maybe a few bits of media like images or video if you want to get all fancy about it.
+				</p>
+				<p>
+					Here’s a lightweight template for you to download which includes some HTML, CSS, and JavaScript
+					to get you started:
+				</p>
+				<br />
+				<a href="packages/webTemplate.zip">webTemplate.zip</a><br />
+				<br />
+				<p>
+					Open it up and you’ll see a very simple folder structure for organizing your files.
+					Within the <code class="inline">scripts</code> folder you’ll find two libraries 
+					(<a target="_blank" href="http://jquery.com">jQuery</a> and 
+					<a target="_blank" href="https://github.com/stewdio/skip">Skip</a>)
+					as well as an <code class="inline">application.js</code> file.
+					This <code class="inline">application.js</code> is where you’ll want to write your code.
+					To see the results just drop the <code class="inline">index.html</code> file into your browser.
+				</p>
+				<br />
+				<a href="packages/webTemplate.zip"><img class="block" src="media/webTemplate.jpg" /></a>
+				<br />
+				<p>
+					After editing your source files just hit your browser’s refresh button to see the results.
+					If you run into cache problems (the files have been updated but the browser continues to render the old version)
+					either hit refresh again or empty your browser’s cache entirely.
+				</p>
+				<p>
+					Don’t be afraid of constant trial, error, and iteration.
+					Making rapid little edits and repeatedly refreshing the browser is a good working method.
+					Instead of trying to design a whole architecture first and then attempt to construct it second,
+					this rapid-edit style is more like intuitively mashing and pulling on a block of clay until the desired shape emerges.
+				</p>					
+
+
+
+
+
+			</article>
+		</div>
+		<script charset="utf-8" src="scripts/jquery.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" src="scripts/application.js"></script>
+	</body>
+</html>

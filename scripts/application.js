@@ -209,25 +209,35 @@ A = {
 			]
 		},
 		{
-			title: 'Text and image',
-			//url  : 'textimage',
+			title: 'Paperworked',
+			url  : 'paperworked',
 			date : '21 September 2012',
-			/*pages: [
-				[ 'Prototypal Inheritance', 'inheritance' ],
-				[ 'Design history highlights', 'design' ],
+			pages: [
+				[ 'Introducing Skip.js', 'skip' ],
 				[ 'Homework', 'homework' ]
-			]*/
+			]
 		},
 		{
-			title: 'Voice and closure',
+			title: 'Text and grids',
+			//url  : 'textgrids',
 			date : '28 September 2012'
+			//pages: [
+			//	[ 'Prototypal inheritance', 'inheritance' ],
+			//	[ 'Design history highlights', 'design' ],
+			//	[ 'Homework', 'homework' ]
+			//]
+		},
+		{
+			title: 'Powers of Three',
+			//url  : 'three',
+			date : '5 October 2012'
+			//pages: [
+			//	[ 'Gazing at grids', 'grids' ],
+			//	[ 'Looking at letterforms', 'letterforms' ],			
+			//]
 		},
 		{
 			title: 'Code is data',
-			date : '5 October 2012'
-		},
-		{
-			title: 'Variations',
 			date : '12 October 2012'
 		},
 		{
@@ -236,6 +246,7 @@ A = {
 		},
 		{
 			title: 'Observe and report',
+			//url  : 'observe',
 			date : '26 October 2012'
 		},
 		{

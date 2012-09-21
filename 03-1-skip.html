@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Skip.js</title>
+	</head>
+	<body>
+		<div id="page">
+			<nav></nav>
+			<article>
+
+
+
+
+				<h1>Skip.js</h1>
+				<p>
+					Skip is a tiny JavaScript library that focuses on the language itself,
+					rather than browser-related tasks like searching the <a target="_blank" href="http://en.wikipedia.org/wiki/Document_Object_Model">DOM</a> or
+					handling <a target="_blank" href="http://en.wikipedia.org/wiki/Ajax_(programming)">Ajax</a> requests.
+					It adds little helper functions and properties to JavaScript through prototypal inheritance. 
+					Skip’s goal is to add a few bits that should have been there already, 
+					and to make code more legible from left-to-right like English.
+					(This is primarily accomplished through “chaining” as we’ll see below.)
+				</p>
+				<p>
+					I’ve included Skip in your template packages and here in the course notes site.
+					(So if you open up your browser’s console right now you’ll have access to Skip’s functionality.)
+					You can also visit <a target="_blank" href="https://github.com/stewdio/skip">Skip’s GitHub page</a>
+					to download the latest copy.
+					Full disclosure: 
+					This is my own personal library that I created to make my life easier
+					and in sharing it with you I hope it will do the same.
+				</p>
+
+
+				<h2>Fun with dates</h2>
+				<p>
+					Dealing with time in JavaScript can often be annoying. 
+					The only time units JavaScript can speak in is <a target="_blank" href="http://en.wikipedia.org/wiki/Millisecond">milliseconds</a>.
+					There’s no built-in units for seconds, minutes, hours, etc.
+					so you must multiply out milliseconds &times; 60 &times; 60 &times; 24...
+					Skip let’s you skip this tedious task by adding the following constants to the global scope:
+				</p>
+<code>SECOND  = 1000
+MINUTE  = SECOND *  60
+HOUR    = MINUTE *  60
+DAY     = HOUR   *  24
+WEEK    = DAY    *   7
+MONTH   = DAY    *  30.4368499
+YEAR    = DAY    * 365.242199
+DECADE  = YEAR   *  10
+CENTURY = YEAR   * 100</code>
+				<p>
+					That’s convenient, sure, but not altogether exciting. 
+					So we take it a step further.
+					Skip augments the Number prototype with functions that multiply numbers by time units, like so:
+				</p>
+<code>var two = 2
+<span class="response">undefined</span>
+two.seconds()
+<span class="response">2000</span>
+</code>
+				<p>
+					But this applies to <em>all</em> Number objects, including number literals.
+					We just have to wrap the number literal in parenthesis, 
+					otherwise JavaScript will think our dot is supposed to be a decimal point and 
+					fail when it reaches something other than another numerical digit after the decimal.
+				</p>
+<code>(2).seconds()
+<span class="response">2000</span>
+(3).weeks()
+<span class="response">1814400000</span>
+(4).days() + (6).hours() + MINUTE
+<span class="response">367260000</span></code>
+
+
+				<h2>Function chaining</h2>
+				<p>
+					When a function returns a useful value you can immediately chain another method on to it, as we’ll do below.
+					We often speak in <em>relative</em> time—how long ago something happened,
+					or how far into the future from now something might happen.
+				</p>
+<code>now()
+<span class="response" id="now">now()</span>
+(4).days().ago()
+<span class="response" id="4_days_ago">(4).days().ago()</span>
+(4).days().fromNow()
+<span class="response" id="4_days_fromNow">(4).days().fromNow()</span></code>
+				<p>
+					But that would be a lot more helpful if we could quickly check that those abstract numbers make human sense.
+				</p>
+<code>now().toDate()
+<span class="response" id="now_toDate">now().toDate()</span>
+(4).days().ago().toDate()
+<span class="response" id="4_days_ago_toDate">(4).days().ago().toDate()</span>
+(4).days().fromNow().toDate()
+<span class="response" id="4_days_fromNow_toDate">(4).days().fromNow().toDate()</span></code>
+
+
+
+
+				<h2>More easy math</h2>
+				<p>
+					When you need to check that a value <code class="inline">n</code> is contained in a range from <code class="inline">a</code> to <code class="inline">b</code>
+					you might write something like this:
+				</p>
+<code>var a = 0, b = 2, n = 1
+<span class="response">undefined</span>
+a &lt;= n &amp;&amp; n &lt;= b
+<span class="response">true</span></code>
+				<p>
+					Skip reads a little closer to English.
+				</p>
+<code>var a = 0, b = 2, n = 1
+<span class="response">undefined</span>
+n.isBetween( a, b )
+<span class="response">true</span></code>
+				<p>
+					And remember, dates are also just numbers.
+				</p>
+<code>var
+yesterday = now() - DAY,
+tomorrow  = now() + DAY,
+today     = now()
+<span class="response">undefined</span>
+today.isBetween( yesterday, tomorrow )
+<span class="response">true</span></code>
+				<p>
+					These are just a few features that Skip adds to JavaScript.
+					Let’s open up <a target="_blank" href="https://github.com/stewdio/skip/blob/master/skip.js">Skip’s source code</a> and peer a little deeper.
+					What other constants does it add to the global scope?
+					What other functions does it add to the Number object?
+					Strings? Arrays?
+					Here’s a good example to end on as we can discuss the Array-like <code class="inline">arguments</code> property of functions
+					as well as <a target="_blank" href="http://en.wikipedia.org/wiki/Polymorphism_(computer_science)">polymorphism</a>:
+				</p>
+<code>[ 0 ].distanceTo( 7 )
+<span class="response">7</span>
+[ 0, 0 ].distanceTo( 0, 7 )
+<span class="response">7</span>
+[ 0, 0, 0 ].distanceTo( 0, 0, 7 )
+<span class="response">7</span>
+[ 0, 0, 0 ].distanceTo([ 0, 0, 7 ])
+<span class="response">7</span></code>
+
+
+
+
+			</article>
+		</div>
+		<script charset="utf-8" src="scripts/jquery.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" src="scripts/application.js"></script>
+		<script>
+
+
+$( '#now' ).text( now() )
+$( '#4_days_ago' ).text( (4).days().ago() )
+$( '#4_days_fromNow' ).text( (4).days().fromNow() )
+
+$( '#now_toDate' ).text( now().toDate() )
+$( '#4_days_ago_toDate' ).text( (4).days().ago().toDate() )
+$( '#4_days_fromNow_toDate' ).text( (4).days().fromNow().toDate() )
+
+
+		</script>
+	</body>
+</html>
+	
+	
