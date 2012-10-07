@@ -1,0 +1,326 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>fortunate & unfortunate</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+
+		<script charset="utf-8" src="scripts/paper.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+		
+		path1 = new Path.Rectangle( view.center, 100 )
+		path1.strokeColor = 'white'
+		path1.fillColor = 'white'
+		path1.rotate( 45 )
+		path1.opacity = 0
+		
+		path2 = new Path.Rectangle( view.center, 100 )
+		path2.strokeColor = 'white'
+		path2.fillColor = 'white'
+		path2.rotate( 45 )
+		path2.opacity = 0
+		
+		path3 = new Path.Rectangle( view.center, 100 )
+		path3.strokeColor = 'white'
+		path3.fillColor = 'white'
+		path3.rotate( 45 )
+		path3.opacity = 0
+		
+		path4 = new Path.Rectangle( view.center, 100 )
+		path4.strokeColor = 'white'
+		path4.fillColor = 'white'
+		path4.rotate( 45 )
+		path4.opacity = 0
+		
+		path5 = new Path.Rectangle( view.center, 50 )
+		path5.strokeColor = 'white'
+		path5.fillColor = 'white'
+		path5.rotate( 45 )
+		path5.opacity = 0
+		
+		path6 = new Path.Rectangle( view.center, 50 )
+		path6.strokeColor = 'white'
+		path6.fillColor = 'white'
+		path6.rotate( 45 )
+		path6.opacity = 0
+		
+		path7 = new Path.Rectangle( view.center, 50 )
+		path7.strokeColor = 'white'
+		path7.fillColor = 'white'
+		path7.rotate( 45 )
+		path7.opacity = 0
+		
+		path8 = new Path.Rectangle( view.center, 50 )
+		path8.strokeColor = 'white'
+		path8.fillColor = 'white'
+		path8.rotate( 45 )
+		path8.opacity = 0
+		
+		var background = new Path.Rectangle( view.center, view.bounds.width )
+		background.fillColor = 'black'
+		background.position = view.center
+		project.activeLayer.insertChild( 0, background )
+		
+		//set up how long we want
+		var durationSeconds = 60
+		var running = true
+		
+		var stepNumber = 0
+		
+		var destination = Point.random() * view.size;
+		var destination1 = Point * view.size;
+		
+		var onFrame = function( event ){
+		
+		//time for path shows up
+		if(event.time>1){
+		path1.opacity = 1
+		path1.rotate(1)
+		}
+		if(event.time>2){
+		path2.opacity = 0.5
+		path2.rotate(-2)
+		}
+		if(event.time>3){
+		path3.opacity = 0.8
+		path3.rotate(3)
+		}
+		if(event.time>4){
+		path4.opacity = 0.5
+		path4.rotate(-3)
+		}
+		
+		//move to four conner
+		if( event.time.isBetween( 5, 7)){
+			path1.position -= 1.5
+			
+
+		}
+		
+		if( event.time.isBetween( 6, 8)){
+			path2.position.x -= 1.5
+			path2.position.y += 1.5
+		}
+		if( event.time.isBetween( 7, 9)){
+			path3.position.x += 1.5
+			path3.position.y -= 1.5
+		}
+		if( event.time.isBetween( 8, 10)){
+			path4.position += 1.5
+		}
+		// start to like each other
+		if( event.time.isBetween(10, 12)){
+			path1.position.y +=1.5
+			path2.position.y -=1.5
+			path3.position.y +=1.5
+			path4.position.y -=1.5
+			
+			}
+		//happy with each other
+		if (event.time.isBetween(12,13)){
+			path1.rotate(+10)
+			path2.rotate(-10)
+		}
+		//path3 move random
+		if(event.time.isBetween(13,18)){
+		var vector = destination - path3.position
+		path3.position += vector / 30
+		path3.content = Math.round(vector.length)
+		  if (vector.length < 5) {
+	        destination = Point.random() * view.size
+	    }
+		}
+		//start attact
+		if (event.time.isBetween(13,15)){
+			path1.rotate(+10)
+			path2.rotate(-10)
+			path1.position.x +=2
+			path2.position.x +=2
+		}
+		if (event.time.isBetween(15,16)){
+			path1.rotate(+10)
+			path2.rotate(-10)
+			path1.position.y +=1
+			path2.position.y -=1
+			path4.rotate(10)
+			path4.position.x +=5
+			path4.position.y -=2
+		}
+		if (event.time.isBetween(16,18)){
+			path1.rotate(+5)
+			path2.rotate(-9)
+			path1.position.y -=1
+			//path2.position.y +=1
+			path1.position.x -=2
+			path2.position.x -=2
+			path4.position.x -=3
+			path4.position.y +=1
+			path4.scale(.99)
+			
+		}
+		//fight back together
+		if (event.time.isBetween(18,19)){
+			path3.position = path4.position
+			path3.rotate(+5)
+			path4.rotate(-9)
+			
+		}
+		if (event.time.isBetween(19,22)){
+			path3.rotate(+5)
+			path4.rotate(-9)
+			path3.position = path4.position
+			path4.position.x -=0.5
+		}
+		if(event.time.isBetween(22,24)){
+			path3.rotate(+5)
+			path4.rotate(-9)
+			path4.position -=4
+			path3.position.x -=1
+			path3.position.y -=1
+		}
+		
+		if(event.time.isBetween(23,24)){
+			path3.position = path4.position
+			path4.position = path1.position
+			
+			path3.scale(1.02)
+		}
+		if(event.time.isBetween(24,26)){
+			path3.position.x +=1
+			path4.position.x +=2
+			path1.scale(.99)
+			path2.scale(.99)
+		}
+		if(event.time.isBetween(28,30)){
+			path3.scale(.995)
+			path4.scale(1.01)
+			path3.position +=1
+			
+		}
+		//mess up
+		if(event.time.isBetween(30,37)){
+		var vector = destination - path1.position
+		path1.position += vector / 30
+		path1.content = Math.round(vector.length)
+		  if (vector.length < 5) {
+	        destination = Point.random() * view.size
+	    }
+		}
+		if(event.time.isBetween(32,37)){
+		var vector = destination - path2.position
+		path2.position += vector / 30
+		path2.content = Math.round(vector.length)
+		  if (vector.length < 5) {
+	        destination = Point.random() * view.size
+	    }
+		}
+		if(event.time.isBetween(40,42)){
+			path1.position = view.center
+			path2.position = view.center
+			path3.position = view.center
+			path4.position = view.center
+		}
+		//be friends
+		if(event.time>=43){
+			path1.opacity = 0
+			path2.opacity = 0
+			path3.opacity = 0
+			path4.opacity = 0
+		}
+		if(event.time>=44){
+			path5.opacity =1
+			path6.opacity =0.5
+			path7.opacity =0.8
+			path8.opacity =0.5
+			
+			path5.rotate(2)
+			path6.rotate(-3)
+			path7.rotate(4)
+			path8.rotate(-5)
+		}
+		if(event.time.isBetween(45,47)){
+			path5.position -=1
+			path6.position +=1
+			path7.position.x -=1
+			path7.position.y +=1
+			path8.position.x +=1
+			path8.position.y -=1
+		}
+		if(event.time.isBetween(48,50)){
+			path5.scale(1.01)
+			path6.scale(1.01)
+			path7.scale(1.01)
+			path8.scale(1.01)
+		}
+		if(event.time.isBetween(51,55)){
+		var vector = destination - path5.position
+		path5.position += vector / 30
+		path5.content = Math.round(vector.length)
+		  if (vector.length < 5) {
+	        destination = Point.random() * view.size
+	    }
+	    }
+	    if(event.time.isBetween(53,56)){
+	    var vector = destination - path6.position
+		path6.position += vector / 30
+		path6.content = Math.round(vector.length)
+		  if (vector.length < 5) {
+	        destination = Point.random() * view.size
+	    }
+	    }
+	    if(event.time.isBetween(54,56)){
+	    var vector = destination - path7.position
+		path7.position += vector / 30
+		path7.content = Math.round(vector.length)
+		  if (vector.length < 5) {
+	        destination = Point.random() * view.size/2
+	    }
+	    }
+	    if(event.time.isBetween(55,56)){
+	    var vector = destination - path8.position
+		path8.position += vector / 30
+		path8.content = Math.round(vector.length)
+		  if (vector.length < 5) {
+	        destination = Point.random() * view.size
+	    }
+	    }
+	    if(event.time.isBetween(57,58)){
+	   		path5.rotate( 8 )
+	   		path6.rotate( -8 )
+	   		path7.rotate( 10 )
+			path8.rotate( -9 )
+			path5.position = view.center
+			path6.position = view.center
+			path7.position = view.center
+			path8.position = view.center	
+		}
+		if(event.time.isBetween(58,60)){
+	   		path5.scale(1.01)
+	   		path6.scale(1.01)
+	   		path7.scale(1.01)
+	   		path8.scale(1.01)
+		}
+		}
+		</script>
+	</body>
+</html>
+<!--
+for(var i= 1;i <=5;i++){
+		(function(i){
+		window.setTimeout(function(){
+		path5.rotate( -2 )
+		path6.rotate( -2 )
+		path7.rotate( -2 )
+		path8.rotate( -2 )
+		path5.position = view.center
+		path6.position = view.center
+		path7.position = view.center
+		path8.position = view.center
+		},58000 *i)
+		})(i)
+		}
+-->
+

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Order and Chaos - Robbie Tilton</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+	</body>
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script charset="utf-8" src="scripts/paper.js"></script>
+	<script charset="utf-8" src="scripts/skip.js"></script>
+	<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+		
+
+		
+		
+		//animation sections
+		var switchState = 0;
+		
+		//common rectangle attributes
+		var myStyle = {
+			fillColor: 'white'
+		}	
+		var rectSize = new Size(110,110)
+
+	
+		//create rectangle
+		var rect1 = new Path.Rectangle( new Point(0, 0), rectSize )
+		rect1.style = myStyle
+		
+		var rect2 = new Path.Rectangle( new Point(-rectSize.width-10, 0), rectSize )
+		rect2.style = myStyle
+		
+		var rect3 = new Path.Rectangle( new Point((-rectSize.width-10)*2, 0), rectSize )
+		rect3.style = myStyle
+				
+		var rect4 = new Path.Rectangle( new Point((-rectSize.width-10)*3, 0), rectSize )
+		rect4.style = myStyle
+
+
+
+		var order = false;
+		var speed = 60;
+		
+		//calc browser width and height and grid
+		var gridX = Math.round( view.size.width / (rectSize.width + 10) )
+		var gridY = Math.round( view.size.height / (rectSize.height + 10) )
+		
+		var moveHorz = function( passedRect ){
+			
+			var args = Array.prototype.slice.call( arguments )
+			args.forEach( function( passedRect ){
+				
+				if(passedRect.position.x <= view.size.width - rectSize.width){
+					passedRect.position.x +=120
+				}else{
+					passedRect.position.x = rectSize.width/2
+					passedRect.position.y += 120
+				}
+				if(passedRect.position.y >= view.size.height - rectSize.height+100){
+					passedRect.position.x = rectSize.width/2
+					passedRect.position.y = rectSize.width/2
+				}
+
+				if(order){
+					rect2.opacity = 1
+					rect3.opacity = 1
+					rect4.opacity = 1				
+				}else{
+					rect2.opacity = .5
+					rect3.opacity = .2
+					rect4.opacity = .1
+				}
+
+			})
+			
+
+		}
+		
+		var moveVert = function( passedRect ){
+			
+			var args = Array.prototype.slice.call( arguments )
+			args.forEach( function( passedRect ){
+				if(passedRect.position.y <= view.size.height - rectSize.height){
+					passedRect.position.y +=120
+				}else{
+					passedRect.position.y = rectSize.width/2
+					passedRect.position.x += 120
+				}
+				if(passedRect.position.x >= view.size.width - rectSize.height+100){
+					passedRect.position.y = rectSize.width/2
+					passedRect.position.x = rectSize.width/2
+				}
+			
+				if(order){
+					rect2.opacity = 1
+					rect3.opacity = 1
+					rect4.opacity = 1				
+				}else{
+					rect2.opacity = .5
+					rect3.opacity = .2
+					rect4.opacity = .1
+				}
+			});
+		}
+		
+		
+		var moveRand = function( passedRect ){
+			
+			var args = Array.prototype.slice.call( arguments )
+			args.forEach( function( passedRect ){
+				var myRand = Math.random()
+				if (myRand < .3){
+					passedRect.position.y -= 120
+				}else{
+					passedRect.position.x += 120
+				}
+				if (myRand > .3){
+					passedRect.position.y += 240
+				}else{
+					passedRect.position.x -= 120
+				}
+		
+				if(passedRect.position.x > view.size.width - rectSize.width/2){
+					passedRect.position.x = view.size.width - rectSize.width/2
+				}
+				if(passedRect.position.x < rectSize.width/2){
+					passedRect.position.x = rectSize.width/2
+				}
+				if(passedRect.position.y > view.size.height - rectSize.height/2){
+					passedRect.position.y = view.size.height - rectSize.height/2
+				}
+				if(passedRect.position.y < rectSize.height/2){
+					passedRect.position.y = rectSize.height/2
+				}	
+				
+			
+				if(order){
+					rect2.opacity = 1
+					rect3.opacity = 1
+					rect4.opacity = 1				
+				}else{
+					rect2.opacity = .5
+					rect3.opacity = .2
+					rect4.opacity = .1
+				}
+			});
+		}
+		
+		
+		//text
+		var text = new PointText(view.center)
+		text.paragraphStyle.justification = 'center'
+		text.characterStyle.fontSize =  12
+		text.fillColor = 'red'
+		
+		
+
+		//animation loop
+		var onFrame = function( event ){
+			if( Math.round(event.time) < 20 ){
+				if(Math.round(event.count) % 240 === 0){
+					order = !order;
+				}
+			
+				if(order){
+					if(Math.round(event.count) % speed === 0){
+						moveHorz(rect1, rect2, rect3, rect4)
+					}
+				}else{
+					moveHorz(rect1, rect2, rect3, rect4)
+				}
+			}else if( Math.round(event.time) < 40){
+				if(Math.round(event.count) % 240 === 0){
+					order = !order;
+				}
+			
+				if(order){
+					if(Math.round(event.count) % speed === 0){
+						moveVert(rect1, rect2, rect3, rect4)
+					}
+				}else{
+					moveVert(rect1, rect2, rect3, rect4)
+				}
+			}else{
+				if(Math.round(event.count) % 240 === 0){
+					order = !order;
+				}
+			
+				if(order){
+					if(Math.round(event.count) % speed === 0){
+						moveRand(rect1, rect2, rect3, rect4)
+					}
+				}else{
+					moveRand(rect1, rect2, rect3, rect4)
+				}
+			}
+			if( Math.round(event.time) > 50){
+				rect1.scale(.99)
+				rect2.scale(.99)
+				rect3.scale(.99)
+				rect4.scale(.99)
+			}
+
+			//text.content = "Seconds: " + Math.round(event.time)
+		}
+
+
+		//resize function
+		//to use write <canvas id="myCanvas" resize></canvas> when declaring html tag
+		// var onResize = function( event ){
+		// 
+		// 		}
+		// 
+		// 		onResize()
+
+
+
+
+	</script>
+
+</html>

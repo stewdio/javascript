@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Paper Squares</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<!-- div id="help">
+			<a target="_blank" href="http://paperjs.org/examples">Paper.js examples &rarr;</a><br />
+			<a target="_blank" href="http://paperjs.org/tutorials">Paper.js tutorials &rarr;</a><br />
+		</div -->
+		<script charset="utf-8" src="scripts/paper.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+	
+	
+var durationSeconds = 60
+var running = true
+tIncluded = 15
+stepTime = 6	
+numMoves = Math.round((durationSeconds - tIncluded)/stepTime)
+
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+background.fillColor = 'black'
+background.position = view.center
+project.activeLayer.insertChild( 0, background )
+	
+spacer = 2
+colrow = 6
+space = (view.bounds.width/colrow)
+squareSize = (space - spacer)
+
+/*counter = 0	
+	for(var i = 0; i < colrow; i++){
+		for(var j = 0; j < colrow; j++){
+			
+			grid.counter = new Point(j*space, i*space)
+			counter++
+		}
+	}
+*/
+
+buzz = function (square) {
+
+square.position.x += (Math.floor(Math.random()*(3))-1)
+square.position.y += (Math.floor(Math.random()*(3))-1)
+
+}
+
+function map_range(value, low1, high1, low2, high2) {
+    return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+}
+
+grid = function(number){
+	
+	var grid = new Point((number%colrow*space), (Math.floor(number/colrow)*space))
+	grid.x = map_range( grid.x, 0, view.bounds.width, (squareSize/2), view.bounds.width-(squareSize/2)) 
+	grid.y = map_range( grid.y, 0, view.bounds.height, (squareSize/2), view.bounds.height-(squareSize/2))
+	return grid
+}
+
+square1 = new Path.Rectangle( grid(Math.floor(Math.random()*colrow*colrow)), squareSize )
+square1.fillColor = 'white'
+square1.opacity = .25
+
+square2 = new Path.Rectangle( grid(Math.floor(Math.random()*colrow*colrow)), squareSize )
+square2.fillColor = 'white'
+square2.opacity = .25
+
+square3 = new Path.Rectangle( grid(Math.floor(Math.random()*colrow*colrow)), squareSize )
+square3.fillColor = 'white'
+square3.opacity = .25
+
+square4Speed = 5800
+square4Size = squareSize/3
+square4 = new Path.Rectangle( grid(Math.floor(Math.random()*colrow*colrow)), square4Size )
+square4.fillColor = 'darkred'
+square4.opacity = .5
+
+
+last = 0
+
+Path.prototype.size = square4Size
+Path.prototype.mySizer = function( newSize ){
+
+	this.scale( newSize/this.size )
+	this.size = newSize
+}
+
+
+var onFrame = function( event ){
+
+update = function(){
+if (Math.floor(event.time%5) === 0) last = 0
+if (Math.floor(event.time%5) === 4){
+
+	if (last !== 4){
+		square1.position =( grid((0).rand(colrow*colrow)))
+		
+			if (square4Speed > 100){
+			square4Speed -= ((square4Speed-80)/numMoves)
+			
+			} 
+			
+			if (square4Size < squareSize){
+			square4Size += (squareSize-square4Size)/numMoves
+			square4.mySizer(square4Size)
+			numMoves--
+			
+			}
+	
+	}
+	last = (Math.floor(event.time%5))
+	
+}
+}
+	//  onFrame() is passed an argument called 'event'.
+	//  This event{} object contains three properties:
+	//  'count' is the current frame number,
+	//  'time' is the current time elapsed in seconds, and
+	//  'delta' is the time since the last frame was rendered.
+	//  Try uncommenting these lines one at a time
+	//  to see what's happening via the console:
+	
+	//console.log( 'Frame number: '+ event.count )
+	//console.log( 'Time elapsed: '+ event.time )
+	//console.log( 'Time elapsed since the last call to onFrame(): '+ event.delta )	
+	
+	
+	//  Should our animation still be running?
+	//  Let's check by comparing our elapsed frame count (event.count)
+	//  to our duration in seconds, multiplied by Frames Per Second.
+
+	
+
+
+	 
+
+
+	if( event.time > durationSeconds && running === true ){
+		
+		running = false
+		square1.remove()
+		square2.remove()
+		square3.remove()
+		square4.remove()
+		background.remove()
+		document.title = 'Paper finished.'
+		console.log( 'Congratulations!' )
+	}
+
+	else if( running === true ) {
+
+		document.title = 'Excluded/Included '+ event.time.floor().toPaddedString( 2 ) +' seconds.'
+		
+		 s4 = [square4.position.x, square4.position.y] 
+		 s1 = [square1.position.x, square1.position.y]
+		 
+		if (s4.distanceTo(square1.position.x,square1.position.y) < 5 && event.time.isBetween( 45,50) ){
+			square4.fillColor = "white"
+			buzz(square4)
+			square4.opacity +=.01
+			square4Size += 10
+			square4.mySizer(square4Size)
+			
+			
+		}else if( event.time.isBetween( 45,50) && s4.distanceTo(square1.position.x,square1.position.y) >= 5 ){
+			
+			vect = square1.position - square2.position
+			square2.position += (vect / 50)
+						
+			vect = square1.position - square3.position
+			square3.position += (vect / 10)
+			
+			vect = square1.position - square4.position
+			square4.position += (vect / square4Speed)
+			
+			
+		
+		}else if( event.time.isBetween( 0,45) && s4.distanceTo(square1.position.x,square1.position.y) >= 5 ){
+		
+			vect = square1.position - square2.position
+			square2.position += (vect / 50)
+						
+			vect = square1.position - square3.position
+			square3.position += (vect / 10)
+			
+			vect = square1.position - square4.position
+			square4.position += (vect / square4Speed)
+			
+			update()
+				
+
+
+
+
+		
+			
+		} if( event.time.isBetween( 51, 60)){
+			numMoves = 2
+			update()
+			
+			square4.mySizer(squareSize/3)
+			square4.fillColor ="red"
+			
+			vect = square1.position - square2.position
+			square2.position += (vect / 50)
+						
+			vect = square1.position - square3.position
+			square3.position += (vect / 10)
+			
+			vect = square1.position - square4.position
+			square4.position += (vect / 5000)
+			
+			
+		
+		
+
+		
+		
+	
+	}
+}
+}
+
+
+
+		</script>
+	</body>
+</html>
+

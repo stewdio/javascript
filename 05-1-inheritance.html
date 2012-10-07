@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Prototypal Inheritance</title>
+	</head>
+	<body>
+		<div id="page">
+			<nav></nav>
+			<article>					
+
+
+
+					
+				<h1>Prototypal Inheritance</h1>
+				<p>
+					If you’re coming from a traditional 
+					<a target="_blank" href="http://en.wikipedia.org/wiki/Object-oriented_programming">object-oriented</a> 
+					language like Java or C++ you’re used to what 
+					<a target="_blank" href="http://en.wikipedia.org/wiki/Douglas_Crockford">Doug Crockford</a> 
+					refers to as “classical 
+					<a target="_blank" href="http://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming)">inheritance</a>.” 
+					That is—the language uses classes to organize and reuse bits of functionality;
+					objects are specific instances of classes.
+				</p>
+				<p>
+					JavaScript doesn’t have (or need) classes.
+					You can just create new objects from thin air, no classes required.
+					But what if you want to make several objects that all have the same capabilities 
+					without writing the same code over and over for each object?
+					How do you share functionality?
+				</p>
+
+
+
+
+				<h2>Cheating</h2>
+				<p>
+					The most straight-forward way to solve the problem is just to avoid it altogether. 
+					(We’ve already used this method and it’s worked beautifully.)
+					Imagine you want to make a thousand Cat objects without understanding anything
+					about classes or inheritance.
+					You can just make a thousand raw objects with the same guts.
+				</p>
+<code>var i, cats = []
+for( i = 0; i &lt; 1000; i ++ ){
+    cats.push({
+        id: i,
+        meow: function(){ return 'MEOW!' }
+    })
+}</code>
+				<p>
+					That <code class="inline">for</code> loop will give you one thousand objects
+					that all meow and have unique ID numbers.
+					It’s as if you had a Cat class and made a thousand instances of it.
+				</p>
+<code>cats[ 29 ].meow()
+<span class="response">"MEOW!"</span>
+cats[ 29 ].id
+<span class="response">29</span></code>
+				<p>
+					But this is definitely cheating.
+					Works well for simple tasks but it’s not very robust.
+					It uses more memory than it should 
+					because you’ve made a thousand <em>copies</em> of something instead of just <em>referencing</em> it
+					(though in this case you won’t notice any performance issues)
+					and if you want to augment or modify the behavior of all these cats 
+					you’d have to patch all one thousand of them instead of just mending the thing they inherit from.
+					It’s not ideal. It’s like ... herding cats.
+				</p>
+
+
+
+
+				<h2>Pretend classical</h2>
+				<p>
+					JavaScript doesn’t have classes but it can emulate them using 
+					functions—adding properties with the <code class="inline">this</code> keyword.
+				</p>
+<code>function Cat(){
+    this.cuteness = 1000
+    this.meow     = function(){ return 'MEOW!' }
+    var nothing   = 'this is really nothing'
+}</code>
+				<p>
+					And it really is just a function.
+				</p>
+<code>typeof Cat
+<span class="response">"function"</span></code>
+
+				<p>
+					Now we can make a new Cat and it will inherit the properties and functions from our pseudo Cat class.
+				</p>
+<code>felix = new Cat()
+<span class="response">► Cat</span>
+typeof felix
+<span class="response">"object"</span>
+felix.cuteness
+<span class="response">1000</span>
+felix.meow()
+<span class="response">"MEOW!"</span>
+felix.nothing
+<span class="response">undefined</span></code>
+				<p>
+					Notice how we must use the <code class="inline">this</code> keyword in order for 
+					a property or method to be inheritable? 
+					And of course we can add new custom properties to Felix, like number of whiskers for example.
+				</p>
+				<code>felix.whiskers = 57</code>
+				<p>
+					Adding these custom properties to one object will not alter the class itself or other instances of it.
+				</p>
+
+
+
+
+				<h2>Playing with prototypes</h2>
+				<p>
+					But let’s suppose we did want to alter every instance of Cat all at once—after execution has already begun?
+					Does that even make sense in a classical language like C++ or Java?
+					It can when you <a target="_blank" href="http://en.wikipedia.org/wiki/Prototype-based_programming">think in prototypes</a>. 
+					Let’s go back to our cat example.
+				</p>
+<code>function Cat(){
+    this.cuteness = 1000
+    this.meow = function(){ return 'MEOW!' }
+}</code>
+				<p>
+					Let’s create two kitties this time.
+				</p>
+<code>felix = new Cat()
+<span class="response">► Cat</span>
+fritz = new Cat()
+<span class="response">► Cat</span></code>
+				<p>
+					So we have a pretend class and we’ve already created two objects that inherit from it. 
+					Now let’s add a new property to both of them at once.
+				</p>
+				<code>Cat.prototype.cuddly = true</code>
+				<p>
+					Now both of our cats are cuddly!
+				</p>
+<code>felix.cuddly
+<span class="response">true</span>
+fritz.cuddly
+<span class="response">true</span></code>
+				<p>
+					Ok, thats great. But what just happened?
+					Let’s have a little in class discussion about what prototypes <em>might be</em>.
+				</p>
+
+
+
+
+				<h2>Object, create!</h2>
+				<p>
+					You know what? There’s an easier way: <code class="inline">Object.create()</code>.
+					This method’s been kicking around years, but you used to have to code the mechanics of it yourself.
+					(If you’re interested in how that works see 
+					<a target="_blank" href="http://javascript.crockford.com/prototypal.html">Doug Crockford’s notes on prototypal inheritance</a>.)
+					Fortunately for you this is now baked right into JavaScript.
+					Let’s have a look.
+				</p>
+<code>var Cat = {
+    cuteness: 1000,
+    meow: function(){ return 'MEOW!' }
+}</code>
+				<p>
+					Notice how above we’re creating a raw object instead of a function.
+					And now we can easily create child objects that refer to our master Cat object.
+				</p>
+<code>felix = Object.create( Cat )
+<span class="response">► Object</span>
+fritz = Object.create( Cat )
+<span class="response">► Object</span></code>
+				<p>
+					We can create custom properties and methods on 
+					<code class="inline">felix</code> or <code class="inline">fritz</code>—that’s not news.
+					What’s news is how simple it is update all objects that inherit from <code class="inline">Cat</code> at once.
+				</p>
+				<code>Cat.cuddly = true</code>
+				<p>
+					There’s no need to even mention prototypes because by using 
+					<code class="inline">Object.create()</code>
+					we’ve already established that there is a one-way relationship between the master object, Cat, 
+					and the objects that inherit from it.
+				</p>
+<code>felix.cuddly
+<span class="response">true</span>
+fritz.cuddly
+<span class="response">true</span></code>
+				<p>
+					Let’s take a moment now to inspect <code class="inline">felix</code> and <code class="inline">fritz</code>.
+					What’s this <code class="inline">felix.__proto__</code> stuff all about?
+					What about passing arguments to the pretend constructor?
+					And if you’re really looking for a brain workout, 
+					what about <code class="inline">Object A</code> that inherits from <code class="inline">Object B</code> that inherits from <code class="inline">Object A</code>?
+				</p>
+
+
+
+
+				<h2>Further reading</h2>
+				<p>
+					Here are some quick helpful references.
+					It’s not homework reading, but having a skim over them 
+					and then being able to refer back to them later
+					will be a big help to you.
+				</p>
+				1. <a target="_blank" href="http://javascript.crockford.com/prototypal.html">Prototypal Inheritance in JavaScript</a>, Douglas Crockford.<br />
+				2. <a target="_blank" href="http://stackoverflow.com/questions/2709612/using-object-create-instead-of-new">Using “Object.create” instead of “new”</a>, Stack Overflow.<br />
+				3. <a target="_blank" href="http://www.quirksmode.org/js/this.html">The <em>this</em> keyword</a>, Quirksmode.<br />
+				4. <a target="_blank" href="http://stackoverflow.com/questions/1986896/what-is-the-difference-between-call-and-apply">What is the difference between call and apply?</a>, Stack Overflow.<br />
+				5. <a target="_blank" href="http://en.wikipedia.org/wiki/Prototype-based_programming">Prototype-based programming</a>, Wikipedia.
+
+
+
+
+				<!--
+				
+				Remaining topics coming up:
+				
+				Code is data. Your program is already a searchable and sortable database!
+				Function() vs. Function.apply() vs. Function.call()
+				Deeper thinking about 'this'
+				Recursive functions and recursive inheritance.
+				
+				-->
+
+
+
+
+			</article>
+		</div>
+		<script charset="utf-8" src="scripts/jquery.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" src="scripts/application.js"></script>
+	</body>
+</html>

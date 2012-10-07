@@ -1,0 +1,37 @@
+body
+{
+	margin: 0;
+	background-color: #333;
+	padding: 0;
+	font-family: "Lucida Grande", Geneva, Verdana, Arial, sans-serif;
+	font-size:    9pt;
+	line-height: 15pt;
+}
+
+
+canvas
+{
+	position: absolute;
+	top:  50%;
+	left: 50%;
+	margin: -300px 0 0 -300px;
+	width:  600px;
+	height: 600px;
+/*	background-color: #000;*/
+}
+#help
+{
+	position: absolute;
+	right:  24px;
+	bottom: 24px;
+}
+#help a
+{
+	color: #F00;
+	text-decoration: none;
+}
+#help a:hover
+{
+	border-bottom: 1px solid #F00;
+}
+

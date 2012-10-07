@@ -5,18 +5,20 @@ A = {
 
 		var 
 		pageUrl = document.location.href.split( '/' ).pop(),
-		nav  = $( '<ul>' )
+		nav  = $( '<table>' )
 
 
 		//  Create navigation link to Home.
 	
 		nav.append(
-			$( '<li>' ).append(
+			$( '<tr>' )
+			.append( $( '<td>' ).addClass( 'lessonNumber' ))
+			.append( $( '<td>' ).append(
 
 				$( '<a>' )
 				.text( 'Home' )
 				.attr( 'href', 'index.html' )
-			)
+			))
 		)
 		nav.append( '<br />' )
 
@@ -28,31 +30,41 @@ A = {
 
 			var el
 			
-			lessonNumber = ( lessonNumber + 1 ).toPaddedString( 2 )
-			el = $( '<li>' ).attr( 'title', lesson.date )
-			nav.append( el )
+			lessonNumber = ( lessonNumber + 1 )
+			el = $( '<tr>' )
+				.addClass( 'lessonHeader' )
+				.attr( 'title', lesson.date )
+				.append( $( '<td>' ).addClass( 'lessonNumber' ).append( lessonNumber ))
+			nav.append( el )//  Weird bug. Had to add it to the DOM *before* doing next two lines. Strange.
+			el.append( $( '<td>' ))
+			el = $( el.find( 'td' )[ 1 ] )
+
+
+			lessonNumber = lessonNumber.toPaddedString( 2 )
 			if( lesson.url ){
-				el.append( 
-					$( '<a>' ).attr( 'href', lessonNumber +'-0-'+ lesson.url +'.html' )
-				)
+				el.append( $( '<a>' ).attr( 'href', lessonNumber +'-0-'+ lesson.url +'.html' ))
 				el = el.find( 'a' )
 			}
 			else el.addClass( 'indent' )
-			el.append( lessonNumber +' &mdash; '+ lesson.title )
+			el.append( lesson.title )
+
+
 			if( lesson.pages ){
 				
 				lesson.pages.forEach( function( page, pageNumber ){
 
 					var href = lessonNumber +'-'+ (pageNumber+1) +'-'+ page[1] +'.html'
 					nav.append(
-						$( '<li>' ).append( 
+						$( '<tr>' )
+						.append( $( '<td>' ).append( '' ))
+						.append( $( '<td>' ).append(
 							$( '<a>' )
 							.text( page[0] )
 							.attr( 'href', href )
-						) 
+						))
 					)
 				})
-				nav.append( '<br />' )
+				//nav.append( '<br />' )
 			}
 		})
 		$( 'nav' ).empty().append( nav )
@@ -61,8 +73,8 @@ A = {
 		//  You know, it might be helpful if we subtly indicated 
 		//  which navigation option is currently active.
 
-		$( 'nav li a' ).each( function(){
-			
+		$( 'nav a' ).each( function(){
+
 			if( pageUrl === $( this ).attr( 'href' )) $( this ).addClass( 'active' )
 		})
 
@@ -209,8 +221,8 @@ A = {
 			]
 		},
 		{
-			title: 'Paperworked',
-			url  : 'paperworked',
+			title: 'Paperworking',
+			url  : 'paperworking',
 			date : '21 September 2012',
 			pages: [
 				[ 'Introducing Skip.js', 'skip' ],
@@ -218,34 +230,44 @@ A = {
 			]
 		},
 		{
-			title: 'Text and grids',
-			//url  : 'textgrids',
-			date : '28 September 2012'
-			//pages: [
-			//	[ 'Prototypal inheritance', 'inheritance' ],
-			//	[ 'Design history highlights', 'design' ],
-			//	[ 'Homework', 'homework' ]
-			//]
+			title: 'Paperworked',
+			url:   'paperworked',
+			date : '28 September 2012',
+			pages: [
+				[ 'Paper Squares critique', 'critique' ],
+				[ 'Homework', 'homework' ]
+			]
 		},
 		{
 			title: 'Powers of Three',
-			//url  : 'three',
-			date : '5 October 2012'
-			//pages: [
-			//	[ 'Gazing at grids', 'grids' ],
-			//	[ 'Looking at letterforms', 'letterforms' ],			
-			//]
+			url  : 'three',
+			date : '5 October 2012',
+			pages: [
+				[ 'Prototypal inheritance', 'inheritance' ],
+				[ 'Introducing Three.js', 'three' ],
+				[ 'Homework', 'homework' ]
+			]
 		},
 		{
 			title: 'Code is data',
 			date : '12 October 2012'
+			//title: 'Text and grids',
+			//url  : 'textgrids',
+			//date : '28 September 2012'
+			//pages: [
+			//	[ 'Prototypal inheritance', 'inheritance' ],
+			//	[ 'Design history highlights', 'design' ],
+			//	[ 'Gazing at grids', 'grids' ],
+			//	[ 'Looking at letterforms', 'letterforms' ],
+			//	[ 'Homework', 'homework' ]
+			//]
 		},
 		{
-			title: 'Midterm critiques',
+			title: 'Patterning',
 			date : '19 October 2012'
 		},
 		{
-			title: 'Observe and report',
+			title: 'Midterm critiques',
 			//url  : 'observe',
 			date : '26 October 2012'
 		},
@@ -254,7 +276,7 @@ A = {
 			date : '2 November 2012'
 		},
 		{
-			title: 'Patterning',
+			title: 'Observe and report',
 			date : '9 November 2012'
 		},
 		{

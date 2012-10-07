@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>fortunate</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<script charset="utf-8" src="scripts/paper.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">	
+
+			var w = 80;
+
+			var square1 = new Path.Rectangle( view.center, w );
+			square1.fillColor = 'white';
+			square1.position.x = 60;
+			square1. position.y = 50;
+
+			var square2 = new Path.Rectangle( view.center, w )
+			square2.fillColor = 'white'
+			square2.position.x = 160;
+			square2.position.y = 50;
+
+			var square3 = new Path.Rectangle( view.center, w )
+			square3.fillColor = 'white'
+			square3.position.x = 260;
+			square3.position.y = 50;
+
+			var square4 = new Path.Rectangle( view.center, w )
+			square4.fillColor = 'white'
+			square4.position.x = 360;
+			square4.position.y = 50;
+			
+			//create the canvas
+var background = new Path.Rectangle( view.center, view.bounds.width )
+			background.fillColor = 'black'
+			background.position = view.center
+			project.activeLayer.insertChild( 0, background )
+	
+
+			//we're counting seconds therefore we run the animation only 60 se
+			var durationSeconds = 60
+			var running = true
+
+			var stepNumber = 0
+
+var walk = function(a,b){
+	square1.position += new Point( a,b ) * Point.random();
+	square2.position += new Point( a,b ) * Point.random();
+	square3.position += new Point( a,b ) * Point.random();
+	square4.position += new Point( a,b ) * Point.random();		
+}
+
+var falling = function(){
+	if (square3.position.y + 60 < view.size.height){
+	square3.position += new Point( 0, + 3 );
+	square3. rotate(1);
+	}
+	else{
+		
+	square3.position.y = view.size.height - 60;
+	
+	}
+}
+
+var attempt = function(){	
+	walk(-1, 0) * Point.random();
+}
+
+
+var rescue = function(){
+	if (square1.position.y + 500 < view.size.height){
+	square1.position += new Point( +0.5, +4 ) * Point.random();
+	square2.position += new Point( +0.3, +4.5 ) * Point.random();	
+	square4.position += new Point( -0.3, +4.3 ) * Point.random();	
+	}
+	
+	else if(square1.position.y + 500 > view.size.height
+		&&square1.position.y + 60 <= view.size.height
+		&&square2.position.y + 60 <= view.size.height
+		&&square4.position.y + 60 <= view.size.height)
+	{square1.position += new Point( +0.7, +5.5 ) * Point.random();
+	square2.position += new Point( +0.5, +6 ) * Point.random();	
+	square4.position += new Point( -0.5, +5.7 ) * Point.random();
+	
+	square1. rotate(2);
+	square2. rotate(2.2);
+	square4. rotate(2.3);
+	
+	}
+	
+	
+	else{				
+	square1.position.y = view.size.height - 60;
+	square2.position.y = view.size.height - 60;
+	square4.position.y = view.size.height - 60;
+	
+	square1. rotate(0);
+	square2. rotate(0);
+	square4. rotate(0);
+	
+	attempt();
+	
+	square1.fillColor.alpha -= 0.01;
+	square2.fillColor.alpha -= 0.012;
+	square4.fillColor.alpha -= 0.011;	
+	}	
+}
+
+
+//var go_back = function(){
+//	if (square1.fillColor.alpha <= 0&&square2.fillColor.alpha <= 0&&square4.fillColor.alpha <= 0){
+//	walk(+2, -5);	
+//}
+
+
+var onFrame = function( event ){
+	if (event.time > durationSeconds &&running ===true){ //if it's more than 60 seconds
+			running = false;
+			square1.remove();
+			square2.remove();
+			square3.remove();
+			square4.remove();
+			background.remove();
+			document.title = "oh poor things!";
+			console.log("done done done!");
+		}
+		else if (running ===true){ //if it's less than 60 seconds
+			document. title = "running at" + event.time.floor().toPaddedString(2) +
+			"seconds."
+
+
+
+
+	
+			if (square4.position.x <  3* view.bounds.width/4){
+				walk(+1,0)
+				}
+	
+	else {
+		falling();
+		walk(0,0)
+		//go_back();
+		
+		 
+		if (square3.position.y + 60 == view.size.height){
+			rescue();
+			//go_back();
+		
+		}
+		
+		
+	}
+
+}	
+
+}
+
+
+		</script>
+	<audio autoplay>
+	<source src="http://itp.nyu.edu/~hs1571/fortunate/media/unfortunate.mp3">
+	</audio>
+	</body>
+</html>

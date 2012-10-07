@@ -1,0 +1,23 @@
+
+body
+{
+	margin: 0;
+	background-color: black;
+	padding: 0;
+	font-family: "Lucida Grande", Geneva, Verdana, Arial, sans-serif;
+	font-size:    9pt;
+	line-height: 15pt;
+}
+
+
+canvas
+{
+	position: absolute;
+}
+#help
+{
+	position: absolute;
+	right:  24px;
+	bottom: 24px;
+}
+

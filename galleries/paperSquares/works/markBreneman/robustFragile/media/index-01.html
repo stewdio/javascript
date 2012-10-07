@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>VisualizingJS - Included - Excluded</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<script charset="utf-8" src="scripts/paper.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+	
+var squareside=80;
+
+var square1 = new Path.Rectangle(view.bounds.bottomLeft-squareside,squareside);
+square1.fillColor = 'white';
+square1.selected=true;
+square1.position.y -=20;
+// console.log("square1s position is "+ square1.position);
+
+var square2 = new Path.Rectangle(square1.bounds.bottomLeft-squareside,squareside);
+square2.fillColor = 'white';
+square2.position.x -=10;
+// square2.selected=true
+// console.log("square2's position is "+ square2.position);
+
+var square3 = new Path.Rectangle(square2.bounds.bottomLeft-squareside,squareside);
+square3.fillColor = 'white';
+square3.position.x -=10;
+// square3.selected=true
+// console.log("square3s position is "+ square3.position);
+
+var square4 = new Path.Rectangle(square3.bounds.bottomLeft-squareside,squareside);
+square4.fillColor = 'white';
+square4.position.x -=10;
+// square4.selected=true
+// console.log("square4s position is "+ square4.position);
+
+var timeText = new PointText(view.center);
+timeText.paragraphStyle.justification = 'center';
+timeText.characterStyle.fontSize = 20;
+timeText.fillColor = 'gray';
+timeText.position=view.size/2;
+
+var frameCountText = new PointText(view.center);
+frameCountText.paragraphStyle.justification = 'center';
+frameCountText.characterStyle.fontSize = 20;
+frameCountText.fillColor = 'gray';
+frameCountText.position=view.size/2.5;
+
+
+var theta=90;
+var angle = function(){
+            var increment=180;
+            theta+=increment;
+            return theta;
+        };
+    
+var introWalk = function(item, event){
+    var walkEvent = event;
+
+          if (square1.position.x < view.size.width/2){
+                  square1.position += new Point(.3,0);
+                  square1.rotate(Math.sin(theta)*10);
+
+                 }
+                 
+          if (square2.position.x <= view.size.width/2-squareside*.85){
+                   square2.position += new Point(.3,0);
+                   square2.rotate(Math.sin(theta)*10);
+                    console.log("square 2s position " + square2.position)
+
+                    }                 
+         
+           if (square3.position.x <= view.size.width/2-squareside*2*.85){
+                       square3.position += new Point(.3,0);
+                       square3.rotate(Math.sin(theta)*10);
+                       console.log("square 3s position " + square3.position)
+                    }
+           
+           if (square4.position.x <= view.size.width/2-squareside*3*.85){
+                       square4.position += new Point(.3,0);
+                       square4.rotate(Math.sin(theta)*10);
+                       console.log("square 4s position " + square4.position)
+                   }
+           
+            angle();
+        };  
+        
+var adjust = function(item,event){
+    if (square2.position.x < 333){
+             square2.position += new Point(-.3,0);
+             square2.rotate(Math.sin(theta)*-10);
+
+              }                 
+
+     if (square3.position.x < 265){
+                 square3.position += new Point(-.3,0);
+                 square3.rotate(Math.sin(theta)*-10);
+              }
+
+     if (square4.position.x < 197){
+                 square4.position += new Point(-.3,0);
+                 square4.rotate(Math.sin(theta)*-10);
+              }
+              angle();
+    
+} 
+
+//PAPER JS ON FRAME CALL
+
+var onFrame = function(event){
+    timeText.content = Math.round(event.time) + " seconds";
+    frameCountText.content = Math.round(event.count) + "frames";
+    var lastEventTime;
+
+    if (event.time< 7.5){
+            introWalk(square1, event);
+            introWalk(square2, event);
+            introWalk(square3, event);
+            introWalk(square4, event);
+    };    
+    
+    if (event.time > 7.5 && event.time < 20){
+            adjust(square2, event);
+            adjust(square3, event);
+            adjust(square4, event);
+        };    
+     
+	
+}
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Include and Exclude - Robbie Tilton</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+	</body>
+
+	<script charset="utf-8" src="scripts/paper.js"></script>
+	<script charset="utf-8" src="scripts/skip.js"></script>
+	<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+		var touched = false
+		
+		//create 4 squares
+		var squares = [];
+		var rectSize = new Size(100,100)
+		for(var i = 0; i<4; i++){
+			var newRect = new Path.Rectangle( new Point( Math.round( Math.random()*(view.size.width-rectSize.width)) ,Math.round( Math.random()*(view.size.height-rectSize.height)) ), rectSize )
+			newRect.fillColor = new RgbColor( Math.random()*1,Math.random()*1,Math.random()*1 );
+			newRect.fillColor.alpha = .6
+			newRect.vector = new Point(0,0)
+			newRect.identity = i
+			if(i<3){
+				newRect.included = true
+			}else{ //start one square as not included
+				newRect.included = false
+				newRect.scale(.3)
+			}
+			//newRect.blendMode = 'overlay'
+			squares.push(newRect);
+		}
+		
+		//random destination area within window
+		var destination = new Point( Math.round( Math.random()*view.size.width ), Math.round( Math.random()*view.size.height ) )
+		
+		//calc distance
+		var distanceFrom = function( x1, y1, x2, y2 ){
+			var xDist = x2-x1
+			var yDist = y2-y1
+			//distance square is from destination
+			var distance = new Point(xDist, yDist)
+			return distance
+		}
+		
+		//chooses random place to runaway to
+		var runAwayRandom = function(){
+			var runAwayDest = []
+			for(var k = 0; k < 3; k++){
+				var randXY = new Point( Math.round( Math.random()*view.size.width ), Math.round( Math.random()*view.size.height ) )
+				runAwayDest.push(randXY)
+			}
+			return runAwayDest
+		}
+		
+
+		//if excluded gets close - run away before finding new destination point
+		var runAway = function( passedRect ){
+			var runAwayDest = runAwayRandom()
+			var curX = squares[3].position.x
+			var curY = squares[3].position.y
+			squares[3].position.x = curX
+			squares[3].position.y = curY
+			
+			//for each passed rect object
+			var args = Array.prototype.slice.call( arguments )
+			args.forEach( function( passedRect ){
+				if( passedRect.identity == 0){
+					var vector0 = distanceFrom( passedRect.position.x, passedRect.position.y, runAwayDest[0].x, runAwayDest[0].y )
+					var length0 = Math.sqrt(vector0.x*vector0.x+vector0.y*vector0.y)
+				
+					//move toward random destination
+					passedRect.position += vector0/10
+					passedRect.rotate(length0/50)	
+				}
+			
+				if( passedRect.identity == 1){
+					var vector1 = distanceFrom( passedRect.position.x, passedRect.position.y, runAwayDest[1].x, runAwayDest[1].y )
+					var length1 = Math.sqrt(vector1.x*vector1.x+vector1.y*vector1.y)
+				
+					//move toward random destination
+					passedRect.position += vector1/10
+					passedRect.rotate(length1/50)	
+				}
+			
+				if( passedRect.identity == 2){
+					var vector2 = distanceFrom( passedRect.position.x, passedRect.position.y, runAwayDest[2].x, runAwayDest[2].y )
+					var length2 = Math.sqrt(vector2.x*vector2.x+vector2.y*vector2.y)
+				
+					//move toward random destination
+					passedRect.position += vector2/50
+					passedRect.rotate(length2/50)	
+				}				
+
+				if(length0 < 150){
+					destination = new Point( Math.round( Math.random()*view.size.width ), Math.round( Math.random()*view.size.height ) )
+					touched=false
+				}
+			});
+			
+		}
+		
+		
+		//speed of excluded square seeking
+		var speed = 60 //higher = slower
+		
+		//rectangles seek toward destination
+		var seek = function( passedRect ){
+			
+			//for each passed rect object
+			var args = Array.prototype.slice.call( arguments )
+			args.forEach( function( passedRect ){
+
+				if( passedRect.included == true ){
+					//direction to seek
+					var vector = distanceFrom( passedRect.position.x, passedRect.position.y, destination.x, destination.y )
+					var length = Math.sqrt(vector.x*vector.x+vector.y*vector.y)
+					var normal = new Point(vector.x/length, vector.y/length)
+					var angle = Math.atan2(normal.x, normal.y)
+					var degree = angle*(180/3.141592653589793238)
+				
+					if(touched == false){
+						//move toward destination
+						passedRect.position += vector/30
+						passedRect.rotate(length/50)
+					}
+				}else{
+					//square(s) not included seek those who are included
+					var test = passedRect.position.x
+					var vectorSheep = distanceFrom( passedRect.position.x, passedRect.position.y, squares[1].position.x, squares[1].position.y )
+					var lengthSheep = Math.sqrt(vectorSheep.x*vectorSheep.x+vectorSheep.y*vectorSheep.y)
+					if(touched == false){
+						//move toward included squares
+						passedRect.position += vectorSheep/speed//speed adjusts over time
+						passedRect.rotate(lengthSheep/30)
+					}
+				}
+				if(lengthSheep < 40){
+					//change destination point
+					//destination = new Point( Math.round( Math.random()*view.size.width ), Math.round( Math.random()*view.size.height ) )				
+					touched = true
+				}
+				if(touched == true){
+					runAway( squares[0], squares[1], squares[2] )	
+				}
+	
+			});	
+		}
+		
+		
+		//animation loop
+		var onFrame = function( event ){
+			for(var j = 0; j<4; j++){
+				seek( squares[j] )
+			}
+			
+			//every second increase speed
+			if( Math.round(event.count) % 30 == 0){
+				if(speed > 10)
+					speed --
+				else
+					squares[3].included = true
+			}
+		}
+
+
+
+
+
+	</script>
+</html>

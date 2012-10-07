@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Order to Chaos - Engin</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<div id="help">
+			
+		</div>
+		<script charset="utf-8" src="scripts/paper.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+
+
+// by Engin Ayaz, Sep 27 2012
+// Order to Chaos
+
+
+var firstSquareLoc = 100;
+
+var square1 = new Path.Rectangle(new Point(firstSquareLoc,firstSquareLoc),100 )
+square1.fillColor = 'white'
+
+var square2 = new Path.Rectangle(new Point(300+firstSquareLoc,firstSquareLoc), 100 )
+square2.fillColor = 'white'
+
+var square3 = new Path.Rectangle(new Point(firstSquareLoc,300+firstSquareLoc), 100 )
+square3.fillColor = 'white'
+
+var square4 = new Path.Rectangle(new Point(300+firstSquareLoc,300+firstSquareLoc), 100 )
+square4.fillColor = 'white'
+
+var counter = 0
+var duration = 3600 // 60 seconds at 60 frames per sec
+
+var startTime = 150
+var firstInterval = 900
+var firstIntervalTransition = 270
+var secondInterval = 1400
+var secondIntervalTransition = 1100
+var thirdInterval = 2200
+var thirdIntervalTransition = 1700
+
+var vector1 = new Point(0,0)
+var vector2 = new Point(0,0)
+var vector3 = new Point(0,0)
+var vector4 = new Point(0,0)
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+background.fillColor = '222222'
+background.position = view.center
+background.fillColor.alpha = 0		
+
+
+var onFrame = function( event ){
+	
+	console.log( 'Frame number: '+ event.count )
+	
+	// stops the animation as needed
+	if(event.count<duration){
+		if(event.count> startTime && event.count<firstInterval){
+			vector1 = view.center - square1.position 
+			square1.position += vector1 / 100
+			
+			vector2 = view.center - square2.position
+			square2.position += vector2 / 135
+			
+			vector3 = view.center - square3.position 
+			square3.position += vector3 / 120
+			
+			vector4 = view.center - square4.position 
+			square4.position += vector4 / 150
+			
+			if(event.count>firstIntervalTransition){
+				square1.fillColor.alpha -= 0.0007
+				square2.fillColor.alpha -= 0.0007
+				square3.fillColor.alpha -= 0.0007
+				square4.fillColor.alpha -= 0.0007
+			}
+		}
+		
+		if(event.count> firstInterval && counter<secondInterval){
+			square1.rotate(-0.5)
+			square2.rotate(0.75)
+			square3.rotate(-1)
+			square4.rotate(1.5)
+		}
+		
+		
+		if(event.count>secondInterval){
+			var randomRotation = 2
+			var rotationDeviation = randomRotation + (randomRotation * Math.random())
+			var rotationDevSq = rotationDeviation * rotationDeviation
+							
+			// cyclic value between -1 and 1
+       		var sinus = Math.sin(event.time * 5)
+       		
+			square1.position.x += (rotationDevSq / 4) * sinus
+       		square2.position.y += -(rotationDevSq / 5) * (sinus)
+       		square3.position += (rotationDevSq / 6) * (sinus)
+       		square4.position.y += (rotationDevSq / 3) * sinus
+       		
+       		if(event.count>thirdIntervalTransition){
+				square1.rotate(-rotationDevSq, square1.x+randomRotation)
+				square2.rotate(rotationDevSq, square3.y+randomRotation/2)
+				square3.rotate(-rotationDevSq)
+				square4.rotate(rotationDevSq)
+			
+				square1.scale(1.0014)
+				square2.scale(1.00135)
+				square3.scale(1.0013)
+				square4.scale(1.00125)
+       		}
+       		
+       		randomRotation += 2
+		}
+	}
+	
+	if(event.count >= duration){
+		square1.remove()
+		square2.remove()
+		square3.remove()
+		square4.remove()
+		background.fillColor.alpha = 1
+		document.title = 'Engins sketch done.'
+	}
+}
+		</script>
+	</body>
+</html>

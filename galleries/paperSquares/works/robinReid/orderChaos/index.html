@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Order Chaos: REID</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<div id="help">
+		</div>
+		<script charset="utf-8" src="scripts/paper.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+	
+	
+
+//create a square at top of the page
+
+var square5 = new Path.Rectangle (0, 80, 70, 70)
+square5.fillColor = 'white'
+square5.destination = Point.random() * view.size
+
+//create another square 10 px away
+
+var square6 = new Path.Rectangle ( 0, 180, 70, 70)
+square6.fillColor ='white'
+square6.destination = Point.random() * view.size
+
+//and another same as above
+var square7 = new Path.Rectangle (0, 380, 70, 70)
+square7.fillColor = 'white' 
+square7.destination = Point.random() * view.size
+
+//and another
+var square8 = new Path.Rectangle (0, 480, 70, 70)
+square8.fillColor = 'white'
+square8.destination = Point.random() * view.size
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+background.fillColor = 'black'
+background.position = view.center
+project.activeLayer.insertChild( 0, background )
+
+var durationSeconds = 60
+var running = true
+
+
+//set up timer to work with while practicing
+//var timeText = new PointText(view.center);
+    //timeText.paragraphStyle.justification = 'center';
+    //timeText.characterStyle.fontSize = 20;
+    //timeText.fillColor = 'gray';
+    //timeText.position=view.size/2;
+
+//var frameCountText = timeText.clone();
+    //frameCountText.position=view.size/1.75;
+    //frameCountText.fillColor = 'white';
+
+
+//set up the action
+
+var onFrame = function( event ) {
+
+       // timeText.content = Math.round(event.time);
+       // frameCountText.content = Math.round(event.count);
+	
+//set up the entry of the squares	
+	var dest1 = new Point (50, 40)
+	var vector1 = dest1 - square5.position
+	
+	var dest2 = new Point (50, 130)
+	var vector2 = dest2 - square6.position
+	
+	var dest3 = new Point (50, 220)
+	var vector3 = dest3 - square7.position
+	
+	var dest4 = new Point (50, 310)
+	var vector4 = dest4 - square8.position
+	
+
+//create groups that can be referenced later
+	var group1 = new Group ([square5, square6])
+	var group2 = new Group ([square7, square8])
+	var group3 = new Group ([square5, square6, square7, square8])
+	
+	
+	if( event.time > durationSeconds && running === true ){
+		
+		
+		square5.remove()
+		square6.remove()
+		square7.remove()
+		background.remove()
+		document.title = 'Paper finished.'
+		//console.log( 'Congratulations!' )
+		running = false
+		
+	}  else if (running === true) {
+
+	
+	if (event.count <= 50){
+		
+		square5.position += vector1/30
+		square6.position += vector2/30			
+
+	}
+	
+	if (event.count.isBetween (60, 80)){
+		
+		square7.position += vector3/15
+		square8.position += vector4/15
+
+		}
+		
+	if (event.count.isBetween (150, 300)) {
+		
+		group3.position.x +=.8
+	}
+	
+	if (event.count.isBetween (320, 470)){
+		group3.position.y += .8
+	}
+	
+	if (event.count.isBetween (475, 625)) {
+		group3.position.x += .8
+	}
+	
+	if (event.count.isBetween (775, 925)) {
+	
+		
+		group3.position.y += .3
+		
+	}
+	
+	if (event.time.isBetween(12, 19)) {
+		square5.rotate (.8)
+		square6.rotate (.8)
+		square7.rotate (.8)
+		square8.rotate (.8)
+		
+	}
+	
+	if (event.time.isBetween(20, 25)) {
+		group3.position.x += (-.6)
+	
+	}
+	
+	if (event.time.isBetween(25, 29)) {
+	
+		square5.rotate (.8)
+		square6.rotate (.8)
+		square7.rotate (.8)
+		square8.rotate (.8)
+	
+	}
+	
+	if (event.time.isBetween(29, 34)) {
+		group3.position.x += (1)
+	
+	}
+	
+	if (event.time.isBetween(35, 37)){
+		square7.position.y += .5
+	
+	}
+	
+	if (event.time.isBetween(38, 40)) {
+		square7.position.y += (-.5)
+		square8.position.y += (-.5)
+	}
+	
+	if (event.time.isBetween (41, 43)) {
+		square8.position.y += (.5)
+	}
+	
+	if (event.time.isBetween(44, 53)){
+	
+	
+	square7.rotate (Math.sin(event.time)* 2)
+
+	}
+	
+	if (event.time.isBetween(53, durationSeconds)){
+		
+		var vector6 = square6.destination - square6.position
+		var vector7 = square7.destination - square7.position
+		var vector5 = square5.destination - square5.position
+		var vector8 = square8.destination - square8.position
+
+		square6.position += vector6/30
+		square7.position += vector7/30
+		square5.position += vector5/30
+		square8.position += vector8/30
+		
+		square5.rotate (2)
+		square6.rotate (-3)
+		square7.rotate (20)
+		square8.rotate (-9)
+		
+			if( vector6.length < 5 && vector7.length < 5 && vector5.length < 5 && vector8.length < 5 ){
+
+				square6.destination = Point.random() * view.size
+				square7.destination = Point.random() * view.size
+				square5.destination = Point.random() * view.size
+				square8.destination = Point.random() * view.size
+				
+				}
+
+		}
+	}				
+
+}
+
+
+		</script>
+	</body>
+</html>

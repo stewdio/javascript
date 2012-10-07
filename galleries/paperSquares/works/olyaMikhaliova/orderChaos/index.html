@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Order and Chaos</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<script charset="utf-8" src="scripts/paper.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+
+var rectangle1 = new Rectangle(new Point(150,170), new Point(225,245));
+var square1 = new Path.Rectangle(rectangle1);  
+square1.fillColor = 'white';
+
+var rectangle2 = new Rectangle(new Point(150,330), new Point(225,405));
+var square2 = new Path.Rectangle(rectangle2);  
+square2.fillColor = 'white';
+
+var rectangle3 = new Rectangle(new Point(235,250), new Point(310,325));
+var square3 = new Path.Rectangle(rectangle3);  
+square3.fillColor = 'white';
+
+var rectangle4 = new Rectangle(new Point(0,250), new Point(75,325));
+var square4 = new Path.Rectangle(rectangle4);  
+square4.fillColor = 'white';
+
+square1HitEdge = false;
+square2HitEdge = false;
+square3HitEdge = false;
+square4HitEdge = false;
+
+var running = true;
+var  durationSeconds = 60; 
+
+incr1Y = 1; 
+incr2Y = 1; 
+incr3Y = 1; 
+incr4Y = 1; 
+
+var incr1X = 1;
+var incr2X = 1;
+var incr3X = 1;
+var incr4X = 1;
+speed1X = 0.2;
+speed2X = 0.2;
+speed3X = 0.2;
+speed4X = 0.2;
+
+speed1Y = 0; 
+speed2Y = 0;
+speed3Y = 0;
+speed4Y = 0;
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+			background.fillColor = 'black'
+			background.position = view.center
+			project.activeLayer.insertChild( 0, background )
+
+function onFrame(event) {
+
+	if( event.time > durationSeconds && running === true ){
+		
+		running = false
+		square1.remove()
+		square2.remove()
+		square3.remove()
+		square4.remove()
+		background.remove(); 
+		var background1 = new Path.Rectangle( view.center, view.bounds.width )
+		background1.fillColor = '#333333'
+		background1.position = view.center
+		document.title = 'Order and Chaos finished.'
+		console.log( 'Congratulations!' )
+
+	}
+
+	else if( running === true ) {
+
+		document.title = 'Order and Chaos '+ event.time.floor().toPaddedString( 2 ) +' seconds.'
+
+	// Part 1: 4 squares move left to right 
+	// Part 2 : when each square reaches right border, it bounces away
+	// Part 3: 4 squares are bouncing around
+
+	if(square1.position.x <= 0 || square1.position.x >= view.bounds.width - 33) {
+		square1HitEdge = true;
+		console.log('hit');
+	}
+
+	if(square2.position.x < 0 || square2.position.x > view.bounds.width - 33) {
+		square2HitEdge = true;
+	}
+
+	if(square3.position.x < 0 || square3.position.x > view.bounds.width - 33) {
+		square3HitEdge = true;
+	}
+
+	if(square4.position.x < 0 || square4.position.x > view.bounds.width - 33) {
+		square4HitEdge = true;
+	}
+
+	// square 1
+	if(square1HitEdge == false ) {
+		square1.position.x = square1.position.x + (speed1X * incr1X); 
+		square1.position.y = square1.position.y + (speed1Y * incr1Y); 
+	} else {
+		console.log('bounce');
+		incr1X = -1 * incr1X;
+		square1HitEdge = false;
+		speed1Y = Math.random(2) + 2;
+		speed1X = Math.random(5) + 2;
+
+		square1.position.x = square1.position.x + (speed1X * incr1X); 
+		square1.position.y = square1.position.y + (speed1Y * incr1Y); 
+		// do the chaotic movement
+
+	}
+	if (square1.position.y < 55 || square1.position.y > view.bounds.height - 75) {
+		incr1Y = -1 * incr1Y; 
+	}
+ // square 2: 
+
+	if(square2HitEdge == false ) {
+		square2.position.x = square2.position.x + (speed2X * incr2X); 
+		square2.position.y = square2.position.y + (speed2Y * incr2Y); 
+	} else {
+		console.log('bounce');
+		incr2X = -1 * incr2X;
+		square2HitEdge = false;
+		speed2Y = Math.random(3)+2;
+		speed2X = Math.random(6) + 2;
+
+		square2.position.x = square2.position.x + (speed2X * incr2X); 
+		square2.position.y = square2.position.y + (speed1Y * incr2Y); 
+		// do the chaotic movement
+
+	}
+	if (square2.position.y < 55 || square2.position.y > view.bounds.height - 75) {
+		incr2Y = -1 * incr2Y; 
+	}
+	// square 3: 
+
+		if(square3HitEdge == false ) {
+		square3.position.x = square3.position.x + (speed3X * incr3X); 
+		square3.position.y = square3.position.y + (speed3Y * incr3Y); 
+		} else {
+		console.log('bounce');
+		incr3X = -1 * incr3X;
+		square3HitEdge = false;
+		speed3Y = Math.random(5)+3;
+		speed3X = Math.random(4) + 3;
+
+		square3.position.x = square3.position.x + (speed3X * incr3X); 
+		square3.position.y = square3.position.y + (speed3Y * incr3Y); 
+
+		}
+	if (square3.position.y < 55 || square3.position.y > view.bounds.height - 75) {
+		incr3Y = -1 * incr3Y; 
+	}
+
+	// square 4: 
+
+		if(square4HitEdge == false ) {
+		square4.position.x = square4.position.x + (speed4X * incr4X); 
+		square4.position.y = square4.position.y + (speed4Y * incr4Y); 
+		} else {
+		console.log('bounce');
+		incr4X = -1 * incr4X;
+		square4HitEdge = false;
+		speed4Y = Math.random(8)+5;
+		speed4X = Math.random(5) + 2;
+
+		square4.position.x = square4.position.x + (speed4X * incr4X); 
+		square4.position.y = square4.position.y + (speed4Y * incr4Y); 
+		// do the chaotic movement
+
+	}
+	if (square4.position.y < 55 || square4.position.y > view.bounds.height - 75) {
+		incr4Y = -1 * incr4Y; 
+	}
+
+} // else if
+} // on frame
+
+</script>
+	</body>

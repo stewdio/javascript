@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>VisualizingJS - Included - Excluded</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<script charset="utf-8" src="scripts/paper.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+	
+var squareside=80;
+
+var square1 = new Path.Rectangle(view.bounds.bottomLeft-squareside,squareside);
+    square1.fillColor = 'white';
+    square1.selected=true;
+    square1.position.y -=20;
+    // square1.position.x =v
+    console.log("square1s position is "+ square1.position);
+// 
+// var square2 = new Path.Rectangle(square1.bounds.bottomLeft-squareside,squareside);
+//     square2.fillColor = 'white';
+//     square2.position.x -=10;
+//     // square2.selected=true
+//     console.log("square2's position is "+ square2.position);
+// 
+// var square3 = new Path.Rectangle(square2.bounds.bottomLeft-squareside,squareside);
+//     square3.fillColor = 'white';
+//     square3.position.x -=10;
+//     // square3.selected=true
+//     console.log("square3s position is "+ square3.position);
+// 
+// var square4 = new Path.Rectangle(square3.bounds.bottomLeft-squareside,squareside);
+//     square4.fillColor = 'white';
+//     square4.position.x -=10;
+//     // square4.selected=true
+
+
+var timeText = new PointText(view.center);
+    timeText.paragraphStyle.justification = 'center';
+    timeText.characterStyle.fontSize = 20;
+    timeText.fillColor = 'gray';
+    timeText.position=view.size/2;
+
+var frameCountText = new PointText(view.center);
+    frameCountText.paragraphStyle.justification = 'center';
+    frameCountText.characterStyle.fontSize = 20;
+    frameCountText.fillColor = 'gray';
+    frameCountText.position=view.size/2.5;
+
+
+var destination1;
+var destination2;
+var destination3;
+var destination4;
+var vector1;
+
+var theta=90;
+var angle = function(){
+            var increment=180;
+            theta+=increment;
+            return theta;
+        }
+
+var walk = function(item, event, direction){
+        var myEvent = event;
+        var dir=direction;
+            item.position += vector1/30;
+        if (item.position.x>destination1.x-10 && item.position.x<destination1.x){
+            item.position.x=destination.x;
+            item.rotate(Math.sin(theta)*10)
+        }
+        if (item.position.x != destination1.x-10){
+            item.rotate(Math.sin(theta)*10*dir);}
+            // console.log(destination1);
+            console.log(item.position);
+
+        }  
+ 
+        
+var onFrame = function(event){
+        timeText.content = Math.round(event.time);
+        angle();
+        destination1=new Point(view.size.width/2,view.size.height-20-squareside/2);
+
+        // console.log(vector1);
+        if (event.time<100 && event.count%5===0){
+        vector1 = destination1 - square1.position;
+
+        walk(square1,event,1);
+    }
+};
+		</script>
+	</body>
+</html>

@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Included to Excluded</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<div id="help">
+			
+		</div>
+		<script charset="utf-8" src="scripts/paper.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+
+
+// by Engin Ayaz, Sep 27 2012
+// Included to Excluded
+
+var square1 = new Path.Rectangle(new Point(150,150),100 )
+square1.fillColor = 'white'
+square1.rotate(45)
+square1.fillColor.alpha = 0.95
+
+var square2 = new Path.Rectangle(new Point(550,150), 100 )
+square2.fillColor = 'white'
+square2.rotate(135)
+square2.fillColor.alpha = 0.95
+
+var square3 = new Path.Rectangle(new Point(150,550), 100 )
+square3.fillColor = 'white'
+square3.rotate(-45)
+square3.fillColor.alpha = 0.95
+
+var square4 = new Path.Rectangle(new Point(550,550), 100 )
+square4.fillColor = 'white'
+square4.rotate(-135)
+square4.fillColor.alpha = 0.95
+
+var counter = 0
+var duration = 3600 // 60 seconds at 60 frames per sec
+
+var startTime = 150
+var firstInterval = 1200
+var secondInterval = 2400
+
+
+var vector1 = new Point(0,0)
+var vector2 = new Point(0,0)
+var vector3 = new Point(0,0)
+var vector4 = new Point(0,0)
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+background.fillColor = '222222'
+background.position = view.center
+background.fillColor.alpha = 0		
+
+var updateFreq = 30 // try 25
+var diminishValue = 10
+var square1_positionUpdate = 20
+
+var redColorDelta = 1/duration
+var redColorValue = 0
+
+//console.log(redColorChange)
+
+var onFrame = function( event ){
+	
+	//console.log( 'Frame number: '+ event.count )
+	console.log(redColorValue)
+	
+	if(event.count<duration){
+			
+			var testVar = event.count % updateFreq.floor()
+			//console.log(updateFreq.floor())
+	
+			if(testVar == 0){
+				var randomPoint = Point.random() * view.size
+			
+				vector1 = randomPoint - square1.position 
+				vector2 = randomPoint - square2.position
+				vector3 = randomPoint - square3.position 
+				vector4 = randomPoint - square4.position 
+			}
+			
+			square1.position += (vector1 / square1_positionUpdate )
+			square2.position += (vector2 / 35)
+			square3.position += (vector3 / 40)
+			square4.position += (vector4 / 45)
+			
+			//console.log( square1_positionUpdate )
+			
+			if (vector1.length < diminishValue) {
+       			 randomPoint = Point.random() * view.size
+   			 }
+			
+			if(event.count>firstInterval){
+				updateFreq = 40
+			}
+			
+			if(event.count>secondInterval){
+				updateFreq = 50
+			}
+			
+			square1.fillColor = new HsbColor(0, redColorValue, 1)
+			square1.fillColor.alpha = 0.95
+			
+			redColorValue+= redColorDelta
+			
+			square1_positionUpdate+= 0.06
+	}
+	
+	if(event.count >= duration){
+		square1.remove()
+		square2.remove()
+		square3.remove()
+		square4.remove()
+		background.fillColor.alpha = 1
+		document.title = 'Engins sketch done.'
+	}
+	
+}
+		</script>
+	</body>
+</html>

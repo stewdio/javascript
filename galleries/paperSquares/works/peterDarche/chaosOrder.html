@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+		<title>Chaos to Order</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+	</body>
+	<script charset="utf-8" src="scripts/paper.js"></script>
+	<script charset="utf-8" src="scripts/skip.js"></script>
+	<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+
+
+//Classes
+var Square = {
+	rect : undefined,
+	velocity : undefined,
+	acceleration : undefined,
+	config : function(){
+		this.rect.strokeWidth = 4
+		this.rect.fillColor = 'white'
+	},
+	flutter : function(mag){
+		var currPos = this.rect.position,
+			randX = (currPos.x - mag).random(currPos.x + mag),
+			randY = (currPos.y - mag).random(currPos.y + mag),
+			randPos = new Point (randX, randY),
+			randVec = randPos - currPos
+		
+		this.rect.position += randVec
+	},
+	grow : function(){
+		this.rect.scale(1.001)
+		this.opacity += .1
+	},
+	shrink : function(){
+		this.rect.scale(.999)
+		this.rect.opacity -= .1
+	},		
+	applyForce : function(force){
+
+		this.acceleration += force
+	},
+	update : function(drag){
+		this.velocity += this.acceleration 
+		this.velocity *= (.1 * drag)
+		this.rect.position += this.velocity
+
+	}	
+}
+
+var Attractor = {
+
+	rect: undefined,
+	config : function(){
+		this.rect.strokeWidth = 4
+		this.rect.fillColor = 'white'
+	},
+	move : function(max, min){
+
+	    if (this.rect.position.x > max || this.rect.position.x < min) {
+	       this.velocity.x *= - 1;
+	    }
+
+	    if (this.rect.position.y > max || this.rect.position.y < min) {
+	      this.velocity.y *= - 1;
+    	}
+
+    	this.rect.position += this.velocity 
+	},
+	attract : function(s){
+		var curPos = new Point (this.rect.position.x, this.rect.position.y ),
+			force = curPos - s.rect.position,
+			distance = this.rect.position.getDistance(s.rect.position)
+			
+		force.normalize()
+		strength = 2 / distance
+	    force *= strength
+	    return force
+	},
+}
+
+//Setup
+var dice = 0,
+	counter = 30,
+	squares = [],
+	max = 400,
+	min = 200,
+	attractors = []
+
+for( var i = 0; i < 4; i++ ){
+	var start = new Point( 300, 300 ), //(window.innerWidth/2 - 200 ) + i * 80, window.innerHeight/2
+		end = new Point (301, 301),
+		s = Object.create( Square )
+
+	s.rect = new Path.Rectangle( start, 50 )
+	s.velocity = start - end
+	s.acceleration = start - end
+	s.config()
+	squares.push(s)
+}
+
+var a = Object.create( Attractor),
+	start = new Point (300, 300),
+	end = new Point (295, 298),
+	vec = end - start
+
+	a.velocity = vec
+	a.rect = new Path.Rectangle( start, 20 )
+	// a.config()
+
+for (var j = 0; j < 4; j++){
+
+	var attractor = Object.create( Attractor ),
+		pos = new Point (200 + (75 * j), 300)
+
+		attractor.rect = new Path.Rectangle( pos, 2)
+		// attractor.config()
+
+		attractors.push(attractor)
+}
+
+//Draw
+var onFrame = function( event ){	
+
+		event.count % 40 === 0  && counter > 0 ? counter-- : null
+
+		if (max > 305 && min < 295 ){
+
+			if ( event.count % 3 === 0 ){	
+				for ( var i = 0 ; i < squares.length; i++ ){
+					
+					squares[i].flutter(counter);
+					
+					var force = a.attract(squares[i])
+
+					squares[i].applyForce(force)
+
+					squares[i].update(1);
+				} 
+
+			} 
+
+			a.move(max, min);	
+			max -= .05
+			min += .05
+
+		} 
+		else {
+
+			console.log(attractors)
+
+			for(var j = 0; j < attractors.length; j++){
+
+				var newForce = attractors[j].attract(squares[j])
+
+				squares[j].applyForce(newForce)
+
+				squares[j].update(.3)
+
+			}
+
+		}
+
+		if (event.count > 3000 && event.count < 3500){
+			console.log("there")
+			for ( var k = 0; k < 4 ; k++){
+				var vector = attractors[k].rect.position - squares[k].rect.position
+				vector *= .03
+				squares[k].rect.position += vector
+			}
+		}
+
+		else if(event.count > 3500){
+			$('canvas').remove()
+		}
+
+
+}
+
+//  Whenever the window is resized, recenter the path.
+var onResize = function( event ){
+	view.center
+}
+
+function changeSize(){
+		event.count % 60 === 0 ? dice = Math.random() * 100 : null
+
+		if( dice > 0 && dice < 33 ){
+			for ( var i = 0 ; i < squares.length; i++ ){
+				squares[0].grow();
+				squares[1].shrink();
+				squares[2].grow();
+				squares[3].shrink();
+			} 
+
+			
+		} else if ( dice >= 34 && dice < 66 ){
+			
+			for ( var j = 0 ; j < squares.length; j++ ){
+				squares[1].grow();
+				squares[2].shrink();
+				squares[3].grow();
+				squares[0].shrink();
+			} 			
+
+		} 
+}
+
+function randomWalk(){
+	for( var i = 0; i < 4; i++ ){
+		squares[i].rect.position += Math.random() * 10
+		squares[i].rect.position += Math.random() * -10
+		squares[i].rect.position.x += -.5
+	}
+}
+
+function randomFlash(event){
+	if(event.count % 5 === 0){	
+		for(var i = 0; i < 4; i++ ){
+			var newPos = new Point (Math.random() * 1200 , Math.random() * 700)
+			squares[i].rect.position = newPos
+		}
+	}
+}
+
+function goRight(){
+for ( var i = 0; i < 4; i++ ){
+		
+		squares[i].rect.position.y -= 10;
+		// squares[i].rect.position.x += 10;
+	}
+}
+
+onResize()
+
+
+	</script>
+</html>

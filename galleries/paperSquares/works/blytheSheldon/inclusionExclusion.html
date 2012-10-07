@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Inclusion and Exclusion</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<script charset="utf-8" src="scripts/paper.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+	
+	
+
+
+var square1 = new Path.Rectangle(new Point(400, 222), 100);
+//square1.strokeColor = 'black';
+square1.fillColor = 'white';
+square1.fillColor.brightness = .68
+square1.rotate(-12);
+
+var square2 = new Path.Rectangle(new Point(480, 285), 100);
+//square2.strokeColor = 'black';
+square2.fillColor = 'white';
+square2.fillColor.brightness = .78
+square2.rotate(35);
+
+var square3 = new Path.Rectangle(new Point(410, 347), 100);
+//square3.strokeColor = 'black';
+square3.fillColor = 'white';
+square3.fillColor.brightness = 0.90
+square3.rotate(15);
+
+var square4 = new Path.Rectangle( new Point( 200, 280 ) , 100 )
+//square4.strokeColor = 'black';
+square4.fillColor = 'white';
+square4.rotate(70);
+
+
+
+
+//  Let's create a Group and put the first 3 squares in it.
+
+var group = new Group()
+//group.addChild( square1 )
+group.addChild( square2 )
+group.addChild( square3 )
+
+
+//  We want to wait to add our 4th square so
+//  here's a flag that we'll set to false
+//  until our 4th square is ready to join.
+
+var joinedGroupAlready = false
+
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+background.fillColor = 'black'
+background.position = view.center
+project.activeLayer.insertChild( 0, background )
+
+
+Path.prototype.rotation = 0
+Path.prototype.myRotate = function( changeInRotation ){
+
+	this.rotation += changeInRotation
+	this.rotate( changeInRotation )
+}
+
+
+
+		
+function onFrame( event ){
+		
+		
+		//  Here's where we deal with that 4th square.
+		//  If it's not yet part of the group then we have to decide:
+		//  1. do we move it?
+		//  2. or is it ready to join the group?
+		
+		if( joinedGroupAlready === false ){
+
+			if( square4.position.x > 540 ){
+
+				group.addChild( square4 )
+				joinedGroupAlready = true
+			}
+			else {
+
+				square4.position += [ 20, -2 ]
+			}
+		
+		
+		
+		
+		
+		}
+
+
+		//  Here's where we deal with the other squares
+
+		square1.position += [ -6, -2 ]
+		//square1.rotate(2);
+			
+			if (square1.position.x < 100 ){
+					square1.position = new Point (100, 124);
+					square1.rotate(-1);
+					group.addChild( square1);
+			}
+			
+		//group.rotate(1);
+	
+		setTimeout(start);
+			
+		
+}
+
+function start() {
+
+
+    var timer = setTimeout(function() {
+    
+   		var destination = new Point (40, 150);
+   		var currentPosition = new Point (550, 353);
+   		var vector = destination - currentPosition;
+   		
+   			square4.position += vector/25;
+   			if (square4.position.x < 160) {
+   				square4.position = new Point(152, 130);
+   				}
+   				square4.rotate(-1);
+    }, 4000);
+    
+    
+        var timer = setTimeout(function() {
+    
+   		var destination = new Point (40, 150);
+   		var currentPosition = new Point (550, 353);
+   		var vector = destination - currentPosition;
+   		
+   			square3.position += vector/25;
+   			
+   			if (square3.position.x < 160) {
+   				square3.position = new Point(152, 180);
+   				}
+   				square3.rotate(-1);
+ 
+    }, 8000);
+
+    
+        var timer = setTimeout(function() {
+        
+        var destination = new Point (40, 150);
+   		var currentPosition = new Point (550, 353);
+   		var vector = destination - currentPosition;
+    		
+    		//square2.rotate(-20);
+    		square2.position -= [ 4, 2 ];
+    
+    
+    }, 10000);
+    		
+    		
+    		var timer = setTimeout(function() {
+    		square2.rotate(-15);
+			if (square2.position.x < 50) {
+    				square2.position -= [ -4.2, -2.5];
+    				}
+
+
+			  }, 12000);
+			  
+			
+			var timer = setTimeout(function() {
+    		 
+    		square2.rotate(10);
+			if (square2.position.x < 50) {
+    				square2.position -= [ -4.2, -2.5];
+    				//square2.rotate(-15);
+    				}
+
+
+			  }, 15000);
+			  
+			  var timer = setTimeout(function() {
+			  
+			  square2.rotate(12);
+			  if (square2.position.x < 50) {
+    				square2.position -= [ -4.2, -2.5];
+    			//	square2.rotate(-5);
+    				square2.fillColor = 'red'
+				square2.fillColor.brightness = .03
+
+    				square2.fillColor.alpha = .60
+    				}
+
+
+			  }, 16000);
+			  
+			    var timer = setTimeout(function() {
+			  
+			  square2.position -= [ -5, -2.5];
+			  
+			 // square2.rotate(-2);
+
+
+			  }, 17000);
+			  
+			var timer = setTimeout(function() {
+			  rotate(1);
+			  
+			  //square2.rotate(1);
+			 
+
+
+			  }, 18000);
+			  
+			      var timer = setTimeout(function() {
+			  rotate(1);
+
+		
+			 
+
+			  }, 19000);
+
+				
+			var timer = setTimeout(function() {
+			rotate(1); 
+		
+			var throughVector = new Point (500, 200);
+			var toVector = new Point (-450, 12);
+			curveBy( throughVector, toVector); 
+
+			
+			
+			 
+
+			  }, 35000);
+			  
+			  var timer = setTimeout(function() {
+			rotate(-1);
+			
+			var throughVector = new Point (450, 200);
+			var toVector = new Point (200, -30);
+			curveBy( throughVector, toVector); 
+						 
+
+			  }, 35500);
+			  
+			var timer = setTimeout(function() {
+
+			square2.position += [ -6, -2 ]
+						 
+
+			  }, 36000);
+			  
+			  
+			var timer = setTimeout(function() {
+
+			square4.position += [ 1, -3 ]
+						 
+
+			  }, 40000);
+	
+			  
+			  
+		var timer = setTimeout(function() {
+
+			square3.position += [ 5, -2 ]
+						 
+
+			  }, 45000);
+			  
+			  
+		var timer = setTimeout(function() {
+
+			square3.position += [ 10, -2 ]
+						 
+
+			  }, 50000); 
+			  
+	
+		var timer = setTimeout(function() {
+
+		
+			square1.scale(.50) 
+
+			  }, 55000);	  
+			  	  	  
+			  
+			  
+			  
+			  
+			var timer = setTimeout(function() {
+
+			group.remove();
+			background.remove()
+			document.title = 'Paper finished.'
+						 
+
+			  }, 60000);
+
+	
+	}
+
+
+		</script>
+	</body>
+</html>
