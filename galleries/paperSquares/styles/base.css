@@ -10,8 +10,8 @@ body, h1, h2, h3, h4, h5, h6, p, form, input, textarea, select, address, th
 	margin:  0;
 	padding: 0;
 	font-family: "Lucida Grande", Geneva, Verdana, Arial, sans-serif;
-	font-size:    9pt;
-	line-height: 15pt;
+	font-size:   12px;
+	line-height: 20px;
 	font-weight: normal;
 	font-style:  normal;
 	color: rgba( 255, 255, 255, 0.5 );
@@ -28,73 +28,46 @@ body
 
 a
 {
-	color: #36C;
+	border-bottom: 1px dotted #FFF;
+	color: #FFF;
 	text-decoration: none;
 }
 a:hover
 {
-	border-bottom: 1px dotted #36C;
-}
-a:active
-{
-	border-bottom: 1px solid #36C;
+	border-bottom: 1px solid #FFF;
 }
 
 
 
 
-h1, h2
-{
-	font-size:   15pt;
-	line-height: 25pt;
-}
 h1
 {
-	padding: 0 0 36px 8px;
-}
-h2
-{
-	font-size:   12pt;
-	line-height: 20pt;
-	margin-bottom: 1pt;/*  Strange that it needs this little breath  */
-}
-p + h1, p + h2, code + h2
-{
-	margin-top: 15pt;
-}
-p + p
-{
-	/*margin-top: 15pt;*/
-	text-indent: 12px !important;
-}
-ol, ul, li
-{
-	margin:  0;
-	padding: 0;
-	list-style: none;
+	padding: 0 0 36px 6px;
+	color: #FFF;
+	font-size:   20px;
+	line-height: 30px;
 }
 .pad
 {
-	padding: 8px;
+	padding: 6px;
 }
 .clear
 {
 	clear: both;
 }
-
 #page
 {
 	position: relative;
 	/*margin: 0 auto;
 	width: 960px;
 	min-height: 100%;*/
-	padding: 36px 60px 120px 60px;
+	padding: 36px 60px 20px 60px;
 }
 
 
 
 
-.work
+.tile
 {
 	position: relative;
 	float: left;
@@ -102,36 +75,36 @@ ol, ul, li
 	height: 224px;
 	overflow: hidden;
 }
-.work img
+.tile img
 {
 	width:  180px;
 	height: 180px;
 }
-.work a, .work a:hover
+.tile a, .tile a:hover
 {
 	border: none;
 }
-.work:hover img
+.tile:hover img
 {
 	background-color: #222;
 }
-.work p, .work .pad
+.tile p, .tile .pad
 {
-	padding: 0 0 0 8px;
+	padding: 0 0 0 6px;
 }
-.work .title
+.tile .title
 {
 	color: rgba( 255, 255, 255, 0.2 );
 }
-.work .author
+.tile .author
 {
 	color: rgba( 255, 255, 255, 0.1 );
 }
-.work:hover .title
+.tile:hover .title
 {
 	color: #FFF;
 }
-.work:hover .author
+.tile:hover .author
 {
 	color: rgba( 255, 255, 255, 0.5 );
 }
@@ -141,9 +114,23 @@ ol, ul, li
 
 #about
 {
-	width: 360px;
+	width: 372px;
 }
 #about .pad
 {
-	padding: 60px 8px 60px 8px;
+	padding: 120px 6px 0 6px;
+}
+
+
+
+
+canvas
+{
+	position: absolute;
+	top:  50%;
+	left: 50%;
+	margin: -300px 0 0 -300px;
+	width:  600px;
+	height: 600px;
+	/*background-color: #000;*/
 }

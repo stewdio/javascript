@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../../styles/base.css" />
+		<title>Robust Fragile</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<!-- div id="help">
+			<a target="_blank" href="http://paperjs.org/examples">Paper.js examples &rarr;</a><br />
+			<a target="_blank" href="http://paperjs.org/tutorials">Paper.js tutorials &rarr;</a><br />
+		</div -->
+		<script charset="utf-8" src="../../scripts/paper.js"></script>
+		<script charset="utf-8" src="../../scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+	
+	
+	
+
+//  We've specified the canvas size in two places:
+//  Up above in the HTML (this is where the canvas "resolution" is set)
+//  and in the CSS (/styles/bass.css) we set the pixel size.
+//  If these two sizes match we're looking at something 100% resolution.
+//  We also set the background color to black in the CSS.
+
+
+
+
+    ////////////////////
+   //                //
+  //   Characters   //
+ //                //
+////////////////////
+
+
+//  Create a red square-shaped Path
+//  with its upper-left corner at the center of the canvas
+//  and all sides 90px long.
+
+var square1 = new Path.Rectangle( view.bounds.bottomLeft, 90 )
+square1.fillColor = 'red'
+
+
+//  Create another square just like it.
+//  Expect afterward we'll set the .position property "manually".
+//  Notice how now the square's center (not its upper-left corner)
+//  is in the canvas's center.
+//  An interesting gotch-ya!
+
+var square2 = new Path.Rectangle(view.bounds.topLeft - 95, 90 )
+square2.fillColor = 'green'
+
+
+//  Now we'll create a third square, 
+//  but with some transparency
+//  and positioned on the bottom-left corner of the canvas.
+
+var square3 = new Path.Rectangle( view.bounds.bottomLeft, 200 )
+square3.fillColor = '#0000FF'
+square3.fillColor.alpha = 0.8
+
+var square4 = new Path.Rectangle(view.bounds.topLeft - 100, 90)
+square4.fillColor = 'yellow'
+square4.fillColor.alpha = 0.8
+
+//  We'll create another similar one
+//  but in the bottom-right corner.
+//  Oh, and we're going to create a property called "destination"
+//  that we'll use in the second half of the animation.
+
+
+
+
+//  Lastly we'll create a black background square that remains in place
+//  for the duration of the animation. 
+//  We want it to appear behind everything else, but because we're creating 
+//  it last it wants to appear on top. One way to fix this is to use 
+//  insertChild() on the active Layer. 
+//  For more info see these URLs and search for "insertChild" on both:
+//  http://paperjs.org/reference/path
+//  http://paperjs.org/reference/layer
+//  And have a look at the related hierarchy commands.
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+background.fillColor = 'black'
+background.position = view.center
+project.activeLayer.insertChild( 0, background )
+
+
+//  We haven't discussed prototypal inheritance yet, but you can learn a lot
+//  from these two examples. 
+//  Paper doesn't keep track of absolute rotation. 
+//  That's ok, we can just add that functionality to ANYTHING that inherits
+//  from the Path{} object by adding to Path's prototype like so:
+
+Path.prototype.rotation = 0
+Path.prototype.myRotate = function( changeInRotation ){
+
+	this.rotation += changeInRotation
+	this.rotate( changeInRotation )
+}
+
+
+
+
+    //////////////
+   //          //
+  //   Loop   //
+ //          //
+//////////////
+
+
+//  This is the real deal right here. You're about to animate in Paper.
+//  You should pay special attention to this Paper tutorial page:
+//  http://paperjs.org/tutorials/animation/creating-animations/
+
+
+//  How many seconds do we want our animation to last for?
+//  Should our animation be running?
+
+var durationSeconds = 60
+var running = true
+
+
+//  Here's one way to break down an animation into simple steps.
+//  In the animation loop we'll check what step we're on, 
+//  perform an action, and check if we should move on to the next step.
+
+var stepNumber = 0
+
+		//square2.fullySelected = true;
+
+
+//  Paper calls the onFrame() function with every tick of its clock.
+//  Ideally its clock ticks 60 frames per second.
+
+var onFrame = function( event ){
+
+
+	//  onFrame() is passed an argument called 'event'.
+	//  This event{} object contains three properties:
+	//  'count' is the current frame number,
+	//  'time' is the current time elapsed in seconds, and
+	//  'delta' is the time since the last frame was rendered.
+	//  Try uncommenting these lines one at a time
+	//  to see what's happening via the console:
+	
+	//console.log( 'Frame number: '+ event.count )
+	//console.log( 'Time elapsed: '+ event.time )
+	//console.log( 'Time elapsed since the last call to onFrame(): '+ event.delta )	
+	
+	
+	//  Should our animation still be running?
+	//  Let's check by comparing our elapsed frame count (event.count)
+	//  to our duration in seconds, multiplied by Frames Per Second.
+	
+	if( event.time > durationSeconds && running === true ){
+		
+		running = false
+		square1.remove()
+		square2.remove()
+		square3.remove()
+		square4.remove()
+		background.remove()
+		document.title = 'Paper finished.'
+		console.log( 'Congratulations!' )
+	}
+
+	else if( running === true ) {
+
+		document.title = 'Paper at '+ event.time.floor().toPaddedString( 2 ) +' seconds.'
+	
+
+		//  Notice how the rotate() function is relative, not absolute!
+		//  ie. We're not setting the degree of rotation to 1 or -1
+		//  but instead we're adding +1 or -1 to whatever the existing
+		//  state of rotation is.
+	
+		//square1.rotate(  1 )
+		//square2.rotate( -1 )
+
+
+		//  Using PaperScript we can add to our current position in a few ways.
+		//  The "proper way" is probably to create a new Point like this:
+
+		//square2.position += new Point( .5, - 1 )
+
+
+		//  But because Paper is flexible we can just use a two-dimensional
+		//  array instead like this if we wanted to and it would be the same:
+		//  square2.position += [ 1, -1 ]
+
+
+		//  Now we'll get fancy:
+		//  We'll just change square3's position by a few units on the X-axis,
+		//  but then have some fun on the Y-axis
+		//  using some math methods created by Skip.js.
+
+		//  One thing to note here is the scale() function. It's the same as 
+		//  Processing's map() function, but because "map" is such an important
+		//  concept to languages like Lisp and Scheme (upon which JavaScript is
+		//  based) it seemed a bad idea to name something "map" here that didn't
+		//  do Lisp-style mapping. In fact, future versions of JavaScript will 
+		//  indeed have their own built-in "map" function based on Scheme's.
+	
+		square3.position += [ 1, -2.5]
+		square3.rotate(.08);
+		
+		square3.position.y = view.bounds.height - square3.position.x.scale( 0, view.bounds.width, 0, PI ).sine().multiply( 100 ) - 80
+
+
+
+		//  Up until now we've been using the built-in rotate() function on
+		//  all of our squares. But remember how we added a myRotate()
+		//  function to the Path object's prototype above? 
+		//  We can totally use that instead and it will keep track of the
+		//  elapsed rotations for us in our custom .rotate property!
+
+		
+		//console.log( 'Rotation of Square3: '+ square3.rotation +' degrees.' )
+
+
+
+
+		//  What step is our animation on, and what should we do about it?
+
+		switch( stepNumber ){
+			
+			case 0:
+				if( event.time >= 3 ) 
+				stepNumber ++
+				break;
+
+			case 1:
+				//square1.scale( 2.0 )//  See comment below.
+				//square3.scale(3.0);
+				stepNumber ++
+				break;
+
+			case 2:
+				if( event.time >= 18) stepNumber ++
+				//square3.rotate(-0.08)
+				break;
+
+			case 3:
+			
+				//  Note how scaling is cumulative.
+				//  As in, we're scaling to 200% of the CURRENT size,
+				//  not 200% of the original size.
+
+				square2.position = view.center
+			
+				stepNumber ++
+				break;
+				
+		}
+
+
+		//  Let's try some time-specific commands:
+		
+		if( event.time.isBetween( 5, 6 )){
+			
+			square3.scale(0.5);
+			square3.position += [ -2, 2 ] 
+			square1.position = view.center
+		
+			}
+
+		if( event.time.isBetween( 5.2, 5.9 )){
+			
+			square3.scale(2.7)
+		
+				
+			square1.rotate(-2.5);
+			square1.scale(1.05);
+			square3.scale(1.01)
+		}
+		
+			if( event.time.isBetween( 9, 9.5 )){
+		
+			square1.scale(0.45);
+			
+			square1.scale(2)
+				
+				if (event.time.isBetween(9, 10)) {
+			
+					
+					square3.fillColor.alpha = .20
+		
+
+					square2.scale(1.05);
+					square2.position += [ 8, 5 ];
+					square1.position = view.center
+					
+					
+					
+					}
+				}
+					
+		if( event.time.isBetween( 10, 13 )){
+			
+			square3.rotate(-.5)
+			square2.rotate(-.05)
+			square1.rotate(-.06)
+	
+			
+		}
+		
+		if( event.time.isBetween( 13.2, 17 )){
+			
+			square2.rotate(.06)
+			
+			
+	
+		
+			
+		}
+		
+		
+		
+		if( event.time.isBetween( 20, 25 )){
+		
+		setTimeout("moveAway()", 23)
+			    
+		for (var i = 0; i <= 10; i++) {
+       	var segment = square4.segments[i];
+       	var segment2 = square1.segments[i]
+
+        // A cylic value between -1 and 1
+        var sinus = Math.sin(event.time * 3 + i);
+        
+        // Change the y position of the segment point:
+         segment.point.y = sinus * 210 + 100;
+         segment2.point.y = sinus * 200 + 120
+
+    }
+
+}
+
+
+
+
+
+		if( event.time.isBetween( 28, 32 )){
+
+		for (var j = 0; j <= 10; j++) {
+       	 segment1 = square2.segments[j];
+
+        // A cylic value between -1 and 1
+        sinus1 = Math.sin(event.time * 3 + j);
+        
+        // Change the y position of the segment point:
+         segment1.point.x = sinus1 * 110 + 200;
+        
+    }
+
+}
+
+	if (event.time.isBetween(34, 40)) {
+			
+			square1.rotate(.5)
+			square2.rotate(.5)
+			square2.position += [2, -2]
+			
+
+		
+				if (square2.position.x >= view.bounds.width - 100) {
+					//square2.position = view.center
+					var newDest = view.center
+					var newVector = square2.position - newDest
+					square2.position -= newVector * 2
+						square2.rotate(1)
+					}
+		
+		}
+		
+		
+	
+			
+		if( event.time.isBetween( 10, 50 )){
+		
+	
+			 	var destination = square2.bounds.bottomRight + 95
+			 	var vector = square4.bounds.bottomRight - destination
+			 	console.log(vector/1000)
+			 	
+			 	square2.position += vector/100
+			 	square4.position -= vector/30
+			 	square4.rotate(-.05)
+			 	
+			 	//var square1Vector = (square1.bounds.bottomRight-100) - destination
+			 	square1.position -= vector/100	
+			 
+		}
+		
+		
+		if( event.time.isBetween( 40, durationSeconds )){
+		
+				
+				square1.rotate(-.1)
+			 	square2.rotate(-.5)	
+			 	
+			 	square1.fillColor.alpha = .5
+				square2.fillColor.alpha = .7
+				
+				square1.position -= [ 2, -1.5]
+					if (square1.position.x < 100) {
+						square1.position -= [ -2, 2 ]
+						if (square1.position.y < 50) {
+							square1.position -= [ 3, -3]
+							}
+					}
+				}	 
+		
+	
+		
+		}
+		
+	}
+
+
+
+function moveAway() {
+
+		square1.scale(1.02) 
+		
+		//move towards the bottom left of the canvas
+		
+		//var square1_destination = view.bounds.topRight
+		//var v = square1_destination - square1.position;
+		square1.position += [ 2, 5 ]
+		
+		}
+		
+
+
+
+
+
+		</script>
+	</body>
+</html>

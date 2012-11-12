@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../../styles/base.css" />
+		<title>Inessah- Robust Fragile</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+
+		<script charset="utf-8" src="../../scripts/paper.js"></script>
+		<script charset="utf-8" src="../../scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+
+var squareA = new Path.Rectangle( new Point (-90, 210), 90)
+squareA.fillColor = 'white'
+squareA.fillColor.alpha = 0.5
+
+var squareB = new Path.Rectangle( new Point (-90, 210), 90)
+squareB.fillColor = 'white'
+squareB.fillColor.alpha = 0.5
+
+var squareC = new Path.Rectangle( new Point (-90, 300), 90)
+squareC.fillColor = 'white'
+squareC.fillColor.alpha = 0.5
+
+var squareD = new Path.Rectangle( new Point (-90, 300), 90)
+squareD.fillColor = 'white'
+squareD.fillColor.alpha = 0.5
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+background.fillColor = 'black'
+background.position = view.center
+project.activeLayer.insertChild( 0, background )
+
+var durationSeconds = 60
+var running = true
+var stepNumber = 0
+
+
+var onFrame = function( event ){
+
+	if( event.time > durationSeconds && running === true ){
+		
+		running = false
+		squareA.remove()
+		squareB.remove()
+		squareC.remove()
+		squareD.remove()
+		background.remove()
+		document.title = 'Horray! You did it!'
+		console.log( 'Congratulations!' )
+	}
+
+	else if( event.time < 60 && running === true ) {
+
+		document.title = 'Paper at '+ event.time.floor().toPaddedString( 2 ) +' seconds.'
+
+		if( event.time.isBetween( 1, durationSeconds ) && squareA.position.x < 345 ) {
+			squareA.position.x += 1
+			}
+
+		if (event.time > 9){
+			squareA.fillColor.alpha +=0.01
+		}
+
+
+		if( event.time.isBetween( 11, durationSeconds ) && squareB.position.x < 255 )
+		{
+			squareB.position.x += 1
+		}
+
+		if (event.time > 19){
+			squareB.fillColor.alpha +=0.01
+		}
+
+
+		if( event.time.isBetween( 21, durationSeconds ) && squareC.position.x <  345 )
+		{
+			squareC.position.x += 1
+		}
+
+		if (event.time > 29){
+			squareC.fillColor.alpha +=0.01
+		}
+
+
+		if( event.time.isBetween( 31, durationSeconds) && squareD.position.x <  255 )
+		{
+			squareD.position.x += 1
+		}
+
+		if (event.time > 39){
+			squareD.fillColor.alpha +=0.01
+		}
+
+		// The Fragile Fall
+		if(event.time.isBetween ( 43, durationSeconds)){
+			squareA.rotate ( 1 ) 
+			squareA.position.y +=3
+		}
+
+		if(event.time.isBetween ( 47, durationSeconds)){
+			squareB.rotate ( -3 ) 
+			squareB.position.y +=1
+		}
+
+		if(event.time.isBetween ( 52, durationSeconds)){
+			squareC.rotate ( 2 ) 
+			squareC.position.y +=2
+		}
+
+		if(event.time.isBetween ( 55, durationSeconds)){
+			squareD.rotate ( 3 ) 
+			squareD.position.y +=1
+		}
+	}
+}
+
+
+
+
+		</script>
+	</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Twitter Earth</title>
+	</head>
+	<body>
+		<div id="page">
+			<nav></nav>
+			<article>					
+
+
+
+					
+				<h1>Twitter Earth</h1>
+				<p>
+					Today we’re going to workshop playing with Twitter (and Google Maps) data.
+					Here are some links to get you started,
+					and I’ll revise / post template code afterwards so you can get on your way
+					with the homework.
+				</p><br />
+				<p>
+					<a target="blank" href="https://dev.twitter.com/docs/api/1">Twitter’s REST API, version 1.0</a>.
+					We will be using Twitter’s deprecated API (rather than their shiny new version 1.1)
+					because version 1.0 does not require authentication and therefore will be simpler
+					for us to play with. But do be aware that this deprecated API will eventually disappear.
+					(Hopefully not for some time after the semester’s end!)
+				</p><br />
+				<p>
+					<a target="_blank" href="http://search.twitter.com/search.json?geocode=0,0,6400km">Actual Twitter API JSON results</a>.
+					This is literally the URL your code will use to query Twitter. 
+					Loading it in the browser will allow you to see the plaintext that makes up Twitter’s JSON response
+					to your API call. 
+					It may look daunting at first, but you can use the console to make it digestible:
+					Open up your console and type <code class="inline">var data = </code> and before you hit enter
+					copy and paste the twitter data. (Then, yes, hit enter.)
+					You’ll see that now you can inspect your <code class="inline">data</code> variable easily.					
+				</p><br />
+				<p>
+					<a target="_blank" href="https://api.twitter.com/1/account/rate_limit_status.json">Your current Twitter API Rate Limit</a>.
+					You’re only allowed so many calls to the Twitter API within a certain amount of time <strong>per IP address</strong>.
+					Know your limits!
+					The Twitter documentation states that you have 150 requests per hour but
+					is that really the case? 
+					Keep an eye on it.			
+				</p><br />
+				<p>
+					<a target="_blank" href="http://stackoverflow.com/questions/3506208/jquery-ajax-cross-domain">jQuery’s JSONP example</a>.
+					This gets right at what we were discussing in class.
+					You need to fetch some JSON data from a domain that is not your own.
+					Modern browsers don’t want to let you do this because it’s a possible security risk.
+					The <a target="_blank" href="http://en.wikipedia.org/wiki/JSONP">JSONP protocol</a>
+					will allow you to make it happen. And jQuery makes it easy.
+				</p><br />
+				<p>
+					<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/geocoding">Google Maps Geocoding Service</a>.
+					You can send a location name as text to the Google Maps API and it will do its best to match that to a latitude and longitude.
+					You might not get what you wanted (Remember Paris vs. Paris, Texas?) but you will likely get something.
+					Have a look at the <a target="_blank" href="https://google-developers.appspot.com/maps/documentation/javascript/examples/geocoding-simple">Google Maps geocoding example</a>
+					and be sure to view its source code.
+					For more on the Google Maps API in general see 
+					<a target="_blank" href="https://developers.google.com/maps/documentation/javascript/examples/">Google Maps JavaScript examples</a>.
+				</p>
+
+
+				<h2>Twitter Earth template</h2>
+				<p>
+					Yes. Sample code that already queries Twitter for tweets, 
+					and if those tweets don’t come with latitude and longitude 
+					this code will query the Google Maps API with whatever text
+					the Twitter user has entered for their location.					
+					Download the new code package:
+					<a href="packages/twitterEarth.zip">twitterEarth.zip</a>.
+					Here’s what you’ll find inside:
+				</p>
+				<br />
+				<a href="packages/twitterEarth.zip"><img class="block" src="media/twitterEarth.jpg" /></a>
+				<br />
+				<p>
+					This code template is also built to run in App Engine.
+					Can’t remember what to do with App Engine files?
+					<a href="05-3-homework.html">Have a look back at this</a>.
+				</p>
+				<p>
+					The code is “disarmed” at the moment: 
+					It will use some canned tweets stored in <code class="inline">/static/scripts/database.js</code>
+					so that you can load it up and begin to test without it counting against your
+					Twitter API rate limit.
+					To re-arm find where <code class="inline">twitterApiArmed</code> has been set to <code class="inline">false</code>
+					and set it to <code class="inline">true</code>.
+				</p>
+
+
+
+
+			</article>
+		</div>
+		<script charset="utf-8" src="scripts/jquery.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" src="scripts/application.js"></script>
+	</body>
+</html>

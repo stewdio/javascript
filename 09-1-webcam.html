@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>Reading the webcam</title>
+	</head>
+	<body>
+		<div id="page">
+			<nav></nav>
+			<article>					
+
+
+
+					
+				<h1>Reading the webcam</h1>
+				<p>
+					The best way to start talking about HTML5 methods for reading data from a webcam 
+					is to just dive into our <a href="packages/webcamTemplate.zip">webcamTemplate.zip</a>.
+					Because <a target="_blank" href="http://en.wikipedia.org/wiki/WebRTC">WebRTC video</a>
+					is so new browser compatibility may be an issue for you.
+					Might I recommend <a target="_blank" href="https://www.google.com/intl/en/chrome/browser/">Chrome</a>?
+				</p>
+				<br />
+				<a href="packages/webcamTemplate.zip"><img class="block" src="media/webcamTemplate.jpg" /></a>
+				<p>
+					Open up <code class="inline">scripts/application.js</code> in your text editor
+					because that’s where the goods are. 
+					Like some of our previous templates it must run from an HTTP server 
+					(rather than straight off your desktop).
+					This is again due to browser security—overall a good thing.
+					Rather than use AppEngine to create an HTTP server, I thought we'd 
+					try this command-line method with smaller overhead:
+				</p>
+
+
+				<h2>Macintosh</h2>
+				<ol>
+					<li>Open your Terminal application.</li>
+					<li>Type <code class="inline">cd</code> (which stands for “change directory”) and leave a space after it, but do not hit enter.</li>
+					<li>In Finder navigate to the folder where you've stored this template.</li>
+					<li>Drag and drop the folder into Terminal. 
+						You will see the pathname of the Finder folder appear in Terminal.</li>
+					<li>Hit enter in Terminal.</li>
+					<li>Type <code class="inline">python -m SimpleHTTPServer</code> and hit enter.
+						This will start a light HTTP server on the default port, 8000.</li>
+					<li>Now you can visit the URL <a target="_blank" href="http://localhost:8000">http://localhost:8000</a> in your browser!</li>
+					<li>To quit the server go back to Terminal where the server is running
+						and hit <strong>Control+C</strong>.</li>
+				</ol>
+				<br />
+	
+
+				<h2>Windows</h2>
+				<p>
+					Similar to above, but you'll have some 
+					<a target="_blank" href="http://stackoverflow.com/questions/4621255/how-do-i-run-a-python-program-in-the-command-prompt-in-windows-7">Windows-specific trix</a> to juggle.					
+				</p>
+
+				<h2>Further reading</h2>
+				<ul>
+					<li><a target="_blank" href="http://en.wikipedia.org/wiki/WebRTC">WebRTC (Wikipedia)</a>.</li>
+					<li><a target="_blank" href="http://docs.python.org/2/library/simplehttpserver.html">Python's simple HTTP server</a>.</li>					
+				</ul>
+
+
+
+			</article>
+		</div>
+		<script charset="utf-8" src="scripts/jquery.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" src="scripts/application.js"></script>
+	</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../../styles/base.css" />
+		<title>Paper Squares</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<script charset="utf-8" src="../../scripts/paper.js"></script>
+		<script charset="utf-8" src="../../scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+	
+	
+//  We've specified the canvas size in two places:
+//  Up above in the HTML (this is where the canvas "resolution" is set)
+//  and in the CSS (/styles/bass.css) we set the pixel size.
+//  If these two sizes match we're looking at something 100% resolution.
+//  We also set the background color to black in the CSS.
+
+var durationSeconds = 60
+var running = true
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+background.fillColor = 'black'
+background.position = view.center
+project.activeLayer.insertChild( 0, background )
+
+var squareSize = 90
+var spacer = 2
+
+var square1 = new Path()
+square1.strokeColor = 'white'
+square1.add(new Point(view.center.x-spacer,view.center.y-spacer ))
+square1.add(new Point(view.center.x-spacer-squareSize,view.center.y-spacer ))
+square1.add(new Point(view.center.x-spacer-squareSize,view.center.y-spacer-squareSize ))
+square1.add(new Point(view.center.x-spacer,view.center.y-spacer-squareSize ))
+square1.v = [
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5)), 
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5)),	
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5)),
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5))
+			]
+square1.closed = true
+square1.fillColor = 'white'
+square1.timer = [1,1,1,1]
+square1Copy = square1.clone()
+square1Copy.opacity = 0
+
+var square2 = new Path()
+square2.strokeColor = 'white'
+square2.add(new Point(view.center.x+spacer,view.center.y-spacer ))
+square2.add(new Point(view.center.x+spacer+squareSize,view.center.y-spacer ))
+square2.add(new Point(view.center.x+spacer+squareSize,view.center.y-spacer-squareSize ))
+square2.add(new Point(view.center.x+spacer,view.center.y-spacer-squareSize ))
+square2.v = [
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5)), 
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5)),	
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5)),
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5))
+			]
+square2.closed = true
+square2.fillColor = 'white'
+square2.timer = [1,1,1,1]
+square2Copy = square2.clone()
+square2Copy.opacity = 0
+
+var square3 = new Path()
+square3.strokeColor = 'white'
+square3.add(new Point(view.center.x-spacer,view.center.y+spacer ))
+square3.add(new Point(view.center.x-spacer-squareSize,view.center.y+spacer ))
+square3.add(new Point(view.center.x-spacer-squareSize,view.center.y+spacer+squareSize ))
+square3.add(new Point(view.center.x-spacer,view.center.y+spacer+squareSize ))
+square3.v = [
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5)), 
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5)),	
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5)),
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5))
+			]
+square3.closed = true
+square3.fillColor = 'white'
+square3.timer = [1,1,1,1]
+square3Copy = square3.clone()
+square3Copy.opacity = 0
+
+square4 = new Path()
+square4.strokeColor = 'white'
+square4.add(new Point(view.center.x+spacer,view.center.y+spacer ))
+square4.add(new Point(view.center.x+spacer+squareSize,view.center.y+spacer ))
+square4.add(new Point(view.center.x+spacer+squareSize,view.center.y+spacer+squareSize ))
+square4.add(new Point(view.center.x+spacer,view.center.y+spacer+squareSize ))
+square4.v = [
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5)), 
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5)),	
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5)),
+				new Point ((Math.floor(Math.random()*(8))-5), (Math.floor(Math.random()*(8))-5))
+		    ]
+square4.closed = true
+square4.fillColor = 'white'
+square4.timer = [1,1,1,1]
+square4Copy = square4.clone()
+square4Copy.opacity = 0
+
+mover = function(square){
+	
+	for (var i = 1; i < 4; i++){
+	
+	square.segments[i].point.x += square.v[i].x 
+	square.segments[i].point.y += square.v[i].y
+	
+	}
+}
+
+checker = function( square, time ){
+	var impact = false;
+	for (var i = 1; i < 4; i++){
+		if(square.segments[i].point.x <= (0 + time*5.5) ){ 
+			square.v[i].x = (-1*(square.v[i].x))
+			impact = true
+			square.segments[i].point.x = (2 + time*5.5)
+			var a = Math.random()
+			square.opacity = a
+			
+		}
+	}
+	for (var i = 1; i < 4; i++){
+		if(square.segments[i].point.x >= (600-time*5.5) ){
+			square.v[i].x = (-1*(square.v[i].x))
+			impact = true
+			square.segments[i].point.x = (598 - time*5.5)
+			
+		}
+	}
+	for (var i = 1; i < 4; i++){
+		if(square.segments[i].point.y <= (0 + time*5.5) ){
+			square.v[i].y = (-1*(square.v[i].y))
+			impact = true
+			square.segments[i].point.y = (2 + time*5.5)
+			
+		}
+	}
+	for (var i = 1; i < 4; i++){
+		if(square.segments[i].point.y >= (600-time*5.5) ){
+			square.v[i].y = (-1*(square.v[i].y))
+			impact = true
+			square.segments[i].point.y = (598 - time*5.5)
+			
+		}
+	}
+	return impact
+}	
+
+buzz = function (square) {
+
+var i = (Math.floor(Math.random()*(3))+1)
+square.segments[i].point.x += (Math.floor(Math.random()*(3))-1)
+square.segments[i].point.y += (Math.floor(Math.random()*(3))-1)
+
+}
+
+intoShape = function (square, squareCopy, event) {
+
+	
+		for (var j = 0; j<4; j++){
+		
+			vectX = squareCopy.segments[j].point.x - square.segments[j].point.x
+			vectY = squareCopy.segments[j].point.y - square.segments[j].point.y 
+			square.segments[j].point.x += (vectX / 30)
+			square.segments[j].point.y += (vectY / 30)
+			square1.opacity += 1
+			square2.opacity += 1
+			square3.opacity += 1
+			square4.opacity += 1
+			
+			if (vectX < .1 && vectY < .1 && event.time <60) {
+			
+			
+			} if (vectX < .1 && vectY < .1 && event.time >60) {
+			
+			square1.opacity = 0
+			square2.opacity = 0
+			square3.opacity = 0
+			square4.opacity = 0
+			console.log('end')
+			
+		}
+	}
+}
+
+
+var onFrame = function( event ){
+
+
+	//  onFrame() is passed an argument called 'event'.
+	//  This event{} object contains three properties:
+	//  'count' is the current frame number,
+	//  'time' is the current time elapsed in seconds, and
+	//  'delta' is the time since the last frame was rendered.
+	//  Try uncommenting these lines one at a time
+	//  to see what's happening via the console:
+	
+	//console.log( 'Frame number: '+ event.count )
+	//console.log( 'Time elapsed: '+ event.time )
+	//console.log( 'Time elapsed since the last call to onFrame(): '+ event.delta )	
+	
+	
+	//  Should our animation still be running?
+	//  Let's check by comparing our elapsed frame count (event.count)
+	//  to our duration in seconds, multiplied by Frames Per Second.
+
+	
+	if( event.time > durationSeconds && running === true ){
+		
+		running = false
+		square1.remove()
+		square2.remove()
+		square3.remove()
+		square4.remove()
+		background.remove()
+		document.title = 'Paper finished.'
+		console.log( 'Congratulations!' )
+	}
+
+	else if( running === true ) {
+
+		document.title = 'Chaos/Order '+ event.time.floor().toPaddedString( 2 ) +' seconds.'
+	
+		if( event.time.isBetween( 0,5  )){
+			
+			buzz(square1)
+			buzz(square2)
+			buzz(square3)
+			buzz(square4)
+			
+		} else if( event.time.isBetween( 5, 50)){
+		
+			mover(square1)
+			mover(square2)
+			mover(square3)
+			mover(square4)
+
+			checker(square1, event.time)
+			checker(square2, event.time)
+			checker(square3, event.time)
+			checker(square4, event.time)			
+			
+		} else if ( event.time.isBetween (50, 59)) {
+	
+			intoShape(square1, square1Copy, event)
+			intoShape(square2, square2Copy, event)
+			intoShape(square3, square3Copy, event)
+			intoShape(square4, square4Copy, event)
+			
+		} else if ( event.time.isBetween(59, 60  )){
+		
+		buzz(square1)
+			buzz(square2)
+			buzz(square3)
+			buzz(square4)		
+			
+		} 
+	
+	}
+}
+
+
+
+
+		</script>
+	</body>
+</html>
+

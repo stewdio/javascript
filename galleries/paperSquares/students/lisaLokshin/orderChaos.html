@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../../styles/base.css" />
+		<title>Order - Chaos: Paper Squares</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<script charset="utf-8" src="../../scripts/paper.js"></script>
+		<script charset="utf-8" src="../../scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+	
+
+//  DARK
+
+var square1 = new Path.Rectangle( new Point (0, 0), 120 )
+square1.fillColor = '#ff06a4'
+
+//  YELLOW
+
+var square2 = new Path.Rectangle( new Point (0, 0), 120 )
+square2.fillColor = '#065eff'
+
+//  GREEN
+var square3 = new Path.Rectangle( new Point (0, 0), 120 )
+square3.fillColor = '#06ff7b'
+
+//  BLUE
+
+var square4 = new Path.Rectangle( new Point (0, 0), 120 )
+square4.fillColor = '#ffd906'
+
+
+//  BACKGROUND
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+background.fillColor = 'black'
+background.position = view.center
+project.activeLayer.insertChild( 0, background )
+
+    //////////////
+   //          //
+  //   Loop   //
+ //          //
+//////////////
+
+
+var durationSeconds = 60
+var running = true
+var stepNumber = 0
+
+var onFrame = function( event ){
+	
+	
+	var destination1 = new Point (60,60)
+	var destination2 = new Point (60,540)
+	var destination3 = new Point (60,540)
+	var destination4 = new Point (60,540)
+	
+	var destination3_2 = new Point (540,540)
+	var destination4_2 = new Point (540,540)
+	
+	var destination4_3 = new Point (540,60)
+	
+	var destination1_4 = new Point (60,540)
+	var destination2_4 = new Point (540,540)
+	var destination3_4 = new Point (540,60)
+	var destination4_4 = new Point (60,60)
+		
+	var destination1_5 = new Point (540,540)
+	var destination2_5 = new Point (540,60)
+	var destination3_5 = new Point (60,60)
+	var destination4_5 = new Point (60,540)
+	
+	var destination1_6 = new Point (540,60)
+	var destination2_6 = new Point (60,60)
+	var destination3_6 = new Point (60,540)
+	var destination4_6 = new Point (540,540)
+	
+	var destination1_7 = new Point (300,300)
+	var destination2_7 = new Point (300,300)
+	var destination3_7 = new Point (300,300)
+	var destination4_7 = new Point (300,300)
+	
+	var destination1_8 = new Point (-1000,-1000)
+	var destination2_8 = new Point (-1000,2000)
+	var destination3_8 = new Point (2000,2000)
+	var destination4_8 = new Point (2000,-1000)
+
+	if( event.time > durationSeconds && running === true ){
+		
+		running = false
+		square1.remove()
+		square2.remove()
+		square3.remove()
+		square4.remove()
+		background.remove()
+		document.title = 'Animation is complete.'
+		console.log( 'Congratulations!' )
+	}
+
+	else if( running === true ) {
+
+		document.title = 'Paper at '+ event.time.floor().toPaddedString( 2 ) +' seconds.'
+
+
+		if( event.time.isBetween(0, 5)){
+		
+			var vector = destination1 - square1.position
+			square1.position += vector / 60
+			
+			var vector = destination2 - square2.position
+			square2.position += vector / 60
+			
+			var vector = destination3 - square3.position
+			square3.position += vector / 60
+			
+			var vector = destination4 - square4.position
+			square4.position += vector / 60
+		}
+
+			
+		if( event.time.isBetween(5, 10)){	
+				
+
+			var vector = destination3_2 - square3.position
+			square3.position += vector / 60
+			
+			var vector = destination4_2 - square4.position
+			square4.position += vector / 60
+		}
+		
+		if( event.time.isBetween(10, 15)){			
+
+			var vector = destination4_3 - square4.position
+			square4.position += vector / 60
+			
+		}
+		
+		if( event.time.isBetween(15, 20)){			
+
+			var vector = destination1_4 - square1.position
+			square1.position += vector / 60
+			
+			var vector = destination2_4 - square2.position
+			square2.position += vector / 60
+			
+			var vector = destination3_4 - square3.position
+			square3.position += vector / 60
+			
+			var vector = destination4_4 - square4.position
+			square4.position += vector / 60
+			
+		}
+		
+		if( event.time.isBetween(20, 25)){			
+
+			var vector = destination1_5 - square1.position
+			square1.position += vector / 60
+			
+			var vector = destination2_5 - square2.position
+			square2.position += vector / 60
+			
+			var vector = destination3_5 - square3.position
+			square3.position += vector / 60
+			
+			var vector = destination4_5 - square4.position
+			square4.position += vector / 60	
+		}
+		
+		if( event.time.isBetween(25, 30)){			
+
+			var vector = destination1_6 - square1.position
+			square1.position += vector / 60
+			
+			var vector = destination2_6 - square2.position
+			square2.position += vector / 60
+			
+			var vector = destination3_6 - square3.position
+			square3.position += vector / 60
+			
+			var vector = destination4_6 - square4.position
+			square4.position += vector / 60	
+		}
+		
+		if( event.time.isBetween(30, 35)){			
+
+			var vector = destination1_7 - square1.position
+			square1.position += vector / 60
+			square1.rotate( 1 )
+			
+			var vector = destination2_7 - square2.position
+			square2.position += vector / 60
+			square2.rotate(  -1 )
+			
+			var vector = destination3_7 - square3.position
+			square3.position += vector / 60
+			square3.rotate(  1 )
+			
+			var vector = destination4_7 - square4.position
+			square4.position += vector / 60
+			square4.rotate(  -1 )
+		}
+		
+		if( event.time.isBetween(35, 40)){			
+
+			square1.rotate( 2 )
+			square2.rotate(  -2 )
+			square3.rotate(  2 )
+			square4.rotate(  -2 )
+		}
+		
+		if( event.time.isBetween(40, 45)){			
+
+			square1.rotate( 3 )
+			square2.rotate(  -3 )
+			square3.rotate(  3 )
+			square4.rotate(  -3 )
+		}
+		if( event.time.isBetween(45, 50)){			
+
+			square1.rotate( 4 )
+			square2.rotate(  -4 )
+			square3.rotate(  4 )
+			square4.rotate(  -4 )
+		}
+		if( event.time.isBetween(50, 55)){			
+
+			square1.rotate( 5 )
+			square2.rotate(  -5 )
+			square3.rotate(  5 )
+			square4.rotate(  -5 )
+		}
+		if( event.time.isBetween(55, 58)){			
+
+			square1.rotate( 10 )
+			square2.rotate(  -10 )
+			square3.rotate(  10 )
+			square4.rotate(  -10 )
+		}
+		
+		if( event.time.isBetween(58, 60)){
+		
+			var vector = destination1_8 - square1.position
+			square1.position += vector / 30
+			
+			var vector = destination2_8 - square2.position
+			square2.position += vector / 30
+			
+			var vector = destination3_8 - square3.position
+			square3.position += vector / 30
+			
+			var vector = destination4_8 - square4.position
+			square4.position += vector / 30
+		}
+		
+	}
+}
+
+		</script>
+	</body>
+</html>

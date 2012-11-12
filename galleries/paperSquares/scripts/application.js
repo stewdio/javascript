@@ -1,238 +1,223 @@
 
 
-var works = [
+var students = [
 
 	{
-		title:  'Chaos and Order',
-		author: 'Hiye Shin',
-		image:  'hiyeShin-chaosOrder.jpg',
-		handle: 'hiyeShin/chaosOrder/index.html'
+		name  : 'Hiye Shin',
+		handle: 'hiyeShin',
+		works : [{
+			name  : 'Chaos and Order', 
+			handle: 'chaosOrder'
+		},{
+			name  : 'Unfortunate', 
+			handle: 'unfortunate'
+		}]
 	},
 	{
-		title:  'Fortunate',
-		author: 'Hiye Shin',
-		image:  'hiyeShin-fortunate.jpg',
-		handle: 'hiyeShin/fortunate/index.html'
+		name  : 'Olya Mikhaliova',
+		handle: 'olyaMikhaliova',
+		works : [{
+			name  : 'Fortunate and Unfortunate', 
+			handle: 'fortunateUnfortunate'
+		},{
+			name  : 'Order and Chaos', 
+			handle: 'orderChaos'
+		}]
 	},
 	{
-		title:  'Fortunate and Unfortunate',
-		author: 'Olya Mikhaliova',
-		image:  'olyaMikhaliova-fortunateUnfortunate.jpg',
-		handle: 'olyaMikhaliova/fortunateUnfortunate/index.html'
+		name  : 'Hsiao-Wen (Tiffany) Chou',
+		handle: 'hsiaoWenChou',
+		works : [{
+			name  : 'Fortunate &amp; Unfortunate',//  IMAGE MISSING
+			handle: 'fortunateUnfortunate'
+		},{
+			name  : 'Order &amp; Chaos',//  IMAGE MISSING
+			handle: 'orderChaos'
+		}]
 	},
 	{
-		title:  'Order and Chaos',
-		author: 'Olya Mikhaliova',
-		image:  'olyaMikhaliova-orderChaos.jpg',
-		handle: 'olyaMikhaliova/orderChaos/index.html'
+		name  : 'Mark Breneman',
+		handle: 'markBreneman',
+		works : [{
+			name  : 'Included—Excluded', 
+			handle: 'includedExcluded'
+		},{
+			name  : 'Robust—Fragile', 
+			handle: 'robustFragile'
+		}]
 	},
 	{
-		title:  'Fortunate &amp; Unfortunate',
-		author: 'Hsiao-Wen (Tiffany) Chou',
-		image:  'imageMissing.jpg',
-		handle: 'hsiaoWenChou/fortunateUnfortunate/index.html'
+		name  : 'Robbie Tilton',
+		handle: 'robbieTilton',
+		works : [{
+			name  : 'Include and Exclude', 
+			handle: 'includeExclude'
+		},{
+			name  : 'Order and Chaos', 
+			handle: 'orderChaos'
+		}]
 	},
 	{
-		title:  'Included—Excluded',
-		author: 'Mark Breneman',
-		image:  'markBreneman-includedExcluded.jpg',
-		handle: 'markBreneman/includedExcluded/index.html'
+		name  : 'Inessah Selditz',
+		handle: 'inessahSelditz',
+		works : [{
+			name  : 'Order Chaos', 
+			handle: 'orderChaos'
+		},{
+			name  : 'Robust Fragile',
+			handle: 'robustFragile'
+		}]
 	},
 	{
-		title:  'Robust—Fragile',
-		author: 'Mark Breneman',
-		image:  'markBreneman-robustFragile.jpg',
-		handle: 'markBreneman/robustFragile/index.html'
+		name  : 'Robin Reid',
+		handle: 'robinReid',
+		works : [{
+			name  : 'Order Chaos', 
+			handle: 'orderChaos'
+		},{
+			name  : 'Robust Fragile',//  IMAGE MISSING
+			handle: 'robustFragile'
+		}]
 	},
 	{
-		title:  'Include and Exclude',
-		author: 'Robbie Tilton',
-		image:  'robbieTilton-includeExclude.jpg',
-		handle: 'robbieTilton/includeExclude.html'
+		name  : 'Joseph Lim',
+		handle: 'josephLim',
+		works : [{
+			name  : 'Chaos / Order', 
+			handle: 'chaosOrder'
+		},{
+			name  : 'Excluded / Included', 
+			handle: 'excludedIncluded'
+		}]
 	},
 	{
-		title:  'Order and Chaos',
-		author: 'Robbie Tilton',
-		image:  'robbieTilton-orderChaos.jpg',
-		handle: 'robbieTilton/orderChaos.html'
+		name  : 'Blythe Sheldon',
+		handle: 'blytheSheldon',
+		works : [{
+			name  : 'Inclusion and Exclusion', 
+			handle: 'inclusionExclusion'
+		},{
+			name  : 'Robust Fragile', 
+			handle: 'robustFragile'
+		}]
 	},
 	{
-		title:  'Order Chaos',
-		author: 'Inessah Selditz',
-		image:  'inessahSelditz-orderChaos.jpg',
-		handle: 'inessahSelditz/orderChaos/index.html'
+		name  : 'Peter Darche',
+		handle: 'peterDarche',
+		works : [{
+			name  : 'Chaos to Order', 
+			handle: 'chaosOrder'
+		},{
+			name  : 'Fortunate to Unfortunate', 
+			handle: 'fortunateUnfortunate'
+		}]
 	},
 	{
-		title:  'Robust Fragile',
-		author: 'Inessah Selditz',
-		image:  'inessahSelditz-robustFragile.jpg',
-		handle: 'inessahSelditz/robustFragile/index.html'
+		name  : 'Engin Ayaz',
+		handle: 'enginAyaz',
+		works : [{
+			name  : 'Included to Excluded', 
+			handle: 'includedExcluded'
+		},{
+			name  : 'Order to Chaos', 
+			handle: 'orderChaos'
+		}]
 	},
 	{
-		title:  'Order Chaos',
-		author: 'Robin Reid',
-		image:  'robinReid-orderChaos.jpg',
-		handle: 'robinReid/orderChaos/index.html'
+		name  : 'Patrick Muth',
+		handle: 'patrickMuth',
+		works : [{
+			name  : 'Included / Excluded',
+			handle: 'includedExcluded'
+		},{
+			name  : 'Order / Chaos',
+			handle: 'orderChaos'
+		}]
 	},
 	{
-		title:  'Chaos / Order',
-		author: 'Joseph Lim',
-		image:  'josephLim-chaosOrder.jpg',
-		handle: 'josephLim/chaosOrder.html'
+		name  : 'Lisa Lokshin',
+		handle: 'lisaLokshin',
+		works : [{
+			name  : 'Included—Excluded',
+			handle: 'includedExcluded'
+		},{
+			name  : 'Order—Chaos',
+			handle: 'orderChaos'
+		}]
 	},
 	{
-		title:  'Excluded / Included',
-		author: 'Joseph Lim',
-		image:  'josephLim-excludedIncluded.jpg',
-		handle: 'josephLim/excludedIncluded.html'
-	},
-	{
-		title:  'Inclusion and Exclusion',
-		author: 'Blythe Sheldon',
-		image:  'blytheSheldon-inclusionExclusion.jpg',
-		handle: 'blytheSheldon/inclusionExclusion.html'
-	},
-	{
-		title:  'Robust Fragile',
-		author: 'Blythe Sheldon',
-		image:  'blytheSheldon-robustFragile.jpg',
-		handle: 'blytheSheldon/robustFragile.html'
-	},
-	{
-		title:  'Chaos to Order',
-		author: 'Peter Darche',
-		image:  'peterDarche-chaosOrder.jpg',
-		handle: 'peterDarche/chaosOrder.html'
-	},
-	{
-		title:  'Fortunate to Unfortunate',
-		author: 'Peter Darche',
-		image:  'peterDarche-fortunateUnfortunate.jpg',
-		handle: 'peterDarche/fortunateUnfortunate.html'
-	},
-	{
-		title:  'Included to Excluded',
-		author: 'Engin Ayaz',
-		image:  'enginAyaz-includedExcluded.jpg',
-		handle: 'enginAyaz/includedExcluded.html'
-	},
-	{
-		title:  'Order to Chaos',
-		author: 'Engin Ayaz',
-		image:  'enginAyaz-orderChaos.jpg',
-		handle: 'enginAyaz/orderChaos.html'
-	},
-
-
-	//  Half shows
-
-	{ 
-		title:  'Animation 2',
-		author: 'Hsiao-Wen (Tiffany) Chou'
-	},
-	{
-		title:  'Animation 2',
-		author: 'Robin Reid'
-	},
-	
-
-	//  No shows
-
-	{
-		title:  'Animation 1',
-		author: 'Hanna Kang-Brown'
-	},
-	{
-		title:  'Animation 2',
-		author: 'Hanna Kang-Brown'
-	},
-	{
-		title:  'Animation 1',
-		author: 'Engin Ayaz'
-	},
-	{
-		title:  'Animation 2',
-		author: 'Engin Ayaz'
-	},
-	{
-		title:  'Animation 1',
-		author: 'Joseph McCagherty'
-	},
-	{
-		title:  'Animation 2',
-		author: 'Joseph McCagherty'
-	},
-	{
-		title:  'Animation 1',
-		author: 'K (Kaitlin) Till-Landry'
-	},
-	{
-		title:  'Animation 2',
-		author: 'K (Kaitlin) Till-Landry'
+		name  : 'Hanna Kang-Brown',
+		handle: 'hannaKangBrown',
+		works : [{
+			name  : 'Inclusive to Exclusive',
+			handle: 'inclusiveExclusive'
+		},{
+			name  : 'Order to Chaos',
+			handle: 'orderChaos'
+		}]
 	},
 	/*{
-		title:  'Animation 1',
-		author: 'Laura (Luca) Shaprio'
+		name  : 'Joseph McCagherty',
+		handle: 'josephMccagherty',
+		works : [{
+			name  : 'Untitled 1 of 2',
+			handle: 'untitled1'
+		},{
+			name  : 'Untitled 2 of 2',
+			handle: 'untitled2'
+		}]
 	},
-	{
-		title:  'Animation 2',
-		author: 'Laura (Luca) Shaprio'
-	},*/
-	{
-		title:  'Animation 1',
-		author: 'Patrick Muth'
-	},
-	{
-		title:  'Animation 2',
-		author: 'Patrick Muth'
-	}
+	{ name: 'K (Kaitlin) Till-Landry' }*/
+	//{ name: 'Laura (Luca) Shapiro' }
 ]
+//students.shuffle()
 
 
 
 
 $( document ).ready( function(){	
 	
-	var 
-	pageUrl = document.location.href.split( '/' ).pop(),
-	workTiles  = $( '#works' )
+	var tiles  = $( '#tiles' )
 
-	workTiles.empty()
-	works.forEach( function( work, i ){
+	tiles.empty()
+	students.forEach( function( student ){
 
-		var workTile = $( '<div>' ).addClass( 'work' )
+		var i, tile, work
 
-		if( work.handle ){
-			
-			if( work.image ){
-				workTile.append(
-					$('<a>')
-					.attr( 'href', 'works/'+ work.handle )
+		for( i = 0; i < 2; i ++ ){
+
+			tile = $( '<div>' ).addClass( 'tile' )
+			if( student.works && student.works[ i ]){
+
+				work = student.works[ i ]
+				tile.append(
+					$( '<a>' )
+					.attr( 'href', 'students/'+ student.handle +'/'+ work.handle +'.html' )
 					.attr( 'target', '_blank' )
 					.append(
-						$( '<img>' ).attr( 'src', 'media/'+ work.image )
+						$( '<img>' ).attr( 'src', 'students/'+ student.handle +'/'+ work.handle +'.jpg' )
+					)
+				).append(
+					$( '<div>' ).addClass( 'pad' ).append(
+						$( '<div>' ).addClass( 'title' ).html( work.name || 'Untitled' ),
+						$( '<div>' ).addClass( 'author' ).html( student.name )
 					)
 				)
 			}
 			else {
-				workTile.append( 
-					$( '<img>' ).attr( 'src', 'media/imageMissing.jpg' )
-				)			
+				
+				tile.append(
+					$( '<img>' ).attr( 'src', 'media/workMissing.png' )
+				).append(
+					$( '<div>' ).addClass( 'pad' ).append(
+						$( '<div>' ).addClass( 'title' ).html( 'Untitled '+ (i+1) +' of 2' ),
+						$( '<div>' ).addClass( 'author' ).html( student.name )
+					)
+				)
 			}
+			tiles.append( tile )
 		}
-		else {
-			workTile.append( 
-				$( '<img>' ).attr( 'src', 'media/workMissing.png' )
-			)
-		}
-		workTile.append(
-			$( '<div>' ).addClass( 'pad' ).append(
-				$( '<div>' ).addClass( 'title' ).html( work.title || 'Untitled' ),
-				$( '<div>' ).addClass( 'author' ).html( work.author )
-			)
-		)
-		workTiles.append( workTile )
-	})
+	})	
 })
 
 

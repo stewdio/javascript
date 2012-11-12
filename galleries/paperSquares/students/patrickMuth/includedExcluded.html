@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../../styles/base.css" />
+		<title>Included/Excluded</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<div id="help"></div>
+	</body>
+	<script charset="utf-8" src="../../scripts/paper.js"></script>
+	<script charset="utf-8" src="../../scripts/skip.js"></script>
+	<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+	
+
+
+
+
+
+var rectangle1 = new Rectangle(new Point(-100,25), new Point(-25,100));
+var square1 = new Path.Rectangle(rectangle1);  
+square1.fillColor = 'white';
+
+var rectangle2 = new Rectangle(new Point(625,25), new Point(700,100));
+var square2 = new Path.Rectangle(rectangle2);  
+square2.fillColor = 'white';
+
+var rectangle3 = new Rectangle(new Point(625,500), new Point(700,575));
+var square3 = new Path.Rectangle(rectangle3);  
+square3.fillColor = 'white';
+
+var rectangle4 = new Rectangle(new Point(-100,500), new Point(-25,575));
+var square4 = new Path.Rectangle(rectangle4);  
+square4.fillColor = 'white';
+
+
+//  Paper calls the onFrame function with every tick of the clock.
+//  Ideally this is 60 frames per second.
+
+var onFrame = function( event ){
+
+var sketchTime = event.time
+
+//if (event.time > 1  && event.time < 1.5 && square1.position.x < 100) {
+ if (sketchTime.isBetween(1,2) && square1.position.x < 100) {
+	square1.position.x = square1.position.x+5;
+
+}
+
+if (sketchTime.isBetween(2,3) && square2.position.x > 500) {
+
+	square2.position.x = square2.position.x-5;
+
+}
+
+if (sketchTime.isBetween(3,4) && square3.position.x > 500) {
+
+	square3.position.x = square3.position.x-5;
+
+}
+if (sketchTime.isBetween(4,5) && square4.position.x < 100) {
+
+	square4.position.x = square4.position.x+5;
+}
+
+if (sketchTime.isBetween(5,20)) {
+	
+	//Square 1
+	if (square1.position.x < 500 && square1.position.y < 100) {
+		square1.position.x = square1.position.x+5
+	}
+
+	else if (square1.position.x > 500 && square1.position.y < 537.5) {
+		square1.position.y = square1.position.y+5
+	}
+
+	else if (square1.position.x > 100 && square1.position.y < 550) {
+		square1.position.x = square1.position.x-5
+	}
+	
+	else if (square1.position.x < 100 && square1.position.y > 100) {
+
+		square1.position.y = square1.position.y-5
+
+	}
+
+	//Square 2
+		if (square2.position.x < 500 && square2.position.y < 100) {
+		square2.position.x = square2.position.x+5
+	}
+
+	else if (square2.position.x > 500 && square2.position.y < 537.5) {
+		square2.position.y = square2.position.y+5
+	}
+
+	else if (square2.position.x > 100 && square2.position.y < 550) {
+		square2.position.x = square2.position.x-5
+	}
+	
+	else if (square2.position.x < 100 && square2.position.y > 100) {
+
+		square2.position.y = square2.position.y-5
+
+	}
+
+	//Square 3
+		if (square3.position.x < 500 && square3.position.y < 100) {
+		square3.position.x = square3.position.x+5
+	}
+
+	else if (square3.position.x > 500 && square3.position.y < 537.5) {
+		square3.position.y = square3.position.y+5
+	}
+
+	else if (square3.position.x > 100 && square3.position.y < 550) {
+		square3.position.x = square3.position.x-5
+	}
+	
+	else if (square3.position.x < 100 && square3.position.y > 100) {
+
+		square3.position.y = square3.position.y-5
+
+	}
+
+	//Square 4
+		if (square4.position.x < 500 && square4.position.y < 100) {
+		square4.position.x = square4.position.x+5
+	}
+
+	else if (square4.position.x > 500 && square4.position.y < 537.5) {
+		square4.position.y = square4.position.y+5
+	}
+
+	else if (square4.position.x > 100 && square4.position.y < 550) {
+		square4.position.x = square4.position.x-5
+	}
+	
+	else if (square4.position.x < 100 && square4.position.y > 100) {
+
+		square4.position.y = square4.position.y-5
+
+	}
+
+}
+
+	 if (sketchTime.isBetween(20.01, 21)) {
+
+	 	square1.position.y = square1.position.y-5
+
+	if (square2.position.x < 400 && square2.position.y < 200) {
+		square2.position.x = square2.position.x+5
+	}
+
+	else if (square2.position.x > 400 && square2.position.y < 437.5) {
+		square2.position.y = square2.position.y+5
+	}
+
+	else if (square2.position.x > 200 && square2.position.y < 450) {
+		square2.position.x = square2.position.x-5
+	}
+	
+	else if (square2.position.x < 200 && square2.position.y > 200) {
+
+		square2.position.y = square2.position.y-5
+
+
+	 }
+
+	if (square3.position.x < 400 && square3.position.y < 200) {
+		square3.position.x = square3.position.x+5
+	}
+
+	else if (square3.position.x > 400 && square3.position.y < 437.5) {
+		square3.position.y = square3.position.y+5
+	}
+
+	else if (square3.position.x > 200 && square3.position.y < 450) {
+		square3.position.x = square3.position.x-5
+	}
+	
+	else if (square3.position.x < 200 && square3.position.y > 200) {
+
+		square3.position.y = square3.position.y-5
+
+	}
+
+	if (square4.position.x < 500 && square4.position.y < 100) {
+		square4.position.x = square4.position.x+5
+	}
+
+	else if (square4.position.x > 500 && square4.position.y < 537.5) {
+		square4.position.y = square4.position.y+5
+	}
+
+	else if (square4.position.x > 100 && square4.position.y < 550) {
+		square4.position.x = square4.position.x-5
+	}
+	
+	else if (square4.position.x < 100 && square4.position.y > 100) {
+
+		square4.position.y = square4.position.y-5
+
+	}
+
+
+	}
+
+	if (sketchTime.isBetween(21,39)) {
+
+
+		 if (square1.position.x < 400 && square1.position.y < 200) {
+		square1.position.x = square1.position.x+5
+	}
+
+	else if (square1.position.x > 400 && square1.position.y < 437.5) {
+		square1.position.y = square1.position.y+5
+	}
+
+	else if (square1.position.x > 200 && square1.position.y < 450) {
+		square1.position.x = square1.position.x-5
+	}
+	
+	else if (square1.position.x < 200 && square1.position.y > 200) {
+
+		square1.position.y = square1.position.y-5
+
+	}
+
+	if (square2.position.x < 400 && square2.position.y < 200) {
+		square2.position.x = square2.position.x+5
+	}
+
+	else if (square2.position.x > 400 && square2.position.y < 437.5) {
+		square2.position.y = square2.position.y+5
+	}
+
+	else if (square2.position.x > 200 && square2.position.y < 450) {
+		square2.position.x = square2.position.x-5
+	}
+	
+	else if (square2.position.x < 200 && square2.position.y > 200) {
+
+		square2.position.y = square2.position.y-5
+
+
+	 }
+
+	if (square3.position.x < 400 && square3.position.y < 200) {
+		square3.position.x = square3.position.x+5
+	}
+
+	else if (square3.position.x > 400 && square3.position.y < 437.5) {
+		square3.position.y = square3.position.y+5
+	}
+
+	else if (square3.position.x > 200 && square3.position.y < 450) {
+		square3.position.x = square3.position.x-5
+	}
+	
+	else if (square3.position.x < 200 && square3.position.y > 200) {
+
+		square3.position.y = square3.position.y-5
+
+	}
+
+	if (square4.position.x < 500 && square4.position.y < 100) {
+		square4.position.x = square4.position.x+5
+	}
+
+	else if (square4.position.x > 500 && square4.position.y < 537.5) {
+		square4.position.y = square4.position.y+5
+	}
+
+	else if (square4.position.x > 100 && square4.position.y < 550) {
+		square4.position.x = square4.position.x-5
+	}
+	
+	else if (square4.position.x < 100 && square4.position.y > 100) {
+
+		square4.position.y = square4.position.y-5
+
+	}
+	}
+	
+	if (sketchTime.isBetween(39,41)) {
+
+
+		square1.position.x = square1.position.x+5;
+		square2.position.x = square2.position.x+5;
+		square3.position.x = square3.position.x+5;
+
+			if (square4.position.x < 500 && square4.position.y < 100) {
+		square4.position.x = square4.position.x+5
+	}
+
+	else if (square4.position.x > 500 && square4.position.y < 537.5) {
+		square4.position.y = square4.position.y+5
+	}
+
+	else if (square4.position.x > 100 && square4.position.y < 550) {
+		square4.position.x = square4.position.x-5
+	}
+	
+	else if (square4.position.x < 100 && square4.position.y > 100) {
+
+		square4.position.y = square4.position.y-5
+
+	}
+
+	}
+
+	if (sketchTime.isBetween(41.01, 42)) {
+
+		square1.position.x = 625
+		square2.position.x = 710
+		square3.position.x = 805
+		square1.position.y = 300
+		square2.position.y = 300
+		square3.position.y = 300
+
+	
+
+	if (square4.position.x < 500 && square4.position.y < 100) {
+		square4.position.x = square4.position.x+5
+	}
+
+	else if (square4.position.x > 500 && square4.position.y < 537.5) {
+		square4.position.y = square4.position.y+5
+	}
+
+	else if (square4.position.x > 100 && square4.position.y < 550) {
+		square4.position.x = square4.position.x-5
+	}
+	
+	else if (square4.position.x < 100 && square4.position.y > 100) {
+
+		square4.position.y = square4.position.y-5
+
+	}
+
+}
+
+if (sketchTime.isBetween(42,46)) { 
+
+	square1.position.x = square1.position.x-5
+	square2.position.x = square2.position.x-5
+	square3.position.x = square3.position.x-5
+
+if (square4.position.x < 500 && square4.position.y < 100) {
+		square4.position.x = square4.position.x+5
+	}
+
+	else if (square4.position.x > 500 && square4.position.y < 537.5) {
+		square4.position.y = square4.position.y+5
+	}
+
+	else if (square4.position.x > 100 && square4.position.y < 550) {
+		square4.position.x = square4.position.x-5
+	}
+	
+	else if (square4.position.x < 100 && square4.position.y > 100) {
+
+		square4.position.y = square4.position.y-5
+
+	}}
+
+if (sketchTime.isBetween(46.01, 47)) {
+
+		square1.position.x = -25
+		square2.position.x = -110
+		square3.position.x = -200
+		square1.position.y = 300
+		square2.position.y = 300
+		square3.position.y = 300
+
+
+if (square4.position.x < 500 && square4.position.y < 100) {
+		square4.position.x = square4.position.x+5
+	}
+
+	else if (square4.position.x > 500 && square4.position.y < 537.5) {
+		square4.position.y = square4.position.y+5
+	}
+
+	else if (square4.position.x > 100 && square4.position.y < 550) {
+		square4.position.x = square4.position.x-5
+	}
+	
+	else if (square4.position.x < 100 && square4.position.y > 100) {
+
+		square4.position.y = square4.position.y-5
+
+	}
+
+}
+
+if (sketchTime.isBetween(47, 55)) {
+
+	square1.position.x = square1.position.x+5
+	square2.position.x = square2.position.x+5
+	square3.position.x = square3.position.x+5
+
+
+if (square4.position.x < 500 && square4.position.y < 100) {
+		square4.position.x = square4.position.x+5
+	}
+
+	else if (square4.position.x > 500 && square4.position.y < 537.5) {
+		square4.position.y = square4.position.y+5
+	}
+
+	else if (square4.position.x > 100 && square4.position.y < 550) {
+		square4.position.x = square4.position.x-5
+	}
+	
+	else if (square4.position.x < 100 && square4.position.y > 100) {
+
+		square4.position.y = square4.position.y-5
+
+	}
+
+}
+
+if (sketchTime.isBetween(55.01, 60)) {
+
+	square4.position.x = square4.position.x-5
+}
+
+
+
+}
+
+//  Whenever the window is resized, recenter the path.
+
+var onResize = function( event ){
+
+
+
+}
+
+
+
+
+
+	</script>
+</html>

@@ -95,6 +95,13 @@ ol, ul, li
 {
 	margin:  0;
 	padding: 0;
+}
+ol
+{
+	/*margin-left: 18px;*/
+}
+ul li
+{
 	list-style: none;
 }
 .pad
@@ -141,10 +148,10 @@ nav tr.lessonHeader td
 {
 	padding-top: 15px;
 }
-tr.lessonHeader + tr.lessonHeader td
+/*tr.lessonHeader + tr.lessonHeader td
 { 
 	padding-top: 0;
-}
+}*/
 nav td.lessonNumber
 {
 	width: 24px;

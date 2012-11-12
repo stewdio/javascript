@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../../styles/base.css" />
+		<title>Paper template</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<script charset="utf-8" src="../../scripts/paper.js"></script>
+		<script charset="utf-8" src="../../scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+
+//var square1 = new Path.Rectangle;
+var square1 = new Path.Rectangle(new Point (0, 504), 90 )
+square1.fillColor = 'white'
+square1.destination = Point.random() * view.size
+
+//var square2 = new Path.Rectangle;
+var square2 = new Path.Rectangle(new Point(184, 504), 90 )
+square2.fillColor = 'white'
+square2.destination = Point.random() * view.size
+
+//var square3 = new Path.Rectangle;
+var square3 = new Path.Rectangle(new Point(368, 504), 90 )
+square3.fillColor = 'white'
+square3.destination = Point.random() * view.size
+
+//var square4 = new Path.Rectangle;
+var square4 = new Path.Rectangle(new Point(552, 504), 90 )
+square4.fillColor = 'white'
+square4.destination = Point.random() * view.size
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+background.fillColor = 'black'
+background.position = view.center
+project.activeLayer.insertChild( 0, background )
+
+var count = 4;
+
+var symbol = new Symbol(path);
+
+/*for (var i = 0; i < count; i++) {
+    var center = Point.random() * view.size;
+    var placedSymbol = symbol.place(center);
+    placedSymbol.scale(i / count);
+}*/
+
+var durationSeconds = 30
+
+var running = true
+
+var stepNumber = 0
+
+var onFrame = function( event ){
+	
+if( event.time > durationSeconds && running === true ){
+		
+		running = false
+		square1.remove()
+		square2.remove()
+		square3.remove()
+		square4.remove()
+		background.remove()
+		document.title = 'Paper finished.'
+		console.log( 'Congratulations!' )
+	}
+	
+	else if( running === true ) {
+
+		document.title = 'Paper at '+ event.time.floor().toPaddedString( 2 ) +' seconds.'
+	
+	//square1.position += new Point( 1, 0 )
+	//square2.position += new Point( 1, 0 )
+	//square3.position += new Point( 1, 0 )
+	//square4.position += new Point( 1, 0 )
+	
+       /*for (var i = 0; i < count; i++) {
+        var item = project.activeLayer.children[i];
+
+	 item.position.x += item.bounds.width / 65;
+			  
+			if (item.bounds.left > view.size.width) {
+			            item.position.x = -item.bounds.width;*/
+			
+			if( event.time.isBetween( 2, durationSeconds ) ){
+
+				          var vector = square1.destination - square1.position
+							square1.position += vector / 24
+										if( vector.length < 11 ){
+
+			square1.destination = Point.random() * view.size
+														}
+			
+			if( event.time.isBetween( 2, durationSeconds ) ){
+
+                           var vector = square2.destination - square2.position
+							square2.position += vector / 26
+										if( vector.length < 9 ){
+
+			square2.destination = Point.random() * view.size
+										}
+			
+			if( event.time.isBetween( 2, durationSeconds ) ){
+
+							var vector = square3.destination - square3.position
+							square3.position += vector / 28
+						if( vector.length < 7 ){
+							
+			square3.destination = Point.random() * view.size
+						}
+			
+			if( event.time.isBetween( 2, durationSeconds )){
+
+							var vector = square4.destination - square4.position
+							square4.position += vector / 30
+						if( vector.length < 5 ){
+							
+			square4.destination = Point.random() * view.size
+		}
+		}
+		}
+			}
+			}
+}
+}
+		</script>
+	</body>
+</html>

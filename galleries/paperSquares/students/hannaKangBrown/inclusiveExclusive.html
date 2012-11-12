@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../../styles/base.css" />
+		<title>Inclusive to Exclusive</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<script charset="utf-8" src="../../scripts/paper.js"></script>
+		<script charset="utf-8" src="../../scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+	
+	
+	
+
+//Create a white square 90 px size at the middle of the page.
+
+var square1 = new Path.Rectangle(new Point(view.size.width/2-45, view.size.height/2), 90)
+square1.fillColor = 'white'
+
+
+//  Create another square just like it.
+
+var square2 = new Path.Rectangle( view.center-45, 90 )
+square2.fillColor = 'white'
+square2.position = view.center-45
+
+
+//  third square, same
+
+var square3 = new Path.Rectangle( new Point( 345,view.size.height/2), 90 )
+square3.fillColor = 'white'
+
+
+//  Fourth excluded square with transparency
+
+var square4 = new Path.Rectangle(new Point( 0, view.size.height-90), 90 )
+square4.fillColor = 'white'
+
+// square4.position = view.center
+square4.fillColor.alpha = 0.5
+square4.destination = Point.random() * view.size
+
+
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+background.fillColor = 'black'
+background.position = view.center
+project.activeLayer.insertChild( 0, background )
+
+
+Path.prototype.rotation = 0
+Path.prototype.myRotate = function( changeInRotation ){
+
+	this.rotation += changeInRotation
+	this.rotate( changeInRotation )
+}
+
+
+//Loop
+
+var durationSeconds = 60
+var running = true
+//var stepNumber = 0
+
+
+var onFrame = function( event ){
+	
+	if( event.time > durationSeconds && running === true ){
+		
+		running = false
+		square1.remove()
+		square2.remove()
+		square3.remove()
+		square4.remove()
+		background.remove()
+		document.title = 'Exclusive Inclusive finished.'
+		console.log( 'Congratulations!' )
+	}
+
+	else if( running === true ) {
+
+		document.title = 'Exclusive Inclusive at '+ event.time.floor().toPaddedString( 2 ) +' seconds.'
+	
+		square1.rotate(  1 )
+		square2.rotate( -1 )
+		square3.rotate( 1 )
+	
+		if( event.time.isBetween(5, 9)){
+		
+			square4.position.x+= 1
+			}
+		
+		if( event.time.isBetween(12, 13)){
+			
+			square4.position.y-= 1
+			}
+		
+		if( event.time.isBetween(15, 21)){
+			
+			square4.position.x+= 1
+			}
+		
+		if( event.time.isBetween(22, 23)){
+						
+			square4.position.y-= 1
+			}
+		if( event.time.isBetween(24, 25)){
+
+			square4.position.x-= 1
+			}
+		if( event.time.isBetween(25, 26)){
+
+			square4.position.x+= 1
+			}
+		if( event.time.isBetween(27, 28)){
+
+			square4.position.y-= 1
+			}
+		if( event.time.isBetween(28, 29)){
+
+			square4.position.x-= 1
+			}	
+		if( event.time.isBetween(29, 30)){
+
+			square4.position.x+= 1
+			}
+			if( event.time.isBetween(32, 33)){
+
+				square4.position.y-= 1
+				}
+			if( event.time.isBetween(33, 34)){
+
+				square4.position.x-= 1
+				}	
+			if( event.time.isBetween(34, 36)){
+
+				square4.position.x+= 1
+				}		
+				if( event.time.isBetween(39, 41)){
+
+					square2.position.x -= .4
+					}
+					if( event.time.isBetween(43, 44)){
+
+						square4.position.y-= .5
+						}
+					if( event.time.isBetween(45, 52)){
+
+						square4.position.x-= .5
+						}
+						if( event.time.isBetween(53, 60)){
+
+							square4.rotate(-1)
+							square4.fillColor.alpha += 0.01
+					
+							
+							}
+						
+    	// if( event.time.isBetween( 31, durationSeconds)){
+    	// 
+    	// 		var vector = square4.destination-square4.position
+    	// 		square4.position += vector / 30
+    	// 		if( vector.length < 5 ){
+    	// 	
+    	// 			square4.destination = Point.random() * view.size
+    	// 		}
+		// }
+	}			
+}
+
+
+
+
+
+		</script>
+	</body>
+</html>
+
+
+<!--scrap code
+var vector = destination - square4.position;
+
+// We add 1/30th of the vector to the position property
+// of the text item, to move it in the direction of the
+// destination point:
+square4.position += vector / 30;
+
+// Set the content of the text item to be the length of the vector.
+// I.e. the distance it has to travel still:
+square4.content = Math.round(vector.length);
+
+// If the distance between the path and the destination is less
+// than 5, we define a new random point in the view to move the
+// path to:
+	if (vector.length < 5) {
+    destination = Point.random() * view.size;*/-->

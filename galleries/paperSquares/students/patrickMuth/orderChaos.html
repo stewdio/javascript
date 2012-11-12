@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../../styles/base.css" />
+		<title>Order/Chaos </title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<div id="help"></div>
+	</body>
+	<script charset="utf-8" src="../../scripts/paper.js"></script>
+	<script charset="utf-8" src="../../scripts/skip.js"></script>
+	<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+	
+
+
+
+//  Create a circle shaped path with its center at the center
+//  of the view and a radius of 180:
+
+var rectangle1 = new Rectangle(new Point(60,600), new Point(135,675));
+var square1 = new Path.Rectangle(rectangle1);  
+square1.fillColor = 'white';
+
+var rectangle2 = new Rectangle(new Point(185,600), new Point(260,675));
+var square2 = new Path.Rectangle(rectangle2);  
+square2.fillColor = 'white';
+
+var rectangle3 = new Rectangle(new Point(310,600), new Point(385,675));
+var square3 = new Path.Rectangle(rectangle3);  
+square3.fillColor = 'white';
+
+var rectangle4 = new Rectangle(new Point(435,600), new Point(510,675));
+var square4 = new Path.Rectangle(rectangle4);  
+square4.fillColor = 'white';
+
+
+
+//  Paper calls the onFrame function with every tick of the clock.
+//  Ideally this is 60 frames per second.
+
+var onFrame = function( event ){
+
+	if ((event.time > 1  && event.time < 1.5  && square1.position.y > 500) || 
+		(event.time > 5  && event.time < 5.5  && square1.position.y > 400) || 
+		(event.time > 9  && event.time < 9.5  && square1.position.y > 305) || 
+		(event.time > 13 && event.time < 13.5 && square1.position.y > 200) || 
+		(event.time > 17 && event.time < 17.5 && square1.position.y > 100) ||
+		(event.time > 21 && event.time < 21.5 && square1.position.y > -75)) {
+
+		square1.position.y = square1.position.y-10;
+
+	}
+
+	if ((event.time > 2  && event.time < 2.5  && square2.position.y > 500)  || 
+		(event.time > 6  && event.time < 6.5  && square2.position.y > 400) || 
+		(event.time > 10 && event.time < 10.5 && square2.position.y > 300) || 
+		(event.time > 14 && event.time < 14.5 && square2.position.y > 200) || 
+		(event.time > 18 && event.time < 18.5 && square2.position.y > 100) ||
+		(event.time > 22 && event.time < 22.5 && square2.position.y > -75)) {
+
+		square2.position.y = square2.position.y-10;
+
+	}
+
+	if ((event.time > 3  && event.time < 3.5  && square3.position.y > 500) ||
+	    (event.time > 7  && event.time < 7.5  && square3.position.y > 400) || 
+	    (event.time > 11 && event.time < 11.5 && square3.position.y > 300) || 
+	    (event.time > 15 && event.time < 15.5 && square3.position.y > 200) || 
+	    (event.time > 19 && event.time < 19.5 && square3.position.y > 100) ||
+	    (event.time > 23 && event.time < 23.5 && square3.position.y > -75)) {
+
+		square3.position.y = square3.position.y-10;
+
+	}
+
+	if ((event.time > 4  && event.time < 4.5  && square4.position.y > 500) || 
+		(event.time > 8  && event.time < 8.5  && square4.position.y > 400) || 
+		(event.time > 12 && event.time < 12.5 && square4.position.y > 300) || 
+		(event.time > 16 && event.time < 16.5 && square4.position.y > 200) || 
+		(event.time > 20 && event.time < 20.5 && square4.position.y > 100) ||
+		(event.time > 24 && event.time < 24.5 && square4.position.y > -75)) {
+
+		square4.position.y = square4.position.y-10;
+
+	}
+		
+
+	if (event.time > 25 && event.time < 25.5 && square1.position.y < 100) {
+
+		square1.position.y = square1.position.y+10
+
+	}
+
+	if (event.time > 26 && event.time < 26.5 && square3.position.y < 100) {
+
+		square3.position.y = square3.position.y+10
+
+	}
+
+	if (event.time > 27 && event.time < 27.5 && square2.position.y < 100) {
+
+		square2.position.y = square2.position.y+10
+
+	}
+
+	if (event.time > 28 && event.time < 28.5 && square4.position.y < 100) {
+
+		square4.position.y = square4.position.y+10
+
+	}
+
+	if (event.time > 29 && event.time < 29.5 && square3.position.y < 225) {
+
+		square3.position.y = square3.position.y+10
+
+	}
+
+	if (event.time > 30 && event.time < 30.5 && square2.position.y < 250) {
+
+		square2.position.y = square2.position.y+10
+
+	}
+
+	if (event.time > 31 && event.time < 31.5 && square1.position.y < 200) {
+
+		square1.position.y = square1.position.y+10
+
+	}
+
+	if (event.time > 32 && event.time < 32.5 && square4.position.y < 180) {
+
+		square4.position.y = square4.position.y+10
+
+	}
+
+	if (event.time > 33 && event.time < 33.5 && square2.position.y < 290) {
+
+		square2.position.y = square2.position.y+10
+
+	}
+
+	if (event.time > 34 && event.time < 34.5 && square4.position.y < 410) {
+
+		square4.position.y = square4.position.y+10
+
+	}
+
+//
+
+	if (event.time > 35 && event.time < 35.5 && square3.position.y < 375) {
+
+		square3.position.y = square3.position.y+10
+
+	}
+
+	if (event.time > 36 && event.time < 36.5 && square1.position.y < 360) {
+
+		square1.position.y = square1.position.y+10
+
+	}
+
+	if (event.time > 37 && event.time < 37.5 && square4.position.y < 470) {
+
+		square4.position.y = square4.position.y+10
+
+	}
+
+	if (event.time > 38 && event.time < 38.5 && square2.position.y < 380) {
+
+		square2.position.y = square2.position.y+10
+
+	}
+	
+	if (event.time > 39 && event.time < 39.5 && square1.position.y < 480) {
+
+		square1.position.y = square1.position.y+10
+
+	}
+
+	if (event.time > 40 && event.time < 40.5 && square3.position.y < 510) {
+
+		square3.position.y = square3.position.y+10
+
+	}
+
+	if (event.time > 41 && event.time < 41.25) {
+
+		square2.position.x = square2.position.x+10
+
+	}
+
+	if (event.time > 42 && event.time < 42.25) {
+
+		movement1 = Math.random()*10
+		movement2 = Math.random()*10
+		square4.position.x = square4.position.x+movement1
+		square1.position.y = square1.position.y-movement2
+	}
+
+	if (event.time > 43 && event.time < 43.25) {
+
+		movement1 = Math.random()*15
+		movement2 = Math.random()*15
+		square3.position.x = square3.position.x-movement1
+		square2.position.y = square2.position.y+movement2
+	}
+
+	if (event.time > 44 && event.time < 44.25) {
+
+		movement1 = Math.random()*11
+		movement2 = Math.random()*13
+		movement3 = Math.random()*14
+		movement4 = Math.random()*15
+		square4.position.x = square4.position.x-movement1
+		square3.position.y = square3.position.y-movement2
+		square1.position.y = square1.position.y-movement3
+		square2.position.x = square2.position.x+movement4
+	}
+
+		if (event.time > 45 && event.time < 45.25) {
+
+		movement1 = Math.random()*11
+		movement2 = Math.random()*13
+		movement3 = Math.random()*14
+		movement4 = Math.random()*15
+		square4.position.x = square4.position.x-movement1
+		square3.position.y = square3.position.y-movement4
+		square1.position.y = square1.position.y-movement3
+		square2.position.x = square2.position.x+movement2
+	}
+
+		if (event.time > 46 && event.time < 46.25) {
+
+		movement1 = Math.random()*11
+		movement2 = Math.random()*18
+		movement3 = Math.random()*14
+		movement4 = Math.random()*1
+		square4.position.y = square4.position.y-movement2
+		square3.position.x = square3.position.x-movement3
+		square1.position.y = square1.position.y-movement1
+		square2.position.x = square2.position.x+movement4
+	}
+
+		if (event.time > 47 && event.time < 47.25) {
+
+		movement1 = Math.random()*14
+		movement2 = Math.random()*16
+		movement3 = Math.random()*14
+		movement4 = Math.random()*19
+		square4.position.x = square4.position.x-movement1
+		square3.position.y = square3.position.y-movement3
+		square1.position.y = square1.position.y-movement4
+		square2.position.y = square2.position.y+movement2
+	}
+
+		if (event.time > 48 && event.time < 48.25) {
+
+		movement1 = Math.random()*12
+		movement2 = Math.random()*13
+		movement3 = Math.random()*14
+		movement4 = Math.random()*15
+		square4.position.x = square4.position.x-movement2
+		square3.position.y = square3.position.y+movement3
+		square1.position.y = square1.position.y-movement4
+		square2.position.x = square2.position.x-movement1
+	}
+
+		if (event.time > 49 && event.time < 49.25) {
+
+		movement1 = Math.random()*10
+		movement2 = Math.random()*9
+		movement3 = Math.random()*14
+		movement4 = Math.random()*15
+		square4.position.x = square4.position.x-movement3
+		square3.position.y = square3.position.y-movement1
+		square1.position.y = square1.position.y-movement2
+		square2.position.x = square2.position.x+movement4
+	}
+
+		if (event.time > 50 && event.time < 50.25) {
+
+		movement1 = Math.random()*11
+		movement2 = Math.random()*13
+		movement3 = Math.random()*12
+		movement4 = Math.random()*15
+		square4.position.y = square4.position.y+movement4
+		square3.position.y = square3.position.y+movement2
+		square1.position.y = square1.position.y-movement1
+		square2.position.x = square2.position.x+movement3
+	}
+
+		if (event.time > 51 && event.time < 51.25) {
+
+		movement1 = Math.random()*14
+		movement2 = Math.random()*13
+		movement3 = Math.random()*14
+		movement4 = Math.random()*15
+		square4.position.y = square4.position.y-movement1
+		square3.position.x = square3.position.x+movement3
+		square1.position.y = square1.position.y-movement4
+		square2.position.x = square2.position.x-movement2
+	}
+
+		if (event.time > 52 && event.time < 52.25) {
+
+		movement1 = Math.random()*12
+		movement2 = Math.random()*13
+		movement3 = Math.random()*14
+		movement4 = Math.random()*15
+		square4.position.x = square4.position.x-movement4
+		square3.position.y = square3.position.y-movement2
+		square1.position.y = square1.position.y-movement3
+		square2.position.x = square2.position.x+movement1
+	}
+
+		if (event.time > 53 && event.time < 53.25) {
+
+		movement1 = Math.random()*11
+		movement2 = Math.random()*13
+		movement3 = Math.random()*14
+		movement4 = Math.random()*15
+		square4.position.x = square4.position.x-movement1
+		square3.position.y = square3.position.y-movement2
+		square1.position.y = square1.position.y+movement3
+		square2.position.x = square2.position.x+movement4
+	}
+
+		if (event.time > 54 && event.time < 54.25) {
+
+		movement1 = Math.random()*14
+		movement2 = Math.random()*13
+		movement3 = Math.random()*15
+		movement4 = Math.random()*16
+		square4.position.x = square4.position.x-movement4
+		square3.position.x = square3.position.x-movement3
+		square1.position.y = square1.position.y-movement1
+		square2.position.x = square2.position.x+movement2
+	}
+
+		if (event.time > 55 && event.time < 55.25) {
+
+		movement1 = Math.random()*16
+		movement2 = Math.random()*15
+		movement3 = Math.random()*14
+		movement4 = Math.random()*15
+		square4.position.y = square4.position.y+movement3
+		square3.position.y = square3.position.y-movement2
+		square1.position.y = square1.position.y-movement4
+		square2.position.x = square2.position.x+movement1
+	}
+
+		if (event.time > 56 && event.time < 56.25) {
+
+		movement1 = Math.random()*14
+		movement2 = Math.random()*12
+		movement3 = Math.random()*16
+		movement4 = Math.random()*15
+		square4.position.x = square4.position.x-movement1
+		square3.position.x = square3.position.x+movement3
+		square1.position.y = square1.position.y-movement2
+		square2.position.x = square2.position.x+movement4
+	}
+
+		if (event.time > 57 && event.time < 57.25) {
+
+		movement1 = Math.random()*14
+		movement2 = Math.random()*19
+		movement3 = Math.random()*18
+		movement4 = Math.random()*17
+		square4.position.x = square4.position.x-movement2
+		square3.position.y = square3.position.y-movement1
+		square1.position.y = square1.position.y-movement4
+		square2.position.x = square2.position.x+movement3
+	}
+
+		if (event.time > 58 && event.time < 58.25) {
+
+		movement1 = Math.random()*19
+		movement2 = Math.random()*20
+		movement3 = Math.random()*19
+		movement4 = Math.random()*18
+		square4.position.x = square4.position.x-movement1
+		square3.position.y = square3.position.y-movement2
+		square1.position.y = square1.position.y-movement3
+		square2.position.x = square2.position.x+movement4
+	}
+
+		if (event.time > 59 && event.time < 59.25) {
+
+		movement1 = Math.random()*19
+		movement2 = Math.random()*21
+		movement3 = Math.random()*20
+		movement4 = Math.random()*22
+		square4.position.x = square4.position.x-movement4
+		square3.position.y = square3.position.y-movement2
+		square1.position.y = square1.position.y-movement1
+		square2.position.x = square2.position.x+movement3
+	}
+
+}
+
+
+//  Whenever the window is resized, recenter the path.
+
+var onResize = function( event ){
+
+
+}
+
+
+//  Sometimes the browser just needs a good nudge
+//  to make sure it knows where the center is.
+
+onResize()
+
+
+
+
+	</script>
+</html>

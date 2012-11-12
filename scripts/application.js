@@ -26,22 +26,24 @@ A = {
 		//  Create the extended navigation to all lessons and their pages
 		//  based on our A.navigation{} object.
 
+		previousLessonHadUrl = false
 		A.navigation.forEach( function( lesson, lessonNumber ){
 
 			var el
 			
 			lessonNumber = ( lessonNumber + 1 )
-			el = $( '<tr>' )
-				.addClass( 'lessonHeader' )
-				.attr( 'title', lesson.date )
-				.append( $( '<td>' ).addClass( 'lessonNumber' ).append( lessonNumber ))
+			el = $( '<tr>' ).attr( 'title', lesson.date )
+			if( lesson.url || previousLessonHadUrl ) el.addClass( 'lessonHeader' )
+			if( lesson.url ) previousLessonHadUrl = true
+			else previousLessonHadUrl = false			
+			el.append( $( '<td>' ).addClass( 'lessonNumber' ).append( lessonNumber ))
 			nav.append( el )//  Weird bug. Had to add it to the DOM *before* doing next two lines. Strange.
 			el.append( $( '<td>' ))
 			el = $( el.find( 'td' )[ 1 ] )
 
-
 			lessonNumber = lessonNumber.toPaddedString( 2 )
 			if( lesson.url ){
+
 				el.append( $( '<a>' ).attr( 'href', lessonNumber +'-0-'+ lesson.url +'.html' ))
 				el = el.find( 'a' )
 			}
@@ -250,46 +252,62 @@ A = {
 		},
 		{
 			title: 'Code is data',
-			date : '12 October 2012'
-			//title: 'Text and grids',
-			//url  : 'textgrids',
-			//date : '28 September 2012'
+			url  : 'data',
+			date : '12 October 2012',
+			pages: [
+				[ 'JavaScript databases', 'databases' ],
+				[ 'Twitter Earth', 'twitter' ],
+				[ 'Homework', 'homework' ]
+			]	
+		},
+		{
+			title: 'Textify',
+			url  : 'textify',
+			date : '19 October 2012',
+			pages: [
+				[ 'Looking at letterforms', 'letterforms' ],
+				[ 'Setting text in Three.js', 'threetext' ],
+				[ 'Homework', 'homework' ]
+			]
+		},
+		{
+			title: 'In-class workshop',
+			url  :  'workshop',
+			date : '26 October 2012',
+			pages: [
+				[ 'Homework', 'homework' ]
+			]
+		},
+		{
+			title: 'Observe and report',
+			url  : 'observe',
+			date : '9 November 2012',
+			pages: [
+				[ 'Reading the webcam', 'webcam' ],
+			//	[ 'jQuery', 'jquery' ],
+				[ 'Homework', 'homework' ]
+			]
+		},
+		{
+			title: 'Twitter globe critiques',
+			date : '16 November 2012'
+		},
+		{
+			title: 'Final project workshop',
+			date : '30 November 2012'
 			//pages: [
-			//	[ 'Prototypal inheritance', 'inheritance' ],
 			//	[ 'Design history highlights', 'design' ],
 			//	[ 'Gazing at grids', 'grids' ],
-			//	[ 'Looking at letterforms', 'letterforms' ],
 			//	[ 'Homework', 'homework' ]
 			//]
 		},
 		{
-			title: 'Patterning',
-			date : '19 October 2012'
-		},
-		{
-			title: 'Midterm critiques',
-			//url  : 'observe',
-			date : '26 October 2012'
-		},
-		{
-			title: 'Poster break',
-			date : '2 November 2012'
-		},
-		{
-			title: 'Observe and report',
-			date : '9 November 2012'
-		},
-		{
-			title: 'TBD',
-			date : '16 November 2012'
-		},
-		{
-			title: 'TBD',
-			date : '30 November 2012'
-		},
-		{
-			title: 'Last chances',
+			title: 'More design',
 			date : '7 December 2012'
+		},
+		{
+			title: 'Make up class',
+			date : 'TBD'
 		},
 		{
 			title: 'Final critiques',

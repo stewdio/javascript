@@ -40,7 +40,7 @@
 
 
 
-	SKIP_JS = 3.64
+	SKIP_JS = 3.65
 
 
 
@@ -64,7 +64,11 @@
 
 			for( key in name ) augment( type, key, name[ key ] )
 		}
-	},
+	}
+
+
+
+
 	cascade = function(){
 
 		var i, args = Array.prototype.slice.call( arguments )
@@ -72,14 +76,11 @@
 		for( i = 0; i < args.length; i ++ )
 			if( args[ i ] !== undefined ) return args[ i ]
 		return false
-	},
+	}
 	coinFlip = function(){
 
 		return Math.round( Math.random() )
 	}
-
-
-
 
 	E       = Math.E
 	PI      = Math.PI

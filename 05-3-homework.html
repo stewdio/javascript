@@ -15,13 +15,84 @@
 					
 				<h1>Homework</h1>
 				<p>
-					Oh, no! 
-					You’ll just have to wait until Monday.
-					Have a good weekend.
+					If any of you are unable to run WebGL content in Chrome or Safari, 
+					<a target="_blank" href="http://www.mozilla.org/en-US/firefox/new/">download the latest version of Firefox</a>. 
+					If this does not solve your problem please <a href="#" onclick="A.email(this)" host="stewd.io" user="stewart">contact me</a> immediately.
+					It is vitally important that you can create and view WebGL content on your machine.
+				</p>
+				<p>
+					You have three tasks this week: 
+					install Google’s App Engine,
+					download a new code template,
+					and modify a portion of it.
+					Have this completed by Friday’s class.
+					(No need to email me on Thursday.)
 				</p>
 
 
+				<h2>1. Install App Engine</h2>
+				<p>
+					Browsers these days are rather strict about 
+					<a target="_blank" href="http://en.wikipedia.org/wiki/Same_origin_policy">same origin policies</a> 
+					and other security concerns—even when running code straight from your Desktop.
+					To work around these issues you’ll need to run your code (and assets) from a server. 
+					Google’s <a target="_blank" href="https://developers.google.com/appengine/">App Engine</a> 
+					makes it incredibly easy to run a lightweight server right on your machine with little fuss.
+					Download the <strong>Google App Engine SDK for Python</strong> here:
+					<a target="_blank" href="https://developers.google.com/appengine/downloads">https://developers.google.com/appengine/downloads</a>
+				</p>
+				<p>
+					If you're still running OS X Snow Leopard you’ll need to download and install 
+					<a target="_blank" href="http://www.python.org/download/releases/2.7.3/">Mac OS X 64-bit/32-bit x86-64/i386 Installer (2.7.3)</a> first, 
+					then in App Engine’s preferences set your Python Path to <code class="inline">/Library/Frameworks/Python.framework/Versions/2.7/bin/python</code>.
+					This text input field is a bit wonky; make sure you hit Enter while your cursor is still in that input field.
+					(See article <a target="_blank" href="http://code.google.com/p/google-appengine-mac-launcher/issues/detail?id=4">Python path setting is only saved if the user presses "enter", but the UI does not indicate this</a> for more information.)
+				</p>
 
+
+				<h2>2. Download the App Engine template</h2>
+				<p>
+					Your homework template code comes ready to run on App Engine. 
+					Download the new code package:
+					<a href="packages/threeAppEngine.zip">threeAppEngine.zip</a>.
+					Here’s what you’ll find inside:
+				</p>
+				<br />
+				<a href="packages/threeAppEngine.zip"><img class="block" src="media/threeAppEngine.jpg" /></a>
+				<br />
+				<p>
+					Once you’ve downloaded and decompressed this new template, 
+					go into App Engine and click <strong>File</strong> &gt; <strong>Add Existing Application...</strong> 
+					and browse to your template files and click Ok.
+					Now that you’ve told App Engine where to find your app, click the green Run button to start your app. 
+					The exact URL may vary, but App Engine will likely use Port 8080
+					so open up your browser and point it to 
+					<a target="_blank" href="http://localhost:8080/">http://localhost:8080/</a>.
+				</p>
+				<p>
+					When the page loads you should see Earth (and some cloud cover) rotating.
+					If you do not see this it may mean your hardware / browser combination is not capable 
+					of or not configured to run WebGL.
+					If that’s the case please <a href="#" onclick="A.email(this)" host="stewd.io" user="stewart">email me</a> immediately.
+				</p>
+				
+
+				<h2>3. Five locations to visit</h2>
+				<p>
+					Look at the code in <code class="inline">/static/scripts/application.js</code>
+					and have a read through the comments. 
+					Lines <code class="inline">94</code> through <code class="inline">144</code> are where your homework sits—the code for dropping pins onto the map. 
+					Take out the five pins I’ve created and replace them with five pins of your own: 
+					What five places do you want to visit—either again or for the first time—before it’s too late. 
+					You’ll need to have the latitude and longitude for location you wish to use. 
+					(Search engines are your friend here.)
+					Use my code as a guide. 
+				</p>
+				<p>
+					That’s it. 
+					We’re going to use this assignment as a jumping off point for more fun with Three.js on Friday. 
+					If you run into any trouble with App Engine let me know, and if we don’t resolve these issues ahead of class we can tend to them then.
+				</p>
 
 			</article>
 		</div>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../../styles/base.css" />
+		<title>Robust</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<div id="help">
+		</div>
+		<script charset="utf-8" src="../../scripts/paper.js"></script>
+		<script charset="utf-8" src="../../scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+	
+	
+
+//create a square at top of the page
+
+var squareSide = 120
+var groupSpeed = .5
+square5Outbounds = false
+var speed = 2
+
+
+var square5 = new Path.Rectangle (10, 80, squareSide, squareSide)
+square5.fillColor = 'white'
+square5.destination = Point.random() * view.size
+
+//create another square 10 px away
+
+var square6 = new Path.Rectangle ( 410, 80, squareSide, squareSide)
+square6.fillColor ='white'
+square6.destination = Point.random() * view.size
+
+//and another same as above
+var square7 = new Path.Rectangle (10, 380, squareSide, squareSide)
+square7.fillColor = 'white' 
+square7.destination = Point.random() * view.size
+
+//and another
+var square8 = new Path.Rectangle (410, 380, squareSide, squareSide)
+square8.fillColor = 'white'
+square8.destination = Point.random() * view.size
+
+var background = new Path.Rectangle( view.center, view.bounds.width )
+background.fillColor = 'black'
+background.position = view.center
+project.activeLayer.insertChild( 0, background )
+
+var durationSeconds = 60
+var running = true
+
+//set up timer to work with while practicing
+var timeText = new PointText(view.center);
+    timeText.paragraphStyle.justification = 'center';
+    timeText.characterStyle.fontSize = 20;
+    timeText.fillColor = 'gray';
+    timeText.position=view.size/2;
+
+var frameCountText = timeText.clone();
+    frameCountText.position=view.size/1.75;
+    frameCountText.fillColor = 'white';
+
+
+//set up the action
+
+var onFrame = function( event ) {
+
+       timeText.content = Math.round(event.time);
+       frameCountText.content = Math.round(event.count);
+	
+//set up the entry of the squares	
+	var dest1 = new Point ((squareSide + (squareSide + 60)), 80)
+	var vector1 = dest1 - square5.position
+	
+	var dest2 = new Point ((squareSide - (squareSide - 60)), 80)
+	var vector2 = dest2 - square6.position
+	
+	var dest3 = new Point ((squareSide + (squareSide + 60)), 380)
+	var vector3 = dest3 - square7.position
+	
+	var dest4 = new Point ((squareSide - (squareSide - 60)), 380)
+	var vector4 = dest4 - square8.position
+	
+
+//create groups that can be referenced later
+	var group1 = new Group ([square5, square6])
+	var group2 = new Group ([square7, square8])
+	var group3 = new Group ([square5, square6, square7, square8])
+	
+	
+	if( event.time > durationSeconds && running === true ){
+		
+		
+		square5.remove()
+		square6.remove()
+		square7.remove()
+		background.remove()
+		document.title = 'Paper finished.'
+
+		running = false
+		
+	}  else if (running === true) {
+
+
+		
+	//move top squares together to show a potential robust block	
+	if (event.count <= 50){
+		
+		square5.position += vector1/30
+		square6.position += vector2/30			
+
+	}
+	
+	//move the bottom squares together to form a potentail robust block
+	
+	if (event.count.isBetween (60, 110)){
+		
+		square7.position += vector3/30 
+		square8.position += vector4/30
+
+
+		}
+	//	move top row to bottom row to form a cojoined block
+	if (event.count.isBetween (120, 300)) {
+		square5.position.y += 1
+		square6.position.y += 1
+	}
+	
+	if (event.count.isBetween (320, 400)){
+		group3.position.y += -2
+	}
+	
+	if (event.count.isBetween (405, 420)) {
+		square6.position.x += 1
+		square8.position.x += 1
+	}
+	
+	
+	if (event.count.isBetween (420, 600)) {
+		group3.position.x += 2
+	
+	}
+	
+	
+	if (event.time.isBetween (11, 16)) {
+		group3.position.x += (-2) 
+		}
+	
+		
+	
+	if (event.time.isBetween(17,20)) {
+		group3.position.x += 2
+	
+	}
+	
+	if (event.time.isBetween (21,23)){
+		group3.rotate (7)
+	
+
+	}
+	
+
+	if (event.time.isBetween(24,27)) {
+		group3.rotate (-7)
+		
+	}
+
+	if (event.time.isBetween (28,42)) {
+	
+		group3.position.y += (Math.cos(event.time)* 3)
+		square5.fillColor.alpha = .6
+		square6.fillColor.alpha = .6
+		square7.fillColor.alpha = .6
+		square8.fillColor.alpha = .6
+		console. log ('tansparent')
+		}
+
+
+	if (event.time.isBetween (43,52)) {
+		
+		square5.position.x += 1
+		square6.position.x -= 1
+		square7.position.x += 1.1
+		square8.position.x +=1.5
+square5.position.y = view.bounds.height - square5.position.x.normalize( square5.position.y, view.bounds.width ).multiply( PI ).sine().multiply( 300 )
+square6.position.y = view.bounds.height - square6.position.x.normalize( square6.position.y, view.bounds.width ).multiply( PI ).sine().multiply( 50 )
+square7.position.y = view.bounds.height - square7.position.x.normalize( square7.position.y, view.bounds.width) .multiply( PI ).sine().multiply( 100 )
+square8.position.y = view.bounds.height - square8.position.x.normalize( square8.position.y, view.bounds.width ).multiply( PI ).sine().multiply( 200 )
+
+	}
+	
+	//if (event.tine.isBetween (51, durationSeconds))	{	
+	
+		//square6.position.x += 2
+		//square7.position.x += 2
+		//square8.position.x += 2
+		//square6.position.y = view.bounds.height - square6.position.x.normalize( 0, view.bounds.width ).multiply( PI ).sine().multiply( 300 )
+		//square7.position.y = view.bounds.height - square7.position.x.normalize( 0, view.bounds.width ).multiply( PI ).sine().multiply( 300 )
+		//square8.position.y = view.bounds.height - square8.position.x.normalize( 0, view.bounds.width ).multiply( PI ).sine().multiply( 300 )
+		//}
+	
+
+}
+}
+
+		</script>
+	</body>
+</html>

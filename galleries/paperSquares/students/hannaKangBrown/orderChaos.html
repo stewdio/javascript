@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../../styles/base.css" />
+		<title>Order to Chaos</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+		<script charset="utf-8" src="../../scripts/paper.js"></script>
+		<script charset="utf-8" src="../../scripts/skip.js"></script>
+		<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+
+
+var square1 = new Path.Rectangle(new Point(75, 200), 90)
+square1.fillColor = 'white'
+
+var square2 = new Path.Rectangle( new Point( 315,200), 90 )
+square2.fillColor = 'white'
+
+var square3 = new Path.Rectangle( new Point( 555,200), 90 )
+square3.fillColor = 'white'
+
+
+var square4 = new Path.Rectangle( new Point( 795,200), 90 )
+square4.fillColor = 'white'
+//square4.fillColor.alpha = 0.5
+
+
+//Loop
+
+var durationSeconds = 60
+var running = true
+var stepNumber = 0
+var destination = Point.random() * view.size;
+
+
+var onFrame = function( event ){
+	
+	if( event.time > durationSeconds && running === true ){
+		
+		running = false
+		square1.remove()
+		square2.remove()
+		square3.remove()
+		square4.remove()
+		background.remove()
+		document.title = 'Order to Chaos finished.'
+		console.log( 'Congratulations!' )
+	}
+
+	else if( running === true ) {
+
+		document.title = 'Order to Chaos at '+ event.time.floor().toPaddedString( 2 ) +' seconds.'
+
+	square1.rotate (1)
+	square2.rotate( 1 )
+	square3.rotate( 1 )
+	square4.rotate( 1 )	
+
+
+if( stepNumber == 0 ){
+    
+	
+
+	// square come together
+	if( event.time > 10 ) stepNumber ++
+}
+if( stepNumber == 1 ){
+
+	square1.position = new Point(120, 245)
+	square2.position = new Point(360, 245)
+	square3.position = new Point(600, 245)
+	square4.position = new Point(840, 245)
+	
+	if( event.time > 15) stepNumber ++
+}
+if( stepNumber == 2){
+	
+	var vector1 = destination - square1.position;
+	   square1.position += vector1 / 30;
+	   square1.content = Math.round(vector1.length);
+	   if (vector1.length > 10) {
+	       destination = Point.random() * view.size;}
+
+		var vector2 = destination - square2.position;
+		   square2.position += vector2 / 30;
+		   square2.content = Math.round(vector2.length);
+		   if (vector2.length > 10) {
+		       destination = Point.random() * view.size;}
+
+			var vector3 = destination - square3.position;
+			   square3.position += vector3 / 30;
+			   square3.content = Math.round(vector3.length);
+			   if (vector3.length > 10) {
+			       destination = Point.random() * view.size;}
+
+				var vector4 = destination - square4.position;
+				   square4.position += vector4 / 30;
+				   square4.content = Math.round(vector4.length);
+				   if (vector4.length > 10) {
+				       destination = Point.random() * view.size;}
+				
+					if( event.time > 25) stepNumber ++
+				
+}
+
+if( stepNumber == 3) {
+	square1.position = new Point(120, 245)
+	square2.position = new Point(360, 245)
+	square3.position = new Point(600, 245)
+	square4.position = new Point(840, 245)
+	
+	if( event.time > 30) stepNumber ++
+}
+
+if( stepNumber == 4){
+	
+	var vector1 = destination - square1.position;
+	   square1.position += vector1 / 30;
+	   square1.content = Math.round(vector1.length);
+	   if (vector1.length > 10) {
+	       destination = Point.random() * view.size;}
+
+		var vector2 = destination - square2.position;
+		   square2.position += vector2 / 30;
+		   square2.content = Math.round(vector2.length);
+		   if (vector2.length > 10) {
+		       destination = Point.random() * view.size;}
+
+			var vector3 = destination - square3.position;
+			   square3.position += vector3 / 30;
+			   square3.content = Math.round(vector3.length);
+			   if (vector3.length > 10) {
+			       destination = Point.random() * view.size;}
+
+				var vector4 = destination - square4.position;
+				   square4.position += vector4 / 30;
+				   square4.content = Math.round(vector4.length);
+				   if (vector4.length > 10) {
+				       destination = Point.random() * view.size;}
+				
+					if( event.time > 40) stepNumber ++
+				
+}
+
+if( stepNumber == 5) {
+
+	square1.position = new Point(120, 245)
+	square2.position = new Point(360, 245)
+	square3.position = new Point(600, 245)
+	square4.position = new Point(840, 245)
+	
+	if( event.time > 45) stepNumber ++
+}
+
+if( stepNumber == 6){
+	
+	var vector1 = destination - square1.position;
+	   square1.position += vector1 / 30;
+	   square1.content = Math.round(vector1.length);
+	   if (vector1.length > 10) {
+	       destination = Point.random() * view.size;}
+
+		var vector2 = destination - square2.position;
+		   square2.position += vector2 / 30;
+		   square2.content = Math.round(vector2.length);
+		   if (vector2.length > 10) {
+		       destination = Point.random() * view.size;}
+
+			var vector3 = destination - square3.position;
+			   square3.position += vector3 / 30;
+			   square3.content = Math.round(vector3.length);
+			   if (vector3.length > 10) {
+			       destination = Point.random() * view.size;}
+
+				var vector4 = destination - square4.position;
+				   square4.position += vector4 / 30;
+				   square4.content = Math.round(vector4.length);
+				   if (vector4.length > 10) {
+				       destination = Point.random() * view.size;}
+				
+					
+				
+}
+
+
+
+
+
+
+if( event.time.round() > 4 && Math.round(event.time) <10){
+
+var vector1 = destination - square1.position;
+   square1.position += vector1 / 30;
+   square1.content = Math.round(vector1.length);
+   if (vector1.length > 10) {
+       destination = Point.random() * view.size;}
+
+	var vector2 = destination - square2.position;
+	   square2.position += vector2 / 30;
+	   square2.content = Math.round(vector2.length);
+	   if (vector2.length > 10) {
+	       destination = Point.random() * view.size;}
+	
+		var vector3 = destination - square3.position;
+		   square3.position += vector3 / 30;
+		   square3.content = Math.round(vector3.length);
+		   if (vector3.length > 10) {
+		       destination = Point.random() * view.size;}
+		
+			var vector4 = destination - square4.position;
+			   square4.position += vector4 / 30;
+			   square4.content = Math.round(vector4.length);
+			   if (vector4.length > 10) {
+			       destination = Point.random() * view.size;}
+			}
+		}
+			
+		
+	}
+
+
+
+
+
+		</script>
+	</body>
+</html>

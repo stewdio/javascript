@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="styles/base.css" />
+		<title>JavaScript databases</title>
+	</head>
+	<body>
+		<div id="page">
+			<nav></nav>
+			<article>					
+
+
+
+					
+				<h1>JavaScript databases</h1>
+				<p>
+					Straight off the bat I must say that JavaScript will not replace traditional databases. 
+					Products like SQL, Oracle, etc. have been meticulously engineered to perform tasks that JavaScript was simply not designed for.
+				</p>
+				<p>
+					However, for small data transmission, storage, and querying JavaScript can be a very useful (and human-readable) data format.
+					This is best illustrated by the popularity of JSON (<a target="_blank" href="http://en.wikipedia.org/wiki/JSON">JavaScript Object Notation</a>)
+					for transmitting chunks of data within web applications.
+					JSON is a subset of JavaScript, meaning all JSON it is literally executable JavaScript, 
+					but not all JavaScript is officially supported in JSON. 
+					What does that mean exactly? 
+					Let’s look over and discuss the <a target="_blank" href="http://www.json.org/">original JSON specification</a> from Douglas Crockford.
+				</p>
+				<br />
+<code>{
+    "title": "JSON",
+    "info": "Just familiar old object notation.",
+    "nested": {
+        "info": "You can nest objects too."
+    },
+    "array": [
+       "1. Yea these", 
+       "2. are also supported", 
+       "3. wouldn’t you know."
+    ]
+}</code>				
+				<p>
+					Above is a short example of JSON. 
+					It is literally a JavaScript object.
+					We could simply <code class="inline">eval()</code> that code and it would be merged into our own code.
+					(What is <code class="inline">eval()</code>? Let’s talk about that for a moment.)
+					But this raises an important <a target="_blank" href="http://en.wikipedia.org/wiki/JSON#Security_issues">security concern</a>:
+					Should we really be <code class="inline">eval()</code>’ing our JSON?
+					The answer is no.
+					Fortunately Ajax libraries, such as <a target="_blank" href="http://jquery.com/">jQuery</a>, and now many browser come with secure JSON support built right in.
+					Let’s briefly look at jQuery’s <code class="inline"><a target="_blank" href="http://api.jquery.com/jQuery.getJSON/">getJSON()</a></code> function.
+				</p>
+				<p>
+					JSON is a nice entry point for talking about JavaScript as a data format because it’s widely used and heavily documented.
+					But don’t let this cloud over the obvious: 
+					You can store data right in your own JavaScript files. 
+					Let’s look back at the simple <a target="_blank" href="http://stewd.io/javascript/galleries/paperSquares/index.html">Paper Squares gallery</a>
+					and take a close look at the JavaScript that’s driving it:
+					<a target="_blank" href="http://stewd.io/javascript/galleries/paperSquares/scripts/application.js">...paperSquares/scripts/application.js</a>.
+					It’s valid JavaScript of course, but it’s just a few points off from being valid JSON.
+					Can you spot some of the factors that prevent it from being JSON?
+				</p>
+
+
+				<h2>Searching</h2>
+				<p>
+					Once you’ve acquired data you need the ability to sift through it.
+					For example, let’s say you have a list of words,
+					<code class="inline">var words = [ 'duck', 'duck', 'goose' ]</code>,
+					you can easily loop through them and search for the word “goose.”
+				</p>
+<code>words.forEach( function( word, i ){
+    if( word === 'goose' )
+        console.log( 'Found goose at index: '+ i )
+})</code>
+				<p>
+					But rarely is life so simple.
+					Let’s look at the documentation for
+					<code class="inline">String.match()</code>,
+					and <code class="inline">String.replace()</code>.
+					<!-- e.category = e.category.replace( 'Best Idents', 'Best idents' ); -->
+					While regular expressions are themselves outside the scope of this class
+					you may find <a target="_blank" href="http://regexpal.com/">RegExp Pal</a> very useful!
+				</p>
+				
+				
+				<h2>Sorting</h2>
+				<p>
+					For me sorting is where the real magic is.
+					Let’s start with a very simple example that uses JavaScript’s
+					built-in <code class="inline">Array.sort()</code> method.
+				</p>
+<code>var things = [ 'P', 'I', 'A', 'N', 'O' ]
+<span class="response">undefined</span>
+things.sort()
+<span class="response">["A", "I", "N", "O", "P"]</span></code>
+				<p>
+					The letters have been more or less sorted alphabetically. 
+					More precisely, the values in the array have been 
+					possibly type coerced then compared in this case according
+					to their ASCII values.
+					If we take a closer look we can see that we’re not truly sorting alphabetically:
+				</p>
+<code>var things = [ 'A', 'a', 'B', 'b', 'C', 'c' ]
+<span class="response">undefined</span>
+things.sort()
+<span class="response">["A", "B", "C", "a", "b", "c"]</span></code>
+				<p>
+					Possibly stranger, even though we’re not sorting strictly alphabetically
+					there’s a remnant of alpha-sort logic in there.
+					Let’s take these numbers which are already sorted in ascending order,
+					run <code class="inline">sort()</code> on them, and see what we get:
+				</p>
+<code>var things = [ 5, 40, 300, 2000, 10000 ]
+<span class="response">undefined</span>
+things.sort()
+<span class="response">[10000, 2000, 300, 40, 5]</span></code>
+				<p>
+					Why did the numbers come out sorted backwards? 
+					It’s because JavaScript isn’t comparing their numeric values,
+					but casting them to strings and comparing their characters one at a time according to ASCII value.
+					We can verify this by asserting one of the numbers as a string and comparing results.
+				</p>
+<code>var things = [ 5, 40, 300, '2000', 10000 ]
+<span class="response">undefined</span>
+things.sort()
+<span class="response">[10000, "2000", 300, 40, 5]</span></code>
+				<p>
+					By now the <code class="inline">sort()</code> method must be seeming a little unhelpful.
+					But here’s where the magic is:
+					<code class="inline">sort()</code> accepts a function as an argument
+					and that function makes all the difference.
+				</p>
+
+
+				<h2>Magic sorting</h2>
+				<p>
+					Let’s dive in head first and then make sense of it as we go along.
+					Here’s a technique for properly sorting numbers in ascending order according to their strictly numeric value.
+				</p>
+<code>function sortByValue( a, b ){ 
+    return +a - +b
+}
+<span class="response">undefined</span>
+var things = [ 5, 40, '300', 2000, 10 ]
+<span class="response">undefined</span>
+things.sort( sortByValue )
+<span class="response">[5, 10, 40, "300", 2000]</span></code>
+				<p>
+					Oh wow. Let’s break apart that example line by line while referencing 
+					<a target="_blank" href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/sort">Mozilla’s <code class="inline">Array.sort()</code> documentation</a>.
+					How can we make it more magical?
+					We can sort objects according to specific keys or values...
+				</p>
+<!--code>
+	var sort_by = function( field, reverse, primer )
+	{
+		var key = function( x )
+		{
+			return primer !== undefined ? primer( x[ field ] ) : x[ field ];
+		};
+		return function( a, b )
+		{
+			var A = key( a ),
+				B = key( b );
+			return ( A < B ? -1 : ( A > B ? 1 : 0 )) * [ 1, -1 ][ +!!reverse ];
+		};
+	};
+</code>
+<code>
+	entries.sort( sort_by( 
+		'agency',
+		 false, 
+		 function( a ){ return a ? a.toUpperCase() : '' }
+	));
+	</code-->
+
+
+
+<!--code>
+
+
+http://stackoverflow.com/questions/979256/how-to-sort-an-array-of-javascript-objects
+http://www.w3schools.com/jsref/jsref_sort.asp
+
+
+
+
+
+
+entries.sort( sort_by( 
+	'agency',
+	 false, 
+	 function( a ){ return a ? a.toUpperCase() : '' }
+));
+
+
+entries.sort( sort_by( 
+	'award',
+	 false, 
+	 function( a )
+	{
+		var cat = [];
+		return [
+			'Gold of Golds',
+			'Gold',
+			'Silver',
+			'Nominated'
+		].indexOf( a );
+	}
+));
+
+</code -->
+
+
+			</article>
+		</div>
+		<script charset="utf-8" src="scripts/jquery.js"></script>
+		<script charset="utf-8" src="scripts/skip.js"></script>
+		<script charset="utf-8" src="scripts/application.js"></script>
+	</body>
+</html>

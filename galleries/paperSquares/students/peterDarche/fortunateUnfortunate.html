@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../../styles/base.css" />
+		<title>Fortunate to Unfortunate</title>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="600" height="600"></canvas>
+	</body>
+	<script charset="utf-8" src="../../scripts/jquery.js"></script>
+	<script charset="utf-8" src="../../scripts/paper.js"></script>
+	<script charset="utf-8" src="../../scripts/skip.js"></script>
+	<script charset="utf-8" type="text/paperscript" canvas="myCanvas">
+
+//Classes
+
+//This should wait till we cover prototypal inheritance
+
+// var Firework = {
+// 	velocity : undefined, // this needs to be a paper vector
+// 	acceleration : undefined, // this needs to be a paper vector
+// 	rect : undefined,
+// 	repller : Object.create( repller )
+// 	applyForce : function(force){
+// 		this.acceleration += force
+// 	},
+// 	update : function(){
+// 		this.velocity += this.acceleration 
+// 		this.velocity *= .1
+// 		this.rect.position += this.velocity
+// 		console.log(this.velocity);
+// 	},
+// 	explode: function(position){
+// 		this.repller.position = position
+
+// 	}
+// 	config : function(){
+// 		this.rect.strokeWidth = 4
+// 		this.rect.fillColor = 'white'
+
+// 	}
+// }
+
+// var Sparkle = {
+// 	velocity : undefined, // this needs to be a paper vector
+// 	acceleration : undefined, // this needs to be a paper vector
+// 	friction : undefined,
+// 	rect : undefined,
+// 	applyForce : function(force){
+// 		this.acceleration += force
+// 	},
+// 	applyFriction: function(){
+
+// 	}
+// 	update : function(){
+// 		this.velocity += this.acceleration 
+// 		this.velocity *= .1
+// 		this.rect.position += this.velocity
+// 		console.log(this.velocity);
+// 	},
+// 	config : function(){
+// 		this.rect.strokeWidth = 4
+// 		this.rect.fillColor = 'white'
+// 	}
+// }
+
+// var Repller = {
+// 		position: undefined,
+// 		repel : function(mover){
+// 			var curPos = new Point (this.position.x, this.position.y ),
+// 				force = curPos - mover.rect.position,
+// 				distance = this.position.getDistance(mover.rect.position)
+				
+// 			force.normalize()
+// 			strength = (this.g * this.mass * m.mass) / (distance * distance )
+// 		    force *= strength
+// 		    return force
+// 		},
+// 		config : function(){
+// 				this.rect.strokeWidth = 4
+// 				this.rect.fillColor = 'white'
+// 				this.rect.opacity = '.4'
+// 		}
+// }
+
+var Square = {
+	rect: undefined,
+	velocity : undefined,
+	centerPoint : undefined,
+	upperRightPoint : undefined,
+	rotate : 0,
+	config : function(){
+		this.rect.strokeWidth = 4
+		this.rect.fillColor = 'white'
+	},
+	shoot : function(){
+		var degrees = (1).rand(10)
+		this.velocity += gravity 
+		this.rect.position += this.velocity
+		// this.rect.rotate(degrees)
+		// this.rotate += degrees
+
+	},
+	toCenter : function(){
+		var vector = this.centerPoint - this.rect.position
+		vector *= .07
+		this.rect.position += vector
+		
+	},
+	drop : function(){
+		var targetPoint = new Point (this.rect.position.x, 590)
+		var vector = targetPoint - this.rect.position
+		vector *= .07
+		this.rect.position += vector
+	},
+	toRightArrow : function(point){
+		var vector = (this.CenterPoint + point) - this.rect.position
+		vector *= .07
+		this.rect.position += vector
+	}
+
+}
+
+var rights = [],
+	lefts = [],
+	squares = []
+
+var increment = false,
+	counter = 0
+
+//create rights
+for( var i = 0; i < 2; i++ ){
+	var point = new Point( view.bounds.bottomRight ),
+		s = Object.create( Square )
+
+	var startP = new Point ((6).rand(10), 600),
+		endP = new Point (0, (565).rand(570)),
+		vec = endP - startP
+
+	var centerPoint = new Point (200 + (75 * i), 300 );
+	var upperRightPoint = new Point ( 300 + (75 * i), 10 ) 
+
+	s.velocity = vec
+	s.centerPoint = centerPoint	
+	s.rect = new Path.Rectangle(point, 50 )
+	s.config()
+	rights.push(s)
+	squares.push(s)
+}
+
+//create lefts 
+for( var i = 0; i < 2; i++ ){
+	var point = new Point( view.bounds.bottomLeft ),
+		s = Object.create( Square )
+
+	var startP = new Point (0, 600),
+		endP = new Point ((6).rand(10), (565).rand(570)),
+		vec = endP - startP
+
+	var centerPoint = new Point (350 + (75 * i), 300 );
+
+	s.velocity = vec
+	s.centerPoint = centerPoint	
+	s.rect = new Path.Rectangle(point, 50 )
+	s.config()
+	lefts.push(s)
+	squares.push(s)
+}
+
+	var start = new Point (300, 299),
+		end = new Point (300, 300),
+		gravity = end - start;
+
+	console.log(rights)
+
+//Draw
+var onFrame = function( event ){	
+
+	if (event.count > 0 && event.count < 75){
+		rights[0].shoot()
+	} 
+	else if (event.count > 75 && event.count < 150){
+		lefts[0].shoot()		 
+	} 
+	else if (event.count > 150 && event.count < 225){
+		rights[1].shoot()
+	} 
+	else if (event.count > 225 && event.count < 300){
+		lefts[1].shoot()
+	} 
+
+	else if( event.count > 300 && event.count < 400 ){
+		for ( var j = 0; j < 2; j++){
+			rights[j].toCenter();
+			lefts[j].toCenter();
+		}
+	}
+
+	else if ( event.count > 400 && event.count < 460 ){
+		lefts[0].rect.position.y -= 1
+		lefts[1].rect.position.y -= 2
+		rights[0].rect.position.y += 1
+		rights[1].rect.position.y += 0 
+	}
+
+	else if( event.count > 460 && event.count < 560){
+		for(var j = 0; j < 2 ; j++){
+			rights[j].rect.position.x += 1
+			rights[j].rect.position.y -= 1
+			lefts[j].rect.position.x += 1
+			lefts[j].rect.position.y -= 1
+		}
+	}
+
+	else if ( event.count > 560 && event.count < 780){
+		for(var j = 0; j < 2 ; j++){
+			rights[j].rect.scale(1.005)
+			lefts[j].rect.scale(1.005)	
+		}
+	}
+
+	else if (event.count > 820 && event.count < 1100){
+			rights[0].rect.scale(.99)
+	}
+
+	else if (event.count > 1100 && event.count < 1200){
+			rights[0].drop()		
+	} 
+
+	else if (event.count > 1100 && event.count < 1500){
+			rights[1].rect.scale(.99)
+	}
+
+	else if (event.count > 1500 && event.count < 1600){
+			rights[1].drop()		
+	} 
+
+	else if (event.count > 1600 && event.count < 1900){
+			lefts[0].rect.scale(.99)
+	}
+
+	else if (event.count > 1900 && event.count < 2000){
+			lefts[0].drop()		
+	} 
+
+	else if (event.count > 2000 && event.count < 2400){
+			lefts[1].rect.scale(.99)
+	}
+
+	else if (event.count > 2400 && event.count < 2500){
+			lefts[1].drop()		
+	}
+
+	else if (event.count > 2500 && event.count < 3499){
+		for (var k = 0; k < 2; k++){
+			lefts[k].rect.opacity -= .001
+			rights[k].rect.opacity -= .001
+		}
+	}
+
+	else if( event.count === 3500){
+		$('canvas').remove()
+	}
+
+
+}
+
+	</script>
+</html>
